@@ -21,13 +21,25 @@ class TechnologiesController extends Controller
         $tech->description = $request->description;
         $tech->year_developed = $request->year_developed;
         $tech->user_id = 1;
+        
+        if($request->has('trade_secret')){
+            $tech->is_trade_secret = 1;
+            $tech->protection_type = 'trade_secret';
+        } else {
+            $tech->is_trade_secret = 0;
+        }
+
+        if($request->protection_type_select == 2){
+            
+        }
+
         $tech->save();
 
+        
 
         $tech->technology_categories()->sync($request->technology_categories);
         $tech->commodities()->sync($request->commodities);
-
-        return redirect()->back()->with('success','Technology Added.'); 
+        return redirect()->back()->with('success','Technology Added. Edit your entry to add more details.'); 
     }
     
     public function editTechnology(Request $request, $tech_id){
@@ -41,10 +53,20 @@ class TechnologiesController extends Controller
         $tech->description = $request->description;
         $tech->year_developed = $request->year_developed;
         $tech->user_id = 1;
+        if($request->has('trade_secret')){
+            $tech->is_trade_secret = 1;
+            $tech->protection_type = 'trade_secret';
+        } else {
+            $tech->is_trade_secret = 0;
+        }
         $tech->save();
 
         $tech->technology_categories()->sync($request->technology_categories);
         $tech->commodities()->sync($request->commodities);
+        $tech->generators()->sync($request->generators);
+        $tech->agencies()->sync($request->owners);
+        $tech->adopters()->sync($request->adopters);
+        $tech->potential_adopters()->sync($request->potential_adopters);
         return redirect()->back()->with('success','Technology Updated.'); 
     }
 
@@ -52,6 +74,10 @@ class TechnologiesController extends Controller
         $tech = Technology::find($tech_id);
         $tech->technology_categories()->detach();
         $tech->commodities()->detach();
+        $tech->generators()->detach();
+        $tech->agencies()->detach();
+        $tech->adopters()->detach();
+        $tech->potential_adopters()->detach();
         $tech->delete();
         return redirect()->back()->with('success','Technology Deleted.'); 
     }

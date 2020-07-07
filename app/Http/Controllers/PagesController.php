@@ -15,6 +15,7 @@ use App\PotentialAdopter;
 use App\Commodity;
 use App\Generator;
 use App\Sector;
+use App\Patent;
 use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
@@ -54,12 +55,29 @@ class PagesController extends Controller
         $industries = Industry::pluck('name', 'id')->all();
         $sectors = Sector::pluck('name', 'id')->all();
         $commodities = Commodity::pluck('name', 'id')->all();
-        $protectionTypes = ProtectionType::pluck('name', 'id')->all();
+        $protectionTypes = ProtectionType::all();
+        $generators = Generator::pluck('name','id')->all();
         $adopterTypes = AdopterType::pluck('name', 'id')->all();
         $technologyCategories = TechnologyCategory::pluck('name', 'id')->all();
         $agencyTypes = AgencyType::pluck('name', 'id')->all();
         $agencies = Agency::pluck('name', 'id')->all();
-        return view('pages.techEdit')->withAgencyTypes($agencyTypes)->withAgencies($agencies)->withTech($tech)->withIndustries($industries)->withCommodities($commodities)->withTechnologyCategories($technologyCategories)->withSectors($sectors)->withProtectionTypes($protectionTypes)->withAdopterTypes($adopterTypes);
+        $adopters = Adopter::pluck('name','id')->all();
+        $potentialAdopters = PotentialAdopter::pluck('name','id')->all();
+        $patents = Patent::pluck('patent_number', 'id')->all();
+        return view('pages.techEdit')
+            ->withTech($tech)
+            ->withAdopters($adopters)
+            ->withPotentialAdopters($potentialAdopters)
+            ->withGenerators($generators)
+            ->withAgencyTypes($agencyTypes)
+            ->withAgencies($agencies)
+            ->withIndustries($industries)
+            ->withCommodities($commodities)
+            ->withTechnologyCategories($technologyCategories)
+            ->withSectors($sectors)
+            ->withProtectionTypes($protectionTypes)
+            ->withAdopterTypes($adopterTypes)
+            ->withPatents($patents);
     }
 
     public function techAddPage(){
@@ -94,10 +112,14 @@ class PagesController extends Controller
         $industries = Industry::pluck('name', 'id')->all();
         $sectors = Sector::pluck('name', 'id')->all();
         $commodities = Commodity::all();
+        $agencies = Agency::pluck('name', 'id')->all();
+        $generators = Generator::pluck('name','id')->all();
         return view('api.current')
             ->withTechnologies($technologies)
             ->withTechnologyCategories($technologyCategories)
             ->withCommodities($commodities)
+            ->withAgencies($agencies)
+            ->withGenerators($generators)
             ->withSectors($sectors)
             ->withIndustries($industries);
     }

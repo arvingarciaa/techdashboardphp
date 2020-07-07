@@ -24,7 +24,7 @@ class CreateTechnologiesTable extends Migration
             $table->text('description')->nullable();
             $table->mediumText('narrative')->nullable();
             $table->integer('is_trade_secret')->nullable();
-            $table->string('protection_level')->nullable();
+            $table->string('protection_type')->nullable();
             $table->integer('user_id');
         });
     }

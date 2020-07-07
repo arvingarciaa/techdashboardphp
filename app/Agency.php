@@ -13,4 +13,8 @@ class Agency extends Model
     public function generator(){
         return $this->hasMany('App\Generator');
     }
+
+    public function technologies(){
+        return $this->hasMany('App\Technology');
+    }
 }

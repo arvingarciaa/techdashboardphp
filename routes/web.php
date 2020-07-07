@@ -86,5 +86,31 @@ Route::post('admin/addTechnology', 'TechnologiesController@addTechnology')->name
 Route::post('admin/{id}/editTechnology', 'TechnologiesController@editTechnology')->name('editTechnology');
 Route::delete('admin/{id}/deleteTechnology', 'TechnologiesController@deleteTechnology')->name('deleteTechnology');
 
+//Patents
+Route::post('admin/addPatent', 'PatentsController@addPatent')->name('addPatent');
+Route::post('admin/{id}/editPatent', 'PatentsController@editPatent')->name('editPatent');
+Route::delete('admin/{id}/deletePatent', 'PatentsController@deletePatent')->name('deletePatent');
+
+//UtilityModels
+Route::post('admin/addUtilityModel', 'UtilityModelsController@addUtilityModel')->name('addUtilityModel');
+Route::post('admin/{id}/editUtilityModel', 'UtilityModelsController@editUtilityModel')->name('editUtilityModel');
+Route::delete('admin/{id}/deleteUtilityModel', 'UtilityModelsController@deleteUtilityModel')->name('deleteUtilityModel');
+
+//IndustrialDesigns
+Route::post('admin/addIndustrialDesign', 'IndustrialDesignsController@addIndustrialDesign')->name('addIndustrialDesign');
+Route::post('admin/{id}/editIndustrialDesign', 'IndustrialDesignsController@editIndustrialDesign')->name('editIndustrialDesign');
+Route::delete('admin/{id}/deleteIndustrialDesign', 'IndustrialDesignsController@deleteIndustrialDesign')->name('deleteIndustrialDesign');
+
+//PlantVarietyProtections
+Route::post('admin/addPlantVarietyProtection', 'PlantVarietyProtectionsController@addPlantVarietyProtection')->name('addPlantVarietyProtection');
+Route::post('admin/{id}/editPlantVarietyProtection', 'PlantVarietyProtectionsController@editPlantVarietyProtection')->name('editPlantVarietyProtection');
+Route::delete('admin/{id}/deletePlantVarietyProtection', 'PlantVarietyProtectionsController@deletePlantVarietyProtection')->name('deletePlantVarietyProtection');
+
+//Copyrights
+Route::post('admin/addCopyright', 'CopyrightsController@addCopyright')->name('addCopyright');
+Route::post('admin/{id}/editCopyright', 'CopyrightsController@editCopyright')->name('editCopyright');
+Route::delete('admin/{id}/deleteCopyright', 'CopyrightsController@deleteCopyright')->name('deleteCopyright');
+
+
 Auth::routes();
 

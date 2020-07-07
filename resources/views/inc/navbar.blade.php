@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <div class="container-fluid px-0">
-   <nav class="navbar navbar-expand-lg navbar-dark bg-light pl-3 pt-0 pb-0" style="min-height:55px; max-height:85px">
+   <nav class="navbar navbar-expand-lg navbar-dark bg-light pl-3 pt-0 pb-0" style="min-height:81px; max-height:85px">
         <div class="col-sm-4" style="max-width:400px">
             <a href="/">
                 <img src="/storage/page_images/pcaarrd-logo-invert.png" style="max-height:85px;width:100%">

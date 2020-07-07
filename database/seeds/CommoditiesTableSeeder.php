@@ -19,6 +19,12 @@ class CommoditiesTableSeeder extends Seeder
             'updated_at' => Carbon::now(),
         ]);
         DB::table('commodities')->insert([
+            'name' => 'Goat',
+            'sector_id' => '2',
+            'created_at' => Carbon::now(), # new \Datetime()
+            'updated_at' => Carbon::now(),
+        ]);
+        DB::table('commodities')->insert([
             'name' => 'Jackfruit',
             'sector_id' => '1',
             'created_at' => Carbon::now(), # new \Datetime()

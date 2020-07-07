@@ -27,6 +27,10 @@
    <!-- Scripts
    <script src="https://kit.fontawesome.com/e0784f1094.js"></script>
    -->
+
+    <!-- ChartJS -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+	<script src="{{ asset('js/Chart.Geo.min.js') }}" defer></script>
    
    <!-- Datatables -->
    <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -53,6 +57,7 @@
    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
    
    
+   
     @yield('top_scripts')
 </head>
 <body>
@@ -63,7 +68,7 @@
                 <div class="col-auto">
                     @yield('breadcrumb')
                 </div>
-                <div class="container float-right mr-2">
+                <div class="float-right mr-2" style="margin-left:auto">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#2ndnavbar">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -102,6 +107,7 @@
             </nav>
         </section>
             @yield('content')
+        @include('inc.footer')
     </div>
 </body>
 @yield ('scripts')

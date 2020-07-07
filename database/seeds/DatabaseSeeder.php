@@ -23,6 +23,10 @@ class DatabaseSeeder extends Seeder
             AdoptersTableSeeder::class,
             PotentialAdoptersTableSeeder::class,
             CommoditiesTableSeeder::class,
+            TechnologiesTableSeeder::class,
+            AgencyTypesTableSeeder::class,
+            AgenciesTableSeeder::class,
+            GeneratorsTableSeeder::class,
         ]);
     }
 }

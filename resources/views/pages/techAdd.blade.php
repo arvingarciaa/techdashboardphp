@@ -49,6 +49,7 @@
                                 <li class="nav-item active" role="tab">
                                     <a class="nav-link active" href="#main" data-toggle="tab">Main</a>
                                 </li>
+                                <!--
                                 <li class="nav-item" role="tab">
                                     <a class="nav-link" href="#ip_protection" data-toggle="tab">IP Protection</a>
                                 </li>
@@ -64,6 +65,7 @@
                                 <li class="nav-item" role="tab">
                                     <a class="nav-link" href="#assets" data-toggle="tab">Assets</a>
                                 </li>
+                            -->
                             </ul>
                         </div>
                         
@@ -142,6 +144,7 @@
                                         {{Form::label('description', 'Description', ['class' => 'col-form-label'])}}
                                         {{Form::textarea('description', '', ['class' => 'form-control', 'placeholder' => 'Add a description'])}}
                                     </div>
+                                    <!--
                                     <div class="form-group">
                                         <table class="table w-50">
                                             <thead>
@@ -306,8 +309,10 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                -->
                                 </div>
                             </div>
+                            <!--
                             <div class="tab-pane fade" id="ip_protection" role="tabpanel">
                                 <div class="card-body">
                                     <div class="form-group">
@@ -326,7 +331,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="trade_secret">
+                                                <input class="form-check-input" type="checkbox" value="" id="trade_secret" name="trade_secret">
                                                 <label class="form-check-label" for="trade_secret">
                                                     Is Trade Secret?
                                                 </label>
@@ -480,6 +485,7 @@
                                     Assets
                                 </div>
                             </div>
+                        -->
                         </div>  
                         <div class="card-footer">
                             {{Form::submit('Save changes', ['class' => 'btn btn-success float-right'])}}
@@ -492,7 +498,9 @@
                                     var e = document.getElementById("protection_type_select");
                                     var value = e.options[e.selectedIndex].value;
                                     $('.ip_protection_choice').hide();
+                                    $('.ip_protection_choice').find('input:text').val('');
                                     $('#protection_type_form_'+value).show();
+                                    $('$trade_secret').prop('checked', false);
                                 });
                             });
                             
