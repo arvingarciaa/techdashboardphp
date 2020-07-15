@@ -16,6 +16,8 @@ use App\Commodity;
 use App\Generator;
 use App\Sector;
 use App\Patent;
+use App\CarouselItem;
+use App\LandingPage;
 use Illuminate\Support\Facades\DB;
 
 class PagesController extends Controller
@@ -23,7 +25,9 @@ class PagesController extends Controller
     public function index()
     {
         $technologies = Technology::all();
-        return view('pages.index')->withTechnologies($technologies);
+        $sectors = Sector::all();
+        $commodities = Commodity::all();
+        return view('pages.index')->withTechnologies($technologies)->withSectors($sectors)->withCommodities($commodities);
     }
 
     public function getAdmin(){
@@ -122,5 +126,13 @@ class PagesController extends Controller
             ->withGenerators($generators)
             ->withSectors($sectors)
             ->withIndustries($industries);
+    }
+
+    public function manageLandingPage(){
+        $carousel_items = CarouselItem::all();
+        $landing_page = LandingPage::find(1);
+        return view('pages.manage')
+            ->withCarouselItems($carousel_items)
+            ->withLandingPage($landing_page);
     }
 }

@@ -13,7 +13,7 @@
             <div class="nav nav-tabs" style="border-bottom-width: 0px;">
                 <a class="list-group-item" data-toggle="tab" href="#technology">Technologies</a>
                 <a class="list-group-item" data-toggle="tab" href="#">Data Management</a>
-                <!--<a class="list-group-item" data-toggle="tab" href="#industry">Industries</a>-->
+                <a class="list-group-item" data-toggle="tab" href="#industry">Industries</a>
                 <a class="list-group-item" data-toggle="tab" href="#sector">Sectors</a>
                 <a class="list-group-item" data-toggle="tab" href="#commodity">Commodities</a>
                 <a class="list-group-item" data-toggle="tab" href="#technologyCategory">Technology Categories</a>
@@ -25,6 +25,7 @@
                 <a class="list-group-item" data-toggle="tab" href="#agencyType">Agency Types</a>
                 <a class="list-group-item" data-toggle="tab" href="#agency">Agencies</a>
                 <a class="list-group-item" data-toggle="tab" href="#generator">Generators</a>
+                <a class="list-group-item" href="/admin/manageLandingPage">Manage Landing Page</a>
                 <a class="list-group-item active" data-toggle="tab" href="#activity">Activity Logs</a>
             </div>
             <style>

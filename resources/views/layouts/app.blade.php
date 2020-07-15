@@ -40,28 +40,39 @@
    
    
    <script src="{{ asset('js/app.js') }}"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
+   <script src="{{ asset('js/select2.min.js') }}"></script>
+   <script src="{{ asset('js/dropzone.js') }}"></script>
    
    <!-- x-editable -->
    <link href="{{ asset('css/bootstrap-editable.css') }}" rel="stylesheet">
    <script src="{{ asset('js/bootstrap-editable.js') }}"></script>
 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+   <script src="{{ asset('js/popper.min.js') }}"></script>
    
    <!-- bootstrap toggle -->
-   <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/css/bootstrap4-toggle.min.css" rel="stylesheet">  
-   <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.5.0/js/bootstrap4-toggle.min.js"></script>
+    <link href="{{ asset('css/bootstrap4-toggle.min.css') }}" rel="stylesheet">  
+    <script src="{{ asset('js/bootstrap4-toggle.min.js') }}"></script>
 
    <!--Select2 -->
    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
    
+
+    <!-- Bootstrap select -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
+    <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
    
    
     @yield('top_scripts')
 </head>
 <body>
     <div id="app">
+        <div class="icon-bar" style="z-index:1000">
+            <a href="#" class="sarai"><img src="https://i.imgur.com/TRr6O4s.png" height="30" width="30"></a> 
+            <a href="#" class="facebook"><i class="fab fa-facebook"></i></a> 
+            <a href="#" class="twitter"><i class="fab fa-twitter"></i></a> 
+            <a href="#" class="email"><i class="fas fa-envelope"></i></a>
+            <a href="#" class="youtube"><i class="fab fa-youtube"></i></a> 
+        </div>
         <section class="sticky-top">
             @include('inc.navbar')
             <nav class="navbar navbar-expand-lg navbar-dark p-0" style="background-color:#2478af;">

@@ -16,6 +16,7 @@ Route::get('/', 'PagesController@index')->name('pages.index');
 Route::get('/admin', 'PagesController@getAdmin')->name('pages.getAdmin');
 Route::get('/admin/tech/{id}/edit', 'PagesController@techEditPage')->name('pages.techEditPage');
 Route::get('/admin/tech/add', 'PagesController@techAddPage')->name('pages.techAddPage');
+Route::get('/admin/manageLandingPage', 'PagesController@manageLandingPage')->name('pages.manageLandingPage');
 Route::post('admin/fetchDependent', 'PagesController@fetchDependent')->name('fetchDependent');
 
 //API
@@ -110,6 +111,11 @@ Route::delete('admin/{id}/deletePlantVarietyProtection', 'PlantVarietyProtection
 Route::post('admin/addCopyright', 'CopyrightsController@addCopyright')->name('addCopyright');
 Route::post('admin/{id}/editCopyright', 'CopyrightsController@editCopyright')->name('editCopyright');
 Route::delete('admin/{id}/deleteCopyright', 'CopyrightsController@deleteCopyright')->name('deleteCopyright');
+
+
+//Manage
+Route::post('admin/manageLandingPage/addCarouselItem', ['uses' => 'CarouselItemsController@addCarouselItem', 'as' => 'carousel.addCarouselItem']);
+Route::post('admin/manageLandingPage/{id}/editCarouselItem', ['uses' => 'CarouselItemsController@editCarouselItem', 'as' => 'carousel.editCarouselItem']);
 
 
 Auth::routes();
