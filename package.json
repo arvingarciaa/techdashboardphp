@@ -28,7 +28,9 @@
   },
   "dependencies": {
     "choices.js": "^7.0.0",
+    "jspdf": "^2.1.1",
     "lightbox2": "^2.11.0",
+    "normalize.css": "^8.0.1",
     "select2": "^4.0.7"
   }
 }

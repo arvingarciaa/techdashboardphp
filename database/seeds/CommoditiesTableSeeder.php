@@ -15,24 +15,28 @@ class CommoditiesTableSeeder extends Seeder
         DB::table('commodities')->insert([
             'name' => 'Abaca',
             'sector_id' => '1',
+            'approved' => 2,
             'created_at' => Carbon::now(), # new \Datetime()
             'updated_at' => Carbon::now(),
         ]);
         DB::table('commodities')->insert([
             'name' => 'Goat',
             'sector_id' => '2',
+            'approved' => 2,
             'created_at' => Carbon::now(), # new \Datetime()
             'updated_at' => Carbon::now(),
         ]);
         DB::table('commodities')->insert([
             'name' => 'Jackfruit',
             'sector_id' => '1',
+            'approved' => 2,
             'created_at' => Carbon::now(), # new \Datetime()
             'updated_at' => Carbon::now(),
         ]);
         DB::table('commodities')->insert([
             'name' => 'Swine',
             'sector_id' => '2',
+            'approved' => 2,
             'created_at' => Carbon::now(), # new \Datetime()
             'updated_at' => Carbon::now(),
         ]);

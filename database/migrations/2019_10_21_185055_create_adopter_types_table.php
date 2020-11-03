@@ -16,6 +16,8 @@ class CreateAdopterTypesTable extends Migration
         Schema::create('adopter_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
+            $table->integer('user_id')->nullable();
+            $table->integer('approved')->default(0);
             $table->text('name');
         });
     }

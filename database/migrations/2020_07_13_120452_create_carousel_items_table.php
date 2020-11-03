@@ -16,10 +16,10 @@ class CreateCarouselItemsTable extends Migration
         Schema::create('carousel_items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->string('title')->nullable();
-            $table->string('subtitle')->nullable();
-            $table->string('banner')->nullable();
-            $table->string('button_link')->nullable();
+            $table->text('title')->nullable();
+            $table->text('subtitle')->nullable();
+            $table->text('banner')->nullable();
+            $table->text('button_link')->nullable();
             $table->Integer('position');
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFundingTypesTable extends Migration
+class CreateApplicabilityIndustriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateFundingTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('funding_types', function (Blueprint $table) {
+        Schema::create('applicability_industries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
+            $table->integer('approved')->default(0);
+            $table->integer('user_id')->nullable();
             $table->text('name');
         });
     }
@@ -27,6 +29,6 @@ class CreateFundingTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('funding_types');
+        Schema::dropIfExists('applicability_industries');
     }
 }

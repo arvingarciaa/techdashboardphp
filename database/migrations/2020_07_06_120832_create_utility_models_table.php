@@ -17,8 +17,9 @@ class CreateUtilityModelsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->bigInteger('application_number')->nullable();
-            $table->bigInteger('registration_number')->nullable();
+            $table->bigInteger('um_number')->nullable();
             $table->date('date_of_filing')->nullable();
+            $table->date('registration_date')->nullable();
             $table->text('status')->nullable();
             $table->unsignedBigInteger('technology_id');
             $table->foreign('technology_id')->references('id')->on('technologies')->onDelete('cascade');

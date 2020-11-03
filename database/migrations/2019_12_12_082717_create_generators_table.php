@@ -16,11 +16,14 @@ class CreateGeneratorsTable extends Migration
         Schema::create('generators', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->text('title')->nullable();
             $table->text('name');
-            $table->text('availability')->nullable();
-            $table->text('expertise')->nullable();
+            $table->text('address')->nullable();
+            $table->text('phone')->nullable();
+            $table->text('fax')->nullable();
+            $table->text('email')->nullable();
             $table->unsignedBigInteger('agency_id');
+            $table->integer('approved')->default(0);
+            $table->integer('user_id')->nullable();
             $table->foreign('agency_id')->references('id')->on('agencies')->onDelete('cascade');
         });
     }

@@ -14,9 +14,14 @@ class PlantVarietyProtectionsController extends Controller
         ));
 
         $plantVarietyProtection = new PlantVarietyProtection;
+        $plantVarietyProtection->application_number = $request->application_number;
+        $plantVarietyProtection->applicant = $request->applicant;
+        $plantVarietyProtection->crop = $request->crop;
+        $plantVarietyProtection->description_of_variety = $request->description_of_variety;
         $plantVarietyProtection->certificate_number = $request->certificate_number;
         $plantVarietyProtection->denomination = $request->denomination;
-        $plantVarietyProtection->crop_type = $request->crop_type;
+        $plantVarietyProtection->date_of_issuance = $request->date_of_issuance;
+        $plantVarietyProtection->duration_of_protection = $request->duration_of_protection;
         $plantVarietyProtection->technology_id = $request->tech_id;
         $plantVarietyProtection->save();
 
@@ -29,10 +34,16 @@ class PlantVarietyProtectionsController extends Controller
             'denomination' => 'required'
         ));
         
-        $plantVarietyProtection = PlantVarietyProtection::find($plantVarietyProtection_id); 
+        $plantVarietyProtection = PlantVarietyProtection::find($plantVarietyProtection_id);
+        $plantVarietyProtection->application_number = $request->application_number;
+        $plantVarietyProtection->applicant = $request->applicant;
+        $plantVarietyProtection->crop = $request->crop;
+        $plantVarietyProtection->description_of_variety = $request->description_of_variety;
         $plantVarietyProtection->certificate_number = $request->certificate_number;
         $plantVarietyProtection->denomination = $request->denomination;
-        $plantVarietyProtection->crop_type = $request->crop_type;
+        $plantVarietyProtection->date_of_issuance = $request->date_of_issuance;
+        $plantVarietyProtection->duration_of_protection = $request->duration_of_protection;
+        $plantVarietyProtection->technology_id = $request->tech_id;
         $plantVarietyProtection->save();
         return redirect()->back()->with('success','Plant Variety Protection Updated.'); 
     }

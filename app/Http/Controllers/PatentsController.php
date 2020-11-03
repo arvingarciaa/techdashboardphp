@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Patent;
+use App\Log;
 
 class PatentsController extends Controller
 {
@@ -17,6 +18,7 @@ class PatentsController extends Controller
         $patent->application_number = $request->application_number;
         $patent->patent_number = $request->patent_number;
         $patent->date_of_filing = $request->date_of_filing;
+        $patent->registration_date = $request->registration_date;
         $patent->status = $request->status;
         $patent->technology_id = $request->tech_id;
         $patent->save();

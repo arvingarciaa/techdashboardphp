@@ -17,6 +17,7 @@ class IndustrialDesignsController extends Controller
         $industrialDesign->application_number = $request->application_number;
         $industrialDesign->registration_number = $request->registration_number;
         $industrialDesign->date_of_filing = $request->date_of_filing;
+        $industrialDesign->registration_date = $request->registration_date;
         $industrialDesign->status = $request->status;
         $industrialDesign->technology_id = $request->tech_id;
         $industrialDesign->save();
@@ -34,6 +35,7 @@ class IndustrialDesignsController extends Controller
         $industrialDesign->application_number = $request->application_number;
         $industrialDesign->registration_number = $request->registration_number;
         $industrialDesign->date_of_filing = $request->date_of_filing;
+        $industrialDesign->registration_date = $request->registration_date;
         $industrialDesign->status = $request->status;
         $industrialDesign->save();
         return redirect()->back()->with('success','Industrial Design Updated.'); 

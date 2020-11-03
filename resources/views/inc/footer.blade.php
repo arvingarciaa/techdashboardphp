@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 
-  <footer class="pb-4 pt-5">
+<footer class="pb-4 pt-5" style="border-top:1px solid rgba(0,0,0,0.2)">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <h5 class="footer-title">About KM4AANR</h5>
+                <h5 class="footer-title">About Technology Dashboard</h5>
                 <ul class="list-unstyled text-small">
-                    <li>KM4AANR.PH is an online database dedicated to Agriculture, Aquatic, and Natural Resources-related news, updates, and content from different platforms. This project is funded by DOST-PCAARRD.</li>
+                    <li>The Technology Transfer and Promotion Division (TTPD) facilitates the transfer of the developed technologies to end users of agriculture, forestry, aquatic and natural resources, as well as the conduct of information dissemination, advocacy and promotion of the same.</li>
                     <li style="margin-top:15px">
-                        <img src="/storage/page_images/dost.png" style="object-fit: cover;width:35px;height:35px">
-                        <img src="/storage/page_images/pcaarrd.png" style="object-fit: cover;width:35px;height:35px">
-                        <img src="/storage/page_images/up.png" style="object-fit: cover;width:35px;height:35px">
+                        <img src="/storage/page_images/for_footer.png" style="object-fit: cover;width:105px">
                     </li>
                     <li>
                        <small class="text-muted">
@@ -35,17 +33,34 @@
             <div class="col-sm-3 ">
                 <h5 class="footer-title">Links</h5>
                 <ul class="list-unstyled text-small">
-                    <li>About us</li>
-                    <li>KM Community</li>
-                    <li>FIESTA</li>
-                    <li>Technology Dashboard</li>
-                    <li>DOST-PCAARRD</li>
+                    <li>
+                        <a href="http://aanr.ph/en/about-project/">About us</a>
+                    </li>
+                    <li>
+                        <a href="http://167.71.210.45:8080/">KM Community</a>
+                    </li>
+                    <li>
+                        <a href="http://167.71.210.45/">FIESTA</a>
+                    </li>
+                    <li>
+                        <a href="http://167.71.210.45:8081/">Technology Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="http://www.pcaarrd.dost.gov.ph/home/portal/">DOST-PCAARRD</a>
+                    </li>
+                    <li>
+                        <a href="{{route('pages.contactUsPage')}}">Contact Us</a>
+                    </li>
                 </ul>
                 
             </div>
         </div>
     </div>
     <style>
+        li > a{
+            text-decoration:none;
+            color:inherit;
+        }
         .footer-title{
             color:rgb(0, 78, 183);
             font-size:20px;

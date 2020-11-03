@@ -16,9 +16,14 @@ class CreatePlantVarietyProtectionsTable extends Migration
         Schema::create('plant_variety_protections', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
+            $table->bigInteger('application_number')->nullable();
+            $table->text('applicant')->nullable();
+            $table->text('crop')->nullable();
+            $table->text('denomination')->nullable();
+            $table->text('description_of_variety')->nullable();
             $table->bigInteger('certificate_number')->nullable();
-            $table->bigInteger('denomination')->nullable();
-            $table->text('crop_type')->nullable();
+            $table->date('date_of_issuance')->nullable();
+            $table->text('duration_of_protection')->nullable();
             $table->unsignedBigInteger('technology_id');
             $table->foreign('technology_id')->references('id')->on('technologies')->onDelete('cascade');
         });

@@ -315,16 +315,14 @@ a.list-group-item{
 }
 
 a.list-group-item:hover{
-  color: white;
   text-decoration: none !important;
+  color:white;
 }
 
 a.list-group-item:active{
   text-decoration: none !important;
   background-color: #3490dc !important;
 }
-
-
 
 .accordion-card{
 margin-top:4px !important;
@@ -369,7 +367,7 @@ transition: .5s ease;
 opacity: 0;
 position: absolute;
 top: 10px;
-left: -25px;
+left: -10px;
 z-index:1000;
 text-align: right;
 }
@@ -414,7 +412,6 @@ max-height: 100%;
 max-width: 100%;
 width: auto;
 height: auto;
-position: absolute;
 top: 0;
 bottom: 0;
 left: 0;
@@ -566,4 +563,64 @@ background-color: rgba(161, 161, 161, 0.6);
 
 .sidebar{
   background-color: rgba(56, 56, 56, 0.6);
+}
+
+.pdf-card{
+  box-shadow: 0 0 1px rgba(0,0,0,0.11), 0 1px 2px rgba(0,0,0,0.22);
+  flex: 0 0 47.5%;
+  margin-bottom: 13px;
+  font-size: 0.75rem;
+  background: #f3f3f3;
+}
+.pdf-card:hover{
+  box-shadow: 0 -1px 0 #e0e0e0, 0 0 2px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.24)
+}
+.pdf-card-size{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  line-height: 1rem;
+  margin-left:0.5em;
+}
+.pdf-card-type{
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 4px;
+  position: absolute;
+  bottom: 12px;
+  width: calc(100% - (2 * 12px));
+}
+.pdf-card-link{
+  display: block;
+  position: relative;
+  height: 130px;
+  padding: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+.pdf-card-link:hover, .pdf-card-link:focus{
+  color: inherit !important;
+  text-decoration: none !important;
+}
+.pdf-card-link:active, .pdf-card-link:hover {
+  outline: 0 !important;
+}
+.pdf-card-title{
+  overflow: hidden;
+  position: relative;
+  line-height: 1.35em;
+  max-height: 2.7em;
+  padding-right: 1em;
+  display: block;
+  word-break: break-word;
+  word-wrap: normal;
+  font-size:15px;
+}
+.card-button{
+  background-color:rgb(100, 149, 237) !important;
+}
+.card-button:hover{
+  background-color: rgb(90, 130, 220) !important;
 }

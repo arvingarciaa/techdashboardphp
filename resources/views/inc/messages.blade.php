@@ -8,13 +8,14 @@
 @if(session('success'))
     <div class="alert alert-success" style="margin-top:5px">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>{{session('success')}}</strong>
+        <strong>{!!session('success')!!}</strong>
+        <a href=""></a>
     </div>
 @endif
 
 @if(session('error'))
     <div class="alert alert-danger" style="margin-top:5px">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>{{session('error')}}</strong>
+        <strong>{!!session('error')!!}</strong>
     </div>
 @endif

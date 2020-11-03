@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProtectionTypesTable extends Migration
+class CreateTechFieldsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateProtectionTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('protection_types', function (Blueprint $table) {
+        Schema::create('tech_fields', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
             $table->text('name');
+            $table->text('slug');
+            $table->Integer('level');
         });
     }
 
@@ -27,6 +29,6 @@ class CreateProtectionTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('protection_types');
+        Schema::dropIfExists('tech_fields');
     }
 }

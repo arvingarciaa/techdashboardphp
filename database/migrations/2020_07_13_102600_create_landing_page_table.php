@@ -16,7 +16,14 @@ class CreateLandingPageTable extends Migration
         Schema::create('landing_pages', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->string('footer_about')->nullable();
+            $table->text('footer_about')->nullable();
+            $table->Integer('landing_page_item_carousel')->default(1);
+            $table->Integer('landing_page_item_social_media_button')->default(1);
+            $table->Integer('landing_page_item_technology_counter')->default(1);
+            $table->Integer('landing_page_item_technology_grid_view')->default(1);
+            $table->Integer('landing_page_item_technology_table_view')->default(1);
+            $table->Integer('landing_page_item_technology_dashboard_view')->default(1);
+            $table->Integer('landing_page_item_technology_commodity_view')->default(1);
         });
     }
 

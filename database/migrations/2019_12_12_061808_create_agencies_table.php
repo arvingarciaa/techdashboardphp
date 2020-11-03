@@ -17,11 +17,15 @@ class CreateAgenciesTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->text('name');
-            $table->text('address')->nullable();
+            $table->text('region')->nullable();
+            $table->text('province')->nullable();
+            $table->text('municipality')->nullable();
+            $table->text('district')->nullable();
             $table->text('phone')->nullable();
+            $table->text('email')->nullable();
+            $table->integer('approved')->default(0);
+            $table->integer('user_id')->nullable();
             $table->text('fax')->nullable();
-            $table->unsignedBigInteger('agency_type_id');
-            $table->foreign('agency_type_id')->references('id')->on('agency_types')->onDelete('cascade');
         });
     }
 
@@ -32,10 +36,6 @@ class CreateAgenciesTable extends Migration
      */
     public function down()
     {
-        Schema::table('agencies', function($table){
-            $table->dropForeign(['agency_type_id']);
-            $table->dropColumn('agency_type_id');
-        });
         Schema::dropIfExists('agencies');
     }
 }

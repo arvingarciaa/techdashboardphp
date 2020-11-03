@@ -9,15 +9,17 @@ class CopyrightsController extends Controller
 {
     public function addCopyright(Request $request){
         $this->validate($request, array(
-            'application_number' => 'required',
             'registration_number' => 'required'
         ));
 
         $copyright = new Copyright;
-        $copyright->application_number = $request->application_number;
+        $copyright->owners = $request->owners;
+        $copyright->publishers = $request->publishers;
+        $copyright->date_of_creation = $request->date_of_creation;
+        $copyright->registration_date = $request->registration_date;
         $copyright->registration_number = $request->registration_number;
-        $copyright->date_of_filing = $request->date_of_filing;
-        $copyright->status = $request->status;
+        $copyright->classes = $request->classes;
+        $copyright->date_of_issuance = $request->date_of_issuance;
         $copyright->technology_id = $request->tech_id;
         $copyright->save();
 
@@ -26,15 +28,17 @@ class CopyrightsController extends Controller
     
     public function editCopyright(Request $request, $copyright_id){
         $this->validate($request, array(
-            'application_number' => 'required',
             'registration_number' => 'required'
         ));
         
         $copyright = Copyright::find($copyright_id); 
-        $copyright->application_number = $request->application_number;
+        $copyright->owners = $request->owners;
+        $copyright->publishers = $request->publishers;
+        $copyright->date_of_creation = $request->date_of_creation;
+        $copyright->registration_date = $request->registration_date;
         $copyright->registration_number = $request->registration_number;
-        $copyright->date_of_filing = $request->date_of_filing;
-        $copyright->status = $request->status;
+        $copyright->classes = $request->classes;
+        $copyright->date_of_issuance = $request->date_of_issuance;
         $copyright->save();
         return redirect()->back()->with('success','Copyright Updated.'); 
     }

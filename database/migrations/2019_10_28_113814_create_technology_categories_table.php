@@ -17,6 +17,8 @@ class CreateTechnologyCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->text('name');
+            $table->integer('approved')->default(0);
+            $table->integer('user_id')->nullable();
         });
     }
 

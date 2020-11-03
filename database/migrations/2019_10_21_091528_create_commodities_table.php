@@ -18,6 +18,8 @@ class CreateCommoditiesTable extends Migration
             $table->timestamps();
             $table->text('name');
             $table->unsignedBigInteger('sector_id');
+            $table->integer('user_id')->nullable();
+            $table->integer('approved')->default(0);
             $table->foreign('sector_id')->references('id')->on('sectors')->onDelete('cascade');
         });
     }

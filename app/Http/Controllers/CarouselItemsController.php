@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\CarouselItem;
+use App\Log;
 
 class CarouselItemsController extends Controller
 {
     public function addCarouselItem(Request $request){
         $this->validate($request, [
-            'image' => 'required'
+            'image' => 'required|max:10240'
         ]);
 
         $item = new CarouselItem;
         if($request->hasFile('image')){
-            if($page->top_banner != null){
-                $image_path = public_path().'/storage/page_images/'.$page->top_banner;
+            if($item->banner != null){
+                $image_path = public_path().'/storage/page_images/'.$page->banner;
                 unlink($image_path);
             }
             $imageFile = $request->file('image');
@@ -30,6 +32,16 @@ class CarouselItemsController extends Controller
         $item->banner = $imageName;
         $item->save();
 
-        return redirect('/manage')->with('success', 'Carousel item added');
+        $user = auth()->user();
+        $log = new Log;
+        $log->user_id = $user->id;
+        $log->user_name = $user->name;
+        $log->user_level = $user->user_level;
+        $log->action = 'Added an entry.';
+        $log->IP_address = $request->ip();
+        $log->resource = 'Carousel Items';
+        $log->save();
+
+        return redirect('/admin/manageLandingPage')->with('success', 'Carousel item added');
     }
 }

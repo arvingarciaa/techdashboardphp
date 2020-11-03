@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAgencyTypesTable extends Migration
+class CreateHeaderLinksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateAgencyTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('agency_types', function (Blueprint $table) {
+        Schema::create('header_links', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->text('name');
+            $table->text('name')->nullable();
+            $table->text('link')->nullable();
+            $table->Integer('default')->nullable();
+            $table->Integer('position');
         });
     }
 
@@ -27,6 +30,6 @@ class CreateAgencyTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('agency_types');
+        Schema::dropIfExists('header_links');
     }
 }

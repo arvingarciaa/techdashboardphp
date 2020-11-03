@@ -14,19 +14,20 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         $this->call([
-            FundingTypesTableSeeder::class,
             AdopterTypesTableSeeder::class,
-            ProtectionTypesTableSeeder::class,
             TechnologyCategoriesTableSeeder::class,
             IndustriesTableSeeder::class,
             SectorsTableSeeder::class,
             AdoptersTableSeeder::class,
-            PotentialAdoptersTableSeeder::class,
             CommoditiesTableSeeder::class,
             TechnologiesTableSeeder::class,
-            AgencyTypesTableSeeder::class,
             AgenciesTableSeeder::class,
             GeneratorsTableSeeder::class,
+            UsersSeeder::class,
+            FieldsSeeder::class,
+            HeaderSeeder::class,
+            CarouselSeeder::class,
+            LandingPagesSeeder::class,
         ]);
     }
 }

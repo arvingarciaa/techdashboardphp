@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179383304-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-179383304-1');
+    </script>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
    <!-- CSRF Token -->
    <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -19,6 +28,7 @@
    <link rel="dns-prefetch" href="//fonts.gstatic.com">
    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+
    <!-- Styles -->
    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css" rel="stylesheet">
    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -27,6 +37,10 @@
    <!-- Scripts
    <script src="https://kit.fontawesome.com/e0784f1094.js"></script>
    -->
+
+
+   <script src="{{ asset('js/html2canvas.min.js') }}"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.1.1/jspdf.umd.min.js"></script>
 
     <!-- ChartJS -->
 	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
@@ -61,21 +75,17 @@
     <link rel="stylesheet" href="{{ asset('css/bootstrap-select.min.css') }}">
     <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.3/js.cookie.min.js"></script>
+    <script src="https://cdn.rawgit.com/jackmoore/colorbox/master/jquery.colorbox-min.js"></script>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/jackmoore/colorbox/master/example1/colorbox.css" />
    
     @yield('top_scripts')
 </head>
-<body>
+<body style="width:100vw">
     <div id="app">
-        <div class="icon-bar" style="z-index:1000">
-            <a href="#" class="sarai"><img src="https://i.imgur.com/TRr6O4s.png" height="30" width="30"></a> 
-            <a href="#" class="facebook"><i class="fab fa-facebook"></i></a> 
-            <a href="#" class="twitter"><i class="fab fa-twitter"></i></a> 
-            <a href="#" class="email"><i class="fas fa-envelope"></i></a>
-            <a href="#" class="youtube"><i class="fab fa-youtube"></i></a> 
-        </div>
         <section class="sticky-top">
             @include('inc.navbar')
-            <nav class="navbar navbar-expand-lg navbar-dark p-0" style="background-color:#2478af;">
+            <nav class="navbar navbar-expand-lg navbar-dark p-0" style="background-color:#216d9e; height:52px">
                 <div class="col-auto">
                     @yield('breadcrumb')
                 </div>
@@ -85,33 +95,7 @@
                     </button>
                     <div class="collapse navbar-collapse pr-4" id="2ndnavbar">
                         <ul class="navbar-nav ml-auto">
-                            @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('LOGIN') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('REGISTER') }}</a>
-                                </li>
-                            @endif
-                            @else
-                                <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->name }} <span class="caret"></span>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a href="/admin" class="dropdown-item">Admin Dashboard</a>
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                            document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
-                                    </div>
-                                </li>
-                            @endguest
+                            
                         </ul>
                     </div>
                 </div>
@@ -123,3 +107,9 @@
 </body>
 @yield ('scripts')
 </html>
+
+<style>
+    body {
+        font-family:"Raleway", sans-serif;
+    }
+</style>

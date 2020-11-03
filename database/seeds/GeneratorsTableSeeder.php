@@ -13,11 +13,13 @@ class GeneratorsTableSeeder extends Seeder
     public function run()
     {
         DB::table('generators')->insert([
-            'title' => 'Mr.',
             'name' => 'Generator',
             'agency_id' => '1',
-            'availability' => 'Active',
-            'expertise' => 'Soil Science',
+            'approved' => 2,
+            'address' => 'Bay, Laguna',
+            'phone' => '0915353462',
+            'fax' => '508-1523',
+            'email' => 'generator@gmail.com',
             'created_at' => Carbon::now(), # new \Datetime()
             'updated_at' => Carbon::now(),
         ]);
