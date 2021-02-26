@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 
 <div class="container-fluid px-0">
-   <nav class="navbar shadow navbar-expand-lg navbar-dark bg-light pl-3 pt-0 pb-0" style="height:79px">
+   <nav class="navbar shadow navbar-expand-lg navbar-dark bg-light pl-3 pt-0 pb-0" style="height:90px" class="px-3">
         <div class="navbar-header" style="margin-top:auto;margin-bottom:auto">
             <a href="/">
-                <img src="/storage/page_images/pcaarrd-logo-invert.png" style="max-width:300px">
+                <img alt="PCAARRD logo" src="/storage/page_images/pcaarrd-logo-invert.png" style="max-width:400px">
             </a>
         </div>
             
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
             <span class="navbar-toggler-icon"></span>
         </button>
-        
-        <span style="left:50%">
-            <h1 class="font-weight-bold">*ALPHA VERSION*</h1>
-        </span>
-
+    
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto upper-nav">
                 <li class="nav-item">
@@ -25,7 +21,7 @@
                     <a class="nav-links" href="http://167.71.210.45/">FIESTA</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-links active" href="http://167.71.210.45:8081">Technology</a>
+                    <a class="nav-links active" href="http://139.59.255.31:8081/">Technology</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-links" href="http://167.71.210.45:8080">Community</a>

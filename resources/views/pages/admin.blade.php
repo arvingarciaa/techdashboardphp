@@ -87,28 +87,6 @@
                     content: "\f054";    /* adjust as needed, taken from bootstrap.css */
                 }
             </style>
-            <script>
-                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                    // gets activated tab
-                    var target = $(e.target).attr("href");
-                    // remove active from all other menu items
-                    $(".nav a").removeClass("active");
-                    // set active for current menu item
-                    $('a[href="' + target + '"]').addClass('active');
-                    $('a[href="' + target + '"]').parent('div').addClass('show');
-                    $('a[href="' + target + '"]').parent('div').prev().removeClass('collapsed');
-                });
-
-                $(function() {
-                    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                        localStorage.setItem('lastTab', $(this).attr('href'));
-                    });
-                    var lastTab = localStorage.getItem('lastTab');
-                    if (lastTab) {
-                        $('[href="' + lastTab + '"]').tab('show');
-                    }
-                });
-            </script>
         </div>
         
         <div class="col-sm-10">
@@ -277,9 +255,13 @@
                                                 <td>{{$tech->title}}</td>
                                                 <td>{{$tech->applicability_location}}</td>
                                                 <td>
-                                                    @if($tech->applicability_industry != null)
-                                                        {{App\ApplicabilityIndustry::where('id', '=', $tech->applicability_industry)->find(1)->name}}
-                                                    @endif
+                                                    @foreach($tech->applicability_industries as $applicability_industry)
+                                                        @if( $loop->first ) 
+                                                            {{ $applicability_industry->name }}
+                                                        @else
+                                                            <br> {{ $applicability_industry->name }}
+                                                        @endif
+                                                    @endforeach
                                                 </td>
                                                 <td>
                                                     @foreach($tech->technology_categories as $technology_category)
@@ -483,8 +465,8 @@
                                                 {{ Form::open(['action' => ['ApplicabilityIndustriesController@rejectApplicabilityIndustry', $applicabilityIndustryPending->id], 'method' => 'POST', 'style="display:inline"']) }}
                                                     <button class="btn btn-danger px-1 py-1" style="font-weight:800">Reject</button> 
                                                 {{ Form::close() }}
-                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editApplicabilityIndustryModal-{{$applicabilityIndustry->id}}"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteApplicabilityIndustryModal-{{$applicabilityIndustry->id}}"><i class="fas fa-trash"></i></button>
+                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editApplicabilityIndustryModal-{{$applicabilityIndustryPending->id}}"><i class="fas fa-edit"></i></button>
+                                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteApplicabilityIndustryModal-{{$applicabilityIndustryPending->id}}"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -502,8 +484,8 @@
                                                 {{ Form::open(['action' => ['ApplicabilityIndustriesController@rejectApplicabilityIndustry', $applicabilityIndustryApprovals->approvable_id], 'method' => 'POST', 'style="display:inline"']) }}
                                                     <button class="btn btn-danger px-1 py-1" style="font-weight:800">Reject</button> 
                                                 {{ Form::close() }}
-                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editApplicabilityIndustryModal-{{$applicabilityIndustry->id}}"><i class="fas fa-edit"></i></button>
-                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteApplicabilityIndustryModal-{{$applicabilityIndustry->id}}"><i class="fas fa-trash"></i></button>
+                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editApplicabilityIndustryModal-{{$applicabilityIndustryPending->id}}"><i class="fas fa-edit"></i></button>
+                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteApplicabilityIndustryModal-{{$applicabilityIndustryPending->id}}"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -2499,21 +2481,26 @@
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <span>
-                                <?php $techApp = App\Technology::where('applicability_industry', '=', $applicabilityIndustry->id)->get(); ?>
-                                Are you sure you want to delete: <b>{{$applicabilityIndustry->name}}</b>?</br></br>
+                                <?php $techApp = App\ApplicabilityIndustry::with('technologies')->find($applicabilityIndustry->id)->get(); ?>
                                 @if($techApp->where('approved','=','2')->count() > 0)
-                                    The following technologies using this Applicability Industry will be affected:
+                                    You cannot delete: <b>{{$applicabilityIndustry->name}}</b></br></br>
+                                    The following technologies are still using this Technology Applicability - Industry:
                                     <ul>
                                         @foreach($techApp->where('approved','=','2') as $tech)
                                             <li>{{$tech->title}}</li>
                                         @endforeach
                                     </ul>
+                                @else
+                                    Are you sure you want to delete: <b>{{$applicabilityIndustry->name}}</b>?</br></br>
                                 @endif
                             </span>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                            @if($techApp->where('approved','=','2')->count() == 0)
                             <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                            @endif
                         </div>
                         </form>
                     </div>
@@ -2753,7 +2740,7 @@
             <div class="modal fade" id="techModal-{{$tech->id}}" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content pl-0 pr-0 pl-0">
-                        <div class="inner-modal pl-3 pr-3"> 
+                        <div id="popup-details-{{$tech->id}}" class="inner-modal pl-3 pr-3"> 
                             <div class="modal-header">
                                 <span style="width:100%" class="mt-2">
                                     <h4>{{$tech->title}} </h4>
@@ -2761,28 +2748,86 @@
                             </div>
                             <div class="modal-body">
                                 <small class="text-muted">
-                                    <i class="fas fa-map-marker-alt"></i> {{$tech->region}}
-                                    <i class="far fa-calendar-alt ml-2"></i> {{$tech->year_developed}}
+                                    @if($tech->applicability_location != null)
+                                    <i class="fas fa-map-marker-alt"></i> {{$tech->applicability_location}}
+                                    @endif
+                                    @if($tech->year_developed != null)
+                                        <i class="far fa-calendar-alt ml-2"></i> {{$tech->year_developed}}
+                                    @endif
                                 </small>
                                 <br>
-                                @foreach($tech->commodities as $commodity)
-                                    @if( $loop->first ) 
-                                        {{ $commodity->sector->name }}
-                                        <i class="fas fa-angle-double-right"></i>
-                                        {{ $commodity->name }}
-                                    @else
-                                        · {{ $commodity->sector->name }}
-                                        <i class="fas fa-angle-double-right"></i>
-                                    @endif
-                                @endforeach
                                 <div class="dropdown-divider mt-3"></div>
                                 <b>Description</b><br>
                                 <span>{{$tech->description}}</span>
+                                @if($tech->significance != NULL)
+                                    <div class="dropdown-divider mt-3"></div>
+                                    <b>Significance</b><br>
+                                    <span>{{$tech->significance}}</span>
+                                @endif
+                                @if($tech->target_users != NULL)
+                                    <div class="dropdown-divider mt-3"></div>
+                                    <b>Target Users</b><br>
+                                    <span>{{$tech->target_users}}</span>
+                                @endif
                                 <div class="dropdown-divider mt-3"></div>
-                                <b>Commodities</b><br>
+                                <b>Technology Applicability - Industry</b>
+                                <span class="ml-3">
+                                    @foreach($tech->applicability_industries as $applicability_industry)
+                                        <br> • {{$applicability_industry->name}}
+                                    @endforeach
+                                </span>
+                                <div class="dropdown-divider mt-3"></div>
+                                <b>Industry - Sector - Commodity</b><br>
                                 @foreach($tech->commodities as $commodity)
-                                    <span class="ml-3">• {{$commodity->name}} </span>
+                                    <span class="ml-3">•
+                                        {{ $commodity->sector->industry->name }}
+                                        <i class="fas fa-angle-double-right"></i>
+                                        {{ $commodity->sector->name }}
+                                        <i class="fas fa-angle-double-right"></i>
+                                        {{ $commodity->name }}
+                                    </span><br>
                                 @endforeach
+                                @if(count($tech->agencies) != 0)
+                                <div class="dropdown-divider mt-3"></div>
+                                <b>Technology Owner</b><br>
+                                @foreach($tech->agencies as $agency)
+                                    <span class="ml-3">• {{$agency->name}} </span><br>
+                                @endforeach
+                                @endif
+                                @if(count($tech->generators) != 0)
+                                <div class="dropdown-divider mt-3"></div>
+                                <b>Technology Generator</b><br>
+                                @foreach($tech->generators as $generator)
+                                    <span class="ml-3">• {{$generator->name}} </span><br>
+                                @endforeach
+                                @endif
+                                @if(count($tech->adopters) != 0)
+                                <div class="dropdown-divider mt-3"></div>
+                                <b>Technology Adopters</b><br>
+                                @foreach($tech->adopters as $adopter)
+                                    <span class="ml-3">• {{$adopter->name}} </span><br>
+                                @endforeach
+                                @endif
+                                @if($tech->basic_research_title != null)
+                                <div class="dropdown-divider mt-3"></div>
+                                <b>Basic Research</b><br>
+                                Project Title - {{$tech->basic_research_title}}<br>
+                                Funding Agency - {{$tech->basic_research_funding}}<br>
+                                Implementing Agency - {{$tech->basic_research_implementing}}<br>
+                                Project Cost - {{$tech->basic_research_cost}}<br>
+                                Start date - {{$tech->basic_research_start_date}}<br>
+                                End date - {{$tech->basic_research_end_date}}
+                                <div class="dropdown-divider mt-3"></div>
+                                @endif
+                                @if($tech->applied_research_title != null)
+                                <b>Applied Research</b><br>
+                                Project Title - {{$tech->applied_research_title}}<br>
+                                Funding Agency - {{$tech->applied_research_funding}}<br>
+                                Implementing Agency - {{$tech->applied_research_implementing}}<br>
+                                Project Cost - {{$tech->applied_research_cost}}<br>
+                                Start date - {{$tech->basic_research_start_date}}<br>
+                                End date - {{$tech->basic_research_end_date}}
+                                @endif
                             </div>
                             <div class="modal-footer">
                                 @if(auth()->user()->user_level == 5)
@@ -3509,7 +3554,34 @@
     }
 </style>
 
+@endsection
+
+@section ('scripts')
 <script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        // gets activated tab
+        var target = $(e.target).attr("href");
+        // remove active from all other menu items
+        $(".nav a").removeClass("active");
+        // set active for current menu item
+        $('a[href="' + target + '"]').addClass('active');
+        $('a[href="' + target + '"]').parent('div').addClass('show');
+        $('a[href="' + target + '"]').parent('div').prev().removeClass('collapsed');
+    });
+    $(".list-group-item-action").on('click', function() {
+        $(".list-group-item-action").each(function(index) {
+            $(this).removeClass("active show");
+        });
+    })
+    $(function() {
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            localStorage.setItem('lastTab', $(this).attr('href'));
+        });
+        var lastTab = localStorage.getItem('lastTab');
+        if (lastTab) {
+            $('[href="' + lastTab + '"]').tab('show');
+        }
+    });
     $(document).ready(function(){
         $('body').on('click', '.list-group a', function (e) {
             $(this).addClass('active');

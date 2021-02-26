@@ -21,6 +21,7 @@ use App\UserMessage;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
 use Victorlap\Approvable\Approvable;
+use Illuminate\Support\Facades\Input;
 use Auth;
 use Redirect;
 
@@ -50,6 +51,39 @@ class PagesController extends Controller
             ->withApplicabilityIndustries($applicabilityIndustries)
             ->withHeaderLinks($headerLinks)
             ->withTechCommodities($techCommodities);
+    }
+
+    public function search(){
+        $technologies = Technology::where('approved', '=', '2')->get();
+        $techGrid = Technology::where('approved', '=', '2')->paginate(6);
+        $techCommodities = Technology::where('approved','=', '2')->get();
+        $sectors = Sector::where('approved','=', '2')->get();
+        $carouselItems = CarouselItem::all();
+        $commodities = Commodity::where('approved','=', '2')->get();
+        $industries = Industry::where('approved','=', '2')->get();
+        $headerLinks = HeaderLink::all();
+        $userMessages = UserMessage::all();
+        $applicabilityIndustries = ApplicabilityIndustry::where('approved','=', '2')->get();
+        $query = Input::get ( 'searchForm' );
+        $results = Technology::where('approved', '=', '2')->where('title','LIKE','%'.$query.'%')->paginate(6);
+        if($query != ''){
+            if(count($technologies) > 0)
+                return view('pages.index')
+                    ->withResults($results)
+                    ->withQuery($query)
+                    ->withTechnologies($technologies)
+                    ->withSectors($sectors)
+                    ->withUserMessages($userMessages)
+                    ->withCommodities($commodities)
+                    ->withCarouselItems($carouselItems)
+                    ->withIndustries($industries)
+                    ->withApplicabilityIndustries($applicabilityIndustries)
+                    ->withHeaderLinks($headerLinks)
+                    ->withTechCommodities($techCommodities);
+            else return view ('pages.index')->withMessage('No Technology found. Try to search again !');
+        } else {
+            return Redirect::route('pages.index')->with('error','Please enter a query.');
+        }
     }
 
     public function contactUsPage(){
@@ -172,5 +206,9 @@ class PagesController extends Controller
 
     public function surveyForm(){
         return view('pages.surveyForm');
+    }
+
+    public function industryProfileView($industry_id){
+        return view('pages.industryProfile');
     }
 }

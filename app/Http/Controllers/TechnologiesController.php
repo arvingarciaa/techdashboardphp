@@ -12,7 +12,11 @@ class TechnologiesController extends Controller
     public function addTechnology(Request $request){
         $this->validate($request, array(
             'title' => 'required|max:255',
-            'technology_categories' => 'required'
+            'technology_categories' => 'required',
+            'applicability_location' => 'required',
+            'applicability_industries' => 'required',
+            'commodities' => 'required',
+            'technology_categories' => 'required',
         ));
 
         $tech = new Technology;
@@ -21,7 +25,6 @@ class TechnologiesController extends Controller
         $tech->significance = $request->significance;
         $tech->target_users = $request->target_users;
         $tech->applicability_location = $request->applicability_location;
-        $tech->applicability_industry = $request->applicability_industry;
         $user = auth()->user();
         $tech->user_id = $user->id;
         $tech->save();
@@ -35,6 +38,7 @@ class TechnologiesController extends Controller
         $log->resource = 'Technologies';
         $log->save();
 
+        $tech->applicability_industries()->sync($request->applicability_industries);
         $tech->technology_categories()->sync($request->technology_categories);
         $tech->commodities()->sync($request->commodities);
         return redirect()->back()->with('success','Technology Added. <a href="/admin/tech/'.$tech->id.'/edit">Click this link add more details.</a>'); 
@@ -42,7 +46,12 @@ class TechnologiesController extends Controller
     
     public function editTechnology(Request $request, $tech_id){
         $this->validate($request, array(
-            'title' => 'required|max:255'
+            'title' => 'required|max:255',
+            'technology_categories' => 'required',
+            'applicability_location' => 'required',
+            'applicability_industries' => 'required',
+            'commodities' => 'required',
+            'technology_categories' => 'required',
         ));
         
         $tech = Technology::find($tech_id);
@@ -51,7 +60,6 @@ class TechnologiesController extends Controller
         $tech->significance = $request->significance;
         $tech->target_users = $request->target_users;
         $tech->applicability_location = $request->applicability_location;
-        $tech->applicability_industry = $request->applicability_industry;
         $tech->year_developed = $request->year_developed;
         $tech->commercialization_mode = $request->commercialization_mode;
         $user = auth()->user();
@@ -81,7 +89,8 @@ class TechnologiesController extends Controller
         $tech->applied_research_cost = str_replace( ',', '', $request->applied_research_cost);
         $tech->applied_research_start_date = $request->applied_research_start_date;
         $tech->applied_research_end_date = $request->applied_research_end_date;
-
+        $tech->application_of_technology = $request->application_of_technology;
+        $tech->limitation_of_technology = $request->limitation_of_technology;
         $tech->save();
 
         if($tech->approved != 2 || $user->user_level == 5){
@@ -98,6 +107,8 @@ class TechnologiesController extends Controller
         $log->resource = 'Technologies';
         $log->save();
 
+
+        $tech->applicability_industries()->sync($request->applicability_industries);
         $tech->technology_categories()->sync($request->technology_categories);
         $tech->commodities()->sync($request->commodities);
         $tech->generators()->sync($request->generators);
@@ -155,7 +166,7 @@ class TechnologiesController extends Controller
         return redirect()->back()->with('success','Technology Rejected.');
     }
 
-    public function togglePublishTechnology($tech_id){
+    public function togglePublishTechnology($tech_id, Request $request){
         $tech = Technology::find($tech_id);
         $user = auth()->user();
 
@@ -175,5 +186,56 @@ class TechnologiesController extends Controller
         $approvals = $tech->approvals()->open()->get();
         $approvals->each->accept();
         return redirect()->back()->with('success',$message);
+    }
+
+    public function toggleIsTradeSecret($tech_id, Request $request){
+        $tech = Technology::find($tech_id);
+        $tech->is_trade_secret = $request->input('is_trade_secret');
+        $tech->save();
+
+        $user = auth()->user();
+        $log = new Log;
+        $log->user_id = $user->id;
+        $log->user_name = $user->name;
+        $log->user_level = $user->user_level;
+        $log->action = 'Toggle Trade Secret from'. $tech->title;
+        $log->IP_address = $request->ip();
+        $log->resource = 'Technologies';
+        $log->save();
+
+
+        if($tech->approved != 2 || $user->user_level == 5){
+            $approvals = $tech->approvals()->open()->get();
+            $approvals->each->accept();
+            return redirect()->back()->with('success','Technology Updated.'); 
+        } else {
+            return redirect()->back()->with('success','Technology Update is submitted for approval.'); 
+        }
+
+    }
+
+    public function toggleIsInvention($tech_id, Request $request){
+        $tech = Technology::find($tech_id);
+        $tech->is_invention = $request->input('is_invention');
+        $tech->save();
+
+        $user = auth()->user();
+        $log = new Log;
+        $log->user_id = $user->id;
+        $log->user_name = $user->name;
+        $log->user_level = $user->user_level;
+        $log->action = 'Toggle Invention from'. $tech->title;
+        $log->IP_address = $request->ip();
+        $log->resource = 'Technologies';
+        $log->save();
+
+
+        if($tech->approved != 2 || $user->user_level == 5){
+            $approvals = $tech->approvals()->open()->get();
+            $approvals->each->accept();
+            return redirect()->back()->with('success','Technology Updated.'); 
+        } else {
+            return redirect()->back()->with('success','Technology Update is submitted for approval.'); 
+        }
     }
 }

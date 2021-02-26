@@ -13,6 +13,7 @@ class AgenciesController extends Controller
             'name' => 'required|max:255'
         ));
 
+        $user = auth()->user();
         $agency = new Agency;
         $agency->name = $request->name;
         $agency->region = $request->region;

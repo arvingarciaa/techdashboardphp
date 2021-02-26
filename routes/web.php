@@ -20,6 +20,8 @@ Route::get('/contactUs', 'PagesController@contactUsPage')->name('pages.contactUs
 Route::post('admin/fetchDependent', 'PagesController@fetchDependent')->name('fetchDependent');
 Route::get('/{id}/printTechPDF', 'PagesController@printTechPDF')->name('printTechPDF');
 Route::get('/surveyForm', 'PagesController@surveyForm')->name('pages.surveyForm');
+Route::get('/search', 'PagesController@search')->name('search');
+Route::get('aanr-industry-profile/{id}', 'PagesController@industryProfileView')->name('industryProfileView');
 
 //Landing Page
 Route::get('/admin/updateLandingPageItems', 'LandingPageController@updateLandingPageItems')->name('pages.updateLandingPageItems');
@@ -110,7 +112,9 @@ Route::post('admin/{id}/editTechnology', 'TechnologiesController@editTechnology'
 Route::delete('admin/{id}/deleteTechnology', 'TechnologiesController@deleteTechnology')->name('deleteTechnology');
 Route::post('admin/{id}/approveTechnology', 'TechnologiesController@approveTechnology')->name('approveTechnology');
 Route::post('admin/{id}/rejectTechnology', 'TechnologiesController@rejectTechnology')->name('rejectTechnology');
-Route::post('admin/{id}/togglePublishTechnology', 'TechnologiesController@togglePublishTechnology')->name('togglePublishTechnology');
+Route::post('admin/{id}/togglePublishTechnology', 'TechnologiesController@togglePublishTechnology')->name('togglePublishTechnology');   
+Route::post('admin/{id}/toggleIsTradeSecret', 'TechnologiesController@toggleIsTradeSecret')->name('toggleIsTradeSecret');
+Route::post('admin/{id}/toggleIsInvention', 'TechnologiesController@toggleIsInvention')->name('toggleIsInvention');
 
 
 //Patents

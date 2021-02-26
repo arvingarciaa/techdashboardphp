@@ -21,7 +21,7 @@ class CreateTechnologiesTable extends Migration
             $table->text('significance')->nullable();
             $table->text('target_users')->nullable();
             $table->text('applicability_location')->nullable();
-            $table->text('applicability_industry')->nullable();
+            $table->unsignedBigInteger('applicability_industry_id')->nullable();
             $table->text('commercialization_mode')->nullable();
             $table->year('year_developed')->nullable();
             $table->integer('is_trade_secret')->default(0);

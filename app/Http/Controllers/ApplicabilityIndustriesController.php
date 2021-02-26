@@ -67,6 +67,7 @@ class ApplicabilityIndustriesController extends Controller
         $appIndustry->technologies()->detach();
         $appIndustry->delete();
 
+
         $user = auth()->user();
         $log = new Log;
         $log->user_id = $user->id;

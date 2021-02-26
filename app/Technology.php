@@ -49,7 +49,7 @@ class Technology extends Model
     }
 
     public function applicability_industries(){
-        return $this->belongsTo('App\ApplicabilityIndustry');
+        return $this->belongsToMany('App\ApplicabilityIndustry');
     }
 
     public function commodities(){

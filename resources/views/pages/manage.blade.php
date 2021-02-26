@@ -254,7 +254,8 @@
                                                     <input type="hidden" name="landing_page_item_technology_commodity_view" value="0"/>
                                                     <input name="landing_page_item_technology_commodity_view" type="checkbox" value="1" {{App\LandingPage::find(1)->landing_page_item_technology_commodity_view == 1 ? 'checked' : ''}}>
                                                     <i></i>
-                                                </label>
+                                                </label>Trying to access array offset on value of type bool
+
                                             </td>
                                         </tr>
                                         <tr>

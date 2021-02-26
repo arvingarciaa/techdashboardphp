@@ -9,6 +9,6 @@ class ApplicabilityIndustry extends Model
 {
     use Approvable;
     public function technologies(){
-        return $this->hasMany('App\Technology');
+        return $this->belongsToMany('App\Technology');
     }
 }

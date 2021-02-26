@@ -65,32 +65,45 @@
                 </div>
                 <div style="">
                     <small style="color: #6c757d !important;">
+                        @if($tech->applicability_location != null)
                         Technology Applicability Location -  {{$tech->applicability_location}} <br>
-                        Technology Applicability Industry - {{App\ApplicabilityIndustry::where('id', '=', $tech->applicability_industry)->find(1)->name}}
+                        @endif
+                        @if($tech->applicability_industry != null)
+                        Technology Applicability Industry - {{App\ApplicabilityIndustry::find($tech->applicability_industry)->name}}
+                        @endif
                     </small>
                     <br>
+                    @if(count($tech->commodities) != null)
                     @foreach($tech->commodities as $commodity)
                             {{ $commodity->sector->name }} >
                             {{ $commodity->name }}<br>
                     @endforeach
+                    @endif
+                    @if($tech->description != null)
                     <div style="margin-top: 1rem !important;    height: 0;
         margin: 0.5rem 0;
         overflow: hidden;
         border-top: 1px solid #e9ecef;"></div>
                     <b>Description</b><br>
                     <span>{{$tech->description}}</span>
+                    @endif
+                    @if($tech->significance != null)
                     <div style="margin-top: 1rem !important;    height: 0;
         margin: 0.5rem 0;
         overflow: hidden;
         border-top: 1px solid #e9ecef;"></div>
                     <b>Significance</b><br>
                     <span>{{$tech->significance}}</span>
+                    @endif
+                    @if($tech->target_users != null)
                     <div style="margin-top: 1rem !important;    height: 0;
         margin: 0.5rem 0;
         overflow: hidden;
         border-top: 1px solid #e9ecef;"></div>
                     <b>Target Users</b><br>
                     <span>{{$tech->target_users}}</span>
+                    @endif
+                    @if(count($tech->commodities) != null)
                     <div style="margin-top: 1rem !important;    height: 0;
         margin: 0.5rem 0;
         overflow: hidden;
@@ -99,6 +112,8 @@
                     @foreach($tech->commodities as $commodity)
                         <span class="ml-3">• {{$commodity->name}} </span><br>
                     @endforeach
+                    @endif
+                    @if(count($tech->agencies) != null)
                     <div style="margin-top: 1rem !important;    height: 0;
         margin: 0.5rem 0;
         overflow: hidden;
@@ -107,6 +122,8 @@
                     @foreach($tech->agencies as $agency)
                         <span class="ml-3">• {{$agency->name}} </span><br>
                     @endforeach
+                    @endif
+                    @if(count($tech->generators) != null)
                     <div style="margin-top: 1rem !important;    height: 0;
         margin: 0.5rem 0;
         overflow: hidden;
@@ -115,6 +132,8 @@
                     @foreach($tech->generators as $generator)
                         <span class="ml-3">• {{$generator->name}} </span><br>
                     @endforeach
+                    @endif
+                    @if(count($tech->adopters) != null)
                     <div style="margin-top: 1rem !important;    height: 0;
         margin: 0.5rem 0;
         overflow: hidden;
@@ -123,6 +142,8 @@
                     @foreach($tech->adopters as $adopter)
                         <span class="ml-3">• {{$adopter->name}} </span><br>
                     @endforeach
+                    @endif
+                    @if($tech->basic_research_title != null)
                     <div style="margin-top: 1rem !important;    height: 0;
         margin: 0.5rem 0;
         overflow: hidden;
@@ -133,6 +154,8 @@
                     Implementing Agency - {{$tech->basic_research_implementing}}<br>
                     Project Cost - {{$tech->basic_research_cost}}<br>
                     Start to end - {{$tech->basic_research_start_date}} - {{$tech->basic_research_end_date}}
+                    @endif
+                    @if($tech->applied_research_title != null)
                     <div style="margin-top: 1rem !important;    height: 0;
         margin: 0.5rem 0;
         overflow: hidden;
@@ -143,6 +166,7 @@
                     Implementing Agency - {{$tech->applied_research_implementing}}<br>
                     Project Cost - {{$tech->applied_research_cost}}<br>
                     Start to end - {{$tech->applied_research_start_date}} - {{$tech->applied_research_end_date}}
+                    @endif
                 </div>
             </div>
         </div>

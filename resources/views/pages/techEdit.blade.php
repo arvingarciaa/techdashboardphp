@@ -21,22 +21,6 @@
                     border: 0px;
                 }
             </style>
-            <script>
-                $('.list-group-item').on('shown.bs.tab', 'a', function (e) {
-                    if (e.relatedTarget) {
-                        $(e.relatedTarget).removeClass('active');
-                    }
-                })
-                $(function() {
-                    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                        localStorage.setItem('lastTab', $(this).attr('href'));
-                    });
-                    var lastTab = localStorage.getItem('lastTab');
-                    if (lastTab) {
-                        $('[href="' + lastTab + '"]').tab('show');
-                    }
-                });
-            </script>
         </div>
         <div class="col-sm-10 pb-4">
             <div class="m-3">
@@ -143,7 +127,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             {{Form::label('applicability_industry', 'Technology Applicability - Industry', ['class' => 'col-form-label'])}}
-                                            {{Form::select('applicability_industry', $applicabilityIndustries, $tech->applicability_industry,['class' => 'form-control', 'placeholder' => '------------']) }}
+                                            {{Form::select('applicability_industries[]', $applicabilityIndustries, null,['class' => 'form-control multi-applicability-industry', 'multiple' => 'multiple']) }}
                                         </div>
                                         <div class="col-sm-2">
                                             {{Form::label('year_developed', 'Year Developed', ['class' => 'col-form-label'])}}
@@ -205,9 +189,8 @@
                                             <table class="table table-bordered table-striped shadow-sm mb-5" id="user_table" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th width="20%">Application Number</th>
-                                                        <th width="45%">Type of Protection</th>
-                                                        <th width="20%">Status</th>
+                                                        <th width="55%">Type of Protection</th>
+                                                        <th width="30%">Status</th>
                                                         <th width="15%">Actions</th>
                                                     </tr>
                                                 </thead>
@@ -215,14 +198,30 @@
                                                         <tr>
                                                             <td><span class="text-muted">-</span></td>
                                                             <td><span class="text-muted">-</span></td>
-                                                            <td><span class="text-muted">-</span></td>
                                                             <td class="text-center">
                                                                 <button type="button" class="btn btn-success px-3 py-1" data-toggle="modal" data-target="#addProtectionModal"><i class="fas fa-plus"></i></button>
                                                             </td>
                                                         </tr>
+                                                    @if($tech->is_trade_secret == 1)
+                                                        <tr>
+                                                            <td>Trade Secret</td>
+                                                            <td>-------</td>
+                                                            <td class="text-center">
+                                                                <button type="button" class="btn btn-primary pl-1 pr-1 pt-0 pb-0" data-toggle="modal" data-target="#editIsTradeSecretModal"><i class="fas fa-edit"></i></button>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                    @if($tech->is_invention == 1)
+                                                        <tr>
+                                                            <td>Invention</td>
+                                                            <td>-------</td>
+                                                            <td class="text-center">
+                                                                <button type="button" class="btn btn-primary pl-1 pr-1 pt-0 pb-0" data-toggle="modal" data-target="#editIsInventionModal"><i class="fas fa-edit"></i></button>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
                                                     @foreach($tech->patents as $patent)
                                                         <tr>
-                                                            <td>{!! nl2br(e($patent->application_number)) !!}</td>
                                                             <td>Patent</td>
                                                             <td>{{$patent->status}}</td>
                                                             <td class="text-center">
@@ -233,7 +232,6 @@
                                                     @endforeach
                                                     @foreach($tech->trademarks as $trademark)
                                                         <tr>
-                                                            <td>{!! nl2br(e($trademark->application_number)) !!}</td>
                                                             <td>Trademark</td>
                                                             <td>{{$trademark->status}}</td>
                                                             <td class="text-center">
@@ -244,7 +242,6 @@
                                                     @endforeach
                                                     @foreach($tech->utility_models as $utility_model)
                                                         <tr>
-                                                            <td>{!! nl2br(e($utility_model->application_number)) !!}</td>
                                                             <td>Utility Model</td>
                                                             <td>{{$utility_model->status}}</td>
                                                             <td class="text-center">
@@ -255,7 +252,6 @@
                                                     @endforeach
                                                     @foreach($tech->industrial_designs as $industrial_design)
                                                         <tr>
-                                                            <td>{!! nl2br(e($industrial_design->application_number)) !!}</td>
                                                             <td>Industrial Design</td>
                                                             <td>{{$industrial_design->status}}</td>
                                                             <td class="text-center">
@@ -266,7 +262,6 @@
                                                     @endforeach
                                                     @foreach($tech->copyrights as $copyright)
                                                         <tr>
-                                                            <td>-------</td>
                                                             <td>Copyright</td>
                                                             <td>-------</td>
                                                             <td class="text-center">
@@ -277,7 +272,6 @@
                                                     @endforeach
                                                     @foreach($tech->plant_variety_protections as $plant_variety_protection)
                                                         <tr>
-                                                            <td>{!! nl2br(e($plant_variety_protection->certificate_number)) !!}</td>
                                                             <td>Plant Variety Protection</td>
                                                             <td>-------</td>
                                                             <td class="text-center">
@@ -649,20 +643,6 @@
                             {{Form::submit('Save changes', ['class' => 'btn btn-success float-right'])}}
                             {{ Form::close() }}
                         </div>
-                        <script>
-                            var value;
-                            $(function() {
-                                $('#protection_type_select').change(function(){
-                                    var e = document.getElementById("protection_type_select");
-                                    var value = e.options[e.selectedIndex].value;
-                                    $('.ip_protection_choice').hide();
-                                    $('.ip_protection_choice').find('input:text').val('');
-                                    $('#protection_type_form_'+value).show();
-                                    $('#trade_secret').prop('checked', false);
-                                });
-                            });
-                            
-                        </script>
                     </div>
                 </div>
             </div>
@@ -693,14 +673,15 @@
                     </div>
                     <div class="ip_protection_choice" id="protection_type_form_1">
                         <div class="card">
-                            {{ Form::open(['action' => 'PatentsController@addPatent', 'method' => 'POST']) }}
+                            {{ Form::open(['action' => ['TechnologiesController@toggleIsTradeSecret', $tech->id], 'method' => 'POST']) }}
                             <div class="card-header">
                                 <b>Trade Secret</b>
                             </div>
                             <div class="card-body">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="trade_secret" name="trade_secret">
-                                    <label class="form-check-label" for="trade_secret">
+                                    <input type="hidden" name="is_trade_secret" value="0"/>
+                                    <input class="form-check-input" type="checkbox" id="is_trade_secret" value="1" {{$tech->is_trade_secret == 1 ? 'checked' : ''}} name="is_trade_secret">
+                                    <label class="form-check-label" for="is_trade_secret">
                                         Is Trade Secret?
                                     </label>
                                 </div>
@@ -714,14 +695,14 @@
                     </div>
                     <div class="ip_protection_choice" id="protection_type_form_2" style="display:none">
                         <div class="card">
-                            {{ Form::open(['action' => 'PatentsController@addPatent', 'method' => 'POST']) }}
+                            {{ Form::open(['action' => ['TechnologiesController@toggleIsInvention', $tech->id], 'method' => 'POST']) }}
                             <div class="card-header">
                                 <b>Invention</b>
                             </div>
                             <div class="card-body">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="trade_secret" name="trade_secret">
-                                    <label class="form-check-label" for="trade_secret">
+                                    <input type="hidden" name="is_invention" value="0"/>
+                                    <input class="form-check-input" type="checkbox" id="is_invention" value="1" {{$tech->is_invention == 1 ? 'checked' : ''}} name="is_invention">
                                         Is Invention?
                                     </label>
                                 </div>
@@ -837,7 +818,7 @@
                                     {{Form::text('registration_number', '', ['class' => 'form-control'])}}
                                 </div>
                                 <div class="form-group">
-                                    {{Form::label('registration_date', 'Date of Filing', ['class' => 'col-form-label'])}}
+                                    {{Form::label('registration_date', 'Registration Date', ['class' => 'col-form-label'])}}
                                     {{ Form::date('registration_date', null,['class' => 'form-control']) }}
                                 </div>
                                 <div class="form-group">
@@ -879,7 +860,7 @@
                                     {{Form::text('registration_number', '', ['class' => 'form-control'])}}
                                 </div>
                                 <div class="form-group">
-                                    {{Form::label('registration_date', 'Date of Filing', ['class' => 'col-form-label'])}}
+                                    {{Form::label('registration_date', 'Registration Date', ['class' => 'col-form-label'])}}
                                     {{ Form::date('registration_date', null,['class' => 'form-control']) }}
                                 </div>
                                 <div class="form-group">
@@ -1002,6 +983,71 @@
         </div>
     </div>
 <!-- END modal for add Protection -->
+
+<!-- Modal for toggle Is Trade Secret and Is Invention -->
+    <div class="modal fade" id="editIsTradeSecretModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">Toggle Is Trade Secret</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        {{ Form::open(['action' => ['TechnologiesController@toggleIsTradeSecret', $tech->id], 'method' => 'POST']) }}
+                        <div class="card-header">
+                            <b>Trade Secret</b>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input type="hidden" name="is_trade_secret" value="0"/>
+                                <input class="form-check-input" type="checkbox" id="is_trade_secret" value="1" {{$tech->is_trade_secret == 1 ? 'checked' : ''}} name="is_trade_secret">
+                                <label class="form-check-label" for="is_trade_secret">
+                                    Is Trade Secret?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right mt-3">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        {{Form::submit('Add Protection', ['class' => 'btn btn-success'])}}
+                        {{Form::close()}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editIsInventionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">Toggle Is Invention</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="card">
+                        {{ Form::open(['action' => ['TechnologiesController@toggleIsInvention', $tech->id], 'method' => 'POST']) }}
+                        <div class="card-header">
+                            <b>Invention</b>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check">
+                                <input type="hidden" name="is_invention" value="0"/>
+                                <input class="form-check-input" type="checkbox" id="is_invention" value="1" {{$tech->is_invention == 1 ? 'checked' : ''}} name="is_invention">
+                                    Is Invention?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right mt-3">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        {{Form::submit('Add Protection', ['class' => 'btn btn-success'])}}
+                        {{Form::close()}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- END Modal for toggle Is Trade Secret and Is Invention -->
 
 @foreach($tech->patents as $patent)
     <!-- Modal for edit Patents -->
@@ -1130,6 +1176,7 @@
                             </div>
                         </div>
                     </div>
+                    {{ Form::hidden('tech_id', $tech->id)}}
                     <div class="text-right mt-3">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         {{Form::submit('Save Changes', ['class' => 'btn btn-success'])}}
@@ -1198,7 +1245,7 @@
                                 {{Form::text('registration_number', $trademark->registration_number, ['class' => 'form-control'])}}
                             </div>
                             <div class="form-group">
-                                {{Form::label('registration_date', 'Date of Filing', ['class' => 'col-form-label'])}}
+                                {{Form::label('registration_date', 'Registration Date', ['class' => 'col-form-label'])}}
                                 {{ Form::date('registration_date', $trademark->registration_date,['class' => 'form-control']) }}
                             </div>
                             <div class="form-group">
@@ -1207,16 +1254,24 @@
                             </div>
                             <div class="form-group">
                                 {{Form::label('status', 'Status of Trademark', ['class' => 'col-form-label'])}}
-                                {{Form::select('status', ['Published' => 'Published', 
-                                                                        'Unpublished' => 'Unpublished', 
-                                                                        'Granted' => 'Granted', 
-                                                                        'Withdrawn' => 'Withdrawn', 
-                                                                        'Pending' => 'Pending', 
-                                                                        'Expired' => 'Expired'
-                                                                        ], $trademark->status,['class' => 'form-control', 'placeholder' => '------------']) }}
+                                {{Form::select('status', [
+                                                        'Registered' => 'Registered',
+                                                        'Pending' => 'Pending', 
+                                                        'For Validation' => 'For Validation',
+                                                        'Appeal Pending' => 'Appeal Pending',
+                                                        'Cancelled' => 'Cancelled',
+                                                        'Abandoned with finality' => 'Abandoned with finality',
+                                                        'Removed from register for non-use' => 'Removed from register for non-use',
+                                                        'Refused with finality' => 'Refused with finality',
+                                                        'Voluntarily abandoned' => 'Voluntarily abandoned',
+                                                        'Voluntarily canceled' => 'Voluntarily canceled',
+                                                        'Withdrawn' => 'Withdrawn', 
+                                                        'Expired' => 'Expired'
+                                                        ], $trademark->status,['class' => 'form-control', 'placeholder' => '------------']) }}
                             </div>
                         </div>
                     </div>
+                    {{ Form::hidden('tech_id', $tech->id)}}
                     <div class="text-right mt-3">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         {{Form::submit('Save Changes', ['class' => 'btn btn-success'])}}
@@ -1285,7 +1340,7 @@
                                 {{Form::text('registration_number', $industrial_design->registration_number, ['class' => 'form-control'])}}
                             </div>
                             <div class="form-group">
-                                {{Form::label('registration_date', 'Date of Filing', ['class' => 'col-form-label'])}}
+                                {{Form::label('registration_date', 'Registration Date', ['class' => 'col-form-label'])}}
                                 {{ Form::date('registration_date', $industrial_design->registration_date,['class' => 'form-control']) }}
                             </div>
                             <div class="form-group">
@@ -1300,6 +1355,7 @@
                             </div>
                         </div>
                     </div>
+                    {{ Form::hidden('tech_id', $tech->id)}}
                     <div class="text-right mt-3">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         {{Form::submit('Save Changes', ['class' => 'btn btn-success'])}}
@@ -1385,6 +1441,7 @@
                             </div>
                         </div>
                     </div>
+                    {{ Form::hidden('tech_id', $tech->id)}}
                     <div class="text-right mt-3">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         {{Form::submit('Save Changes', ['class' => 'btn btn-success'])}}
@@ -1474,6 +1531,7 @@
                             </div>
                         </div>
                     </div>
+                    {{ Form::hidden('tech_id', $tech->id)}}
                     <div class="text-right mt-3">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                         {{Form::submit('Save Changes', ['class' => 'btn btn-success'])}}
@@ -1557,9 +1615,9 @@
                             <div class="col-sm-4">
                                 {{Form::label('cost', 'Project Cost (PHP)', ['class' => 'col-form-label'])}}
                                 <div class="input-group">
-                                        <div class="input-group-prepend">
-                                <div class="input-group-text">₱</div>
-                                </div>
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">₱</div>
+                                    </div>
                                     {{Form::text('cost', '', ['class' => 'form-control', 'placeholder' => 'Add cost', 'aria-describedby' => 'passwordHelpBlock'])}}
                                 </div>
                                 <small id="passwordHelpBlock" class="form-text text-muted">
@@ -1805,15 +1863,6 @@
             </div>
         </div>
     </div>
-    <script>
-        $('#uploadFileModal').on('show.bs.modal', function (event) {
-                var button     = $(event.relatedTarget),
-                    modal    = $(this),
-                    category       = button.data('category');
-
-                modal.find("#addFileCategory").val(category);
-            });
-    </script>
     <!-- END modal for upload file-->
     @foreach($tech->files as $file)
     <!-- Modal for confirm delete file -->
@@ -1845,7 +1894,27 @@
     <!-- end modal for confirm delete file-->
 @endforeach
 
+@endsection
+@section('scripts')
 <script>
+    var value;
+    $(function() {
+        $('#protection_type_select').change(function(){
+            var e = document.getElementById("protection_type_select");
+            var value = e.options[e.selectedIndex].value;
+            $('.ip_protection_choice').hide();
+            $('.ip_protection_choice').find('input:text').val('');
+            $('#protection_type_form_'+value).show();
+            $('#trade_secret').prop('checked', false);
+        });
+    });
+
+    $('#uploadFileModal').on('show.bs.modal', function (event) {
+        var button     = $(event.relatedTarget),
+            modal    = $(this),
+            category       = button.data('category');
+        modal.find("#addFileCategory").val(category);
+    });
     $(document).ready(function(){
         $('.multi-commodity').select2({
             placeholder: "Select commodity",
@@ -1853,6 +1922,9 @@
         $('.multi-category').select2({
             placeholder: "Select category",
         }).val({!! json_encode($tech->technology_categories()->allRelatedIds()) !!}).trigger('change');
+        $('.multi-applicability-industry').select2({
+            placeholder: "Select Applicability Industry",
+        }).val({!! json_encode($tech->applicability_industries()->allRelatedIds()) !!}).trigger('change');
         $('.multi-agency').select2({
             placeholder: "Select agency",
         }).val({!! json_encode($tech->agencies()->allRelatedIds()) !!}).trigger('change');

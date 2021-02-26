@@ -21,22 +21,6 @@
                     border: 0px;
                 }
             </style>
-            <script>
-                $('.list-group-item').on('shown.bs.tab', 'a', function (e) {
-                    if (e.relatedTarget) {
-                        $(e.relatedTarget).removeClass('active');
-                    }
-                })
-                $(function() {
-                    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                        localStorage.setItem('lastTab', $(this).attr('href'));
-                    });
-                    var lastTab = localStorage.getItem('lastTab');
-                    if (lastTab) {
-                        $('[href="' + lastTab + '"]').tab('show');
-                    }
-                });
-            </script>
         </div>
         <div class="col-sm-10 pb-4">
             @include('inc.messages')
@@ -111,7 +95,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             {{Form::label('applicability_industry', 'Technology Applicability - Industry', ['class' => 'col-form-label'])}}
-                                            {{Form::select('applicability_industry', $applicabilityIndustries, null,['class' => 'form-control', 'placeholder' => '------------']) }}
+                                            {{Form::select('applicability_industries[]', $applicabilityIndustries, null,['class' => 'form-control multi-applicability-industry', 'multiple' => 'multiple']) }}
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -323,11 +307,29 @@
         </div>
     </div>
 </div>
-
+@endsection
+@section ('scripts')
 <script>
+    $('.list-group-item').on('shown.bs.tab', 'a', function (e) {
+        if (e.relatedTarget) {
+            $(e.relatedTarget).removeClass('active');
+        }
+    })
+    $(function() {
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            localStorage.setItem('lastTab', $(this).attr('href'));
+        });
+        var lastTab = localStorage.getItem('lastTab');
+        if (lastTab) {
+            $('[href="' + lastTab + '"]').tab('show');
+        }
+    });
     $(document).ready(function(){
         $('.multi-commodity').select2({
             placeholder: " Select commodity"
+        });
+        $('.multi-applicability-industry').select2({
+            placeholder: " Select Applicability Industry",
         });
         $('.multi-category').select2({
             placeholder: " Select category"
