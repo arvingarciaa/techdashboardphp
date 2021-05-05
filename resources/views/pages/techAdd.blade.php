@@ -335,7 +335,7 @@
             placeholder: " Select category"
         });
         $('.multi-tech-category').select2({
-            placeholder: "Select tech category"
+            placeholder: " Select tech category"
         });
         $('body').on('click', '.list-group a', function (e) {
             $(this).addClass('active');
