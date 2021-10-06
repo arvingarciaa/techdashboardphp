@@ -101,9 +101,9 @@
                                 <table class="table table-bordered table-striped shadow-sm mb-5" id="user_table" width="100%">
                                     <thead>
                                         <tr>
-                                            <th width="5%">Position</th>
-                                            <th width="40%">Name</th>
-                                            <th width="40%">Link</th>
+                                            <th width="45%">Name</th>
+                                            <th width="15%">Position</th>
+                                            <th width="25%">Link</th>
                                             <th width="15%">Actions</th>
                                         </tr>
                                     </thead>
@@ -118,9 +118,9 @@
                                         </tr>
                                         @foreach($headerLinks as $header_link)
                                             <tr>
-                                                <td width="5%">{{$header_link->position}}</td>
-                                                <td width="40%">{{$header_link->name}}</td>
-                                                <td width="40%">{{$header_link->link}}</td>
+                                                <td width="45%">{{$header_link->name}}</td>
+                                                <td width="15%">{{$header_link->position}}</td>
+                                                <td width="25%">{{$header_link->link}}</td>
                                                 <td width="15%" class="text-center">
                                                     <button type="button" class="btn btn-primary pl-1 pr-1 pt-0 pb-0" data-toggle="modal" data-target="#editHeaderLinkModal-{{$header_link->id}}"><i class="fas fa-edit"></i></button>
                                                     <button type="button" class="btn btn-danger pl-1 pr-1 pt-0 pb-0" data-toggle="modal" data-target="#deleteHeaderLinkModal-{{$header_link->id}}"><i class="fas fa-minus"></i></button>
@@ -275,6 +275,7 @@
     </div>
 </div>
 
+
 <!-- BANNERS -->
     <!-- Modal for add new banner for carousel -->
         <div class="modal fade" id="addCarouselItem" tabindex="-1" role="dialog" aria-labelledby="imageLabel" aria-hidden="true" style="z-index:9999">
@@ -401,11 +402,15 @@
                     <div class="form-group">
                         <div class="form-group">
                             {{Form::label('name', 'Name', ['class' => 'col-form-label'])}}
-                            {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Add a name for the link'])}}
+                            {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Add a name'])}}
                         </div>
                         <div class="form-group">
-                            {{Form::label('link', 'Button Link', ['class' => 'col-form-label'])}}
-                            {{Form::text('link', '', ['class' => 'form-control',  'placeholder' => 'Add link for button redirect'])}}
+                            {{Form::label('link', 'Link to header', ['class' => 'col-form-label'])}}
+                            {{Form::text('link', '', ['class' => 'form-control', 'placeholder' => 'Add a link'])}}
+                        </div>
+                        <div class="form-group">
+                            {{Form::label('position', 'Position weight (lowest to highest, from left to right)', ['class' => 'col-form-label'])}}
+                            {{Form::text('position', '', ['class' => 'form-control', 'placeholder' => 'Add a number'])}}
                         </div>
                     </div>
                 </div>
@@ -418,6 +423,69 @@
         </div>
     </div>
 <!-- END modal header link -->
+
+@foreach($headerLinks as $header)
+<!-- Modal for EDIT header link -->
+    <div class="modal fade" id="editHeaderLinkModal-{{$header->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-l" role="document">
+            <div class="modal-content">
+                {{ Form::open(['action' => ['HeaderLinksController@editHeaderLink', $header->id], 'method' => 'POST']) }}
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">Edit Header Links</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        {{Form::label('name', 'Name', ['class' => 'col-form-label'])}}
+                        {{Form::text('name', $header->name, ['class' => 'form-control', 'placeholder' => 'Add a name'])}}
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('link', 'Link to header', ['class' => 'col-form-label'])}}
+                        {{Form::text('link', $header->link, ['class' => 'form-control', 'placeholder' => 'Add a link'])}}
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('position', 'Position weight (lowest to highest, from left to right)', ['class' => 'col-form-label'])}}
+                        {{Form::text('position', $header->position, ['class' => 'form-control', 'placeholder' => 'Add a number'])}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    {{Form::submit('Save Changes', ['class' => 'btn btn-success'])}}
+                </div>
+                {{Form::close()}}
+            </div>
+        </div>
+    </div>
+
+<!-- Modal for DELETE header link -->
+    <div class="modal fade" id="deleteHeaderLinkModal-{{$header->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="{{ route('carousel.deleteHeaderLink', $header->id)}}" method="POST">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">Confirm Delete</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {{ csrf_field() }}
+                    <span>
+                        Are you sure you want to delete: <b>{{$header->name}}</b>?</br></br>
+                    </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                    <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endforeach
+<!-- END of Header Links Modals -->
 
 <style>
     .landing-page-center{

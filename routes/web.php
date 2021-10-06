@@ -160,6 +160,7 @@ Route::post('admin/manageLandingPage/{id}/editCarouselItem', ['uses' => 'Carouse
 //Header Links
 Route::post('admin/manageLandingPage/addHeaderLink', ['uses' => 'HeaderLinksController@addHeaderLink', 'as' => 'carousel.addHeaderLink']);
 Route::post('admin/manageLandingPage/{id}/editHeaderLink', ['uses' => 'HeaderLinksController@editHeaderLink', 'as' => 'carousel.editHeaderLink']);
+Route::post('admin/manageLandingPage/{id}/deleteHeaderLink', ['uses' => 'HeaderLinksController@deleteHeaderLink', 'as' => 'carousel.deleteHeaderLink']);
 
 //Logs
 Route::post('admin/addLog', 'LogsController@addLog')->name('addLog');

@@ -14,21 +14,11 @@
     
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto upper-nav">
-                <li class="nav-item">
-                    <a class="nav-links" href="http://aanr.ph">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-links" href="http://167.71.210.45/">FIESTA</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-links active" href="http://139.59.255.31:8081/">Technology</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-links" href="http://167.71.210.45:8080">Community</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-links" href="https://elibrary.pcaarrd.dost.gov.ph/slims/Main">eLib</a>
-                </li>
+                @foreach(App\HeaderLink::all()->sortBy('position') as $header_link)
+                    <li class="nav-item">
+                        <a class="nav-links" href="{{$header_link->link}}">{{$header_link->name}}</a>
+                    </li>
+                @endforeach
                 @guest
                 <li class="nav-item">
                     <a class="nav-links active" href="{{ route('login') }}">{{ __('LOGIN') }}</a>

@@ -451,25 +451,27 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach(App\ApplicabilityIndustry::where('approved', '=', '1')->get() as $applicabilityIndustryPending)
-                                        <tr>
-                                            <?php $industryUser = App\User::where('id', '=', $applicabilityIndustryPending->user_id)->get()->pluck('name')?>
-                                            <td>{{ $industryUser->first() }}</td>
-                                            <td>{{ $applicabilityIndustryPending->id }}</td>
-                                            <td>{{ Carbon\Carbon::parse($applicabilityIndustryPending->created_at)->format('M d,Y g:i:s A') }}</td>
-                                            <td>{{ $applicabilityIndustryPending->name }}</td>
-                                            <td style="text-align:center">
-                                                {{ Form::open(['action' => ['ApplicabilityIndustriesController@approveApplicabilityIndustry', $applicabilityIndustryPending->id], 'method' => 'POST', 'style="display:inline"']) }}
-                                                    <button class="btn btn-success px-1 py-1" style="font-weight:800">Accept</button> 
-                                                {{ Form::close() }}
-                                                {{ Form::open(['action' => ['ApplicabilityIndustriesController@rejectApplicabilityIndustry', $applicabilityIndustryPending->id], 'method' => 'POST', 'style="display:inline"']) }}
-                                                    <button class="btn btn-danger px-1 py-1" style="font-weight:800">Reject</button> 
-                                                {{ Form::close() }}
-                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editApplicabilityIndustryModal-{{$applicabilityIndustryPending->id}}"><i class="fas fa-edit"></i></button>
+                                    @if(App\ApplicabilityIndustry::where('approved', '=', '1')->count() != 0)
+                                        @foreach(App\ApplicabilityIndustry::where('approved', '=', '1')->get() as $applicabilityIndustryPending)
+                                            <tr>
+                                                <?php $industryUser = App\User::where('id', '=', $applicabilityIndustryPending->user_id)->get()->pluck('name')?>
+                                                <td>{{ $industryUser->first() }}</td>
+                                                <td>{{ $applicabilityIndustryPending->id }}</td>
+                                                <td>{{ Carbon\Carbon::parse($applicabilityIndustryPending->created_at)->format('M d,Y g:i:s A') }}</td>
+                                                <td>{{ $applicabilityIndustryPending->name }}</td>
+                                                <td style="text-align:center">
+                                                    {{ Form::open(['action' => ['ApplicabilityIndustriesController@approveApplicabilityIndustry', $applicabilityIndustryPending->id], 'method' => 'POST', 'style="display:inline"']) }}
+                                                        <button class="btn btn-success px-1 py-1" style="font-weight:800">Accept</button> 
+                                                    {{ Form::close() }}
+                                                    {{ Form::open(['action' => ['ApplicabilityIndustriesController@rejectApplicabilityIndustry', $applicabilityIndustryPending->id], 'method' => 'POST', 'style="display:inline"']) }}
+                                                        <button class="btn btn-danger px-1 py-1" style="font-weight:800">Reject</button> 
+                                                    {{ Form::close() }}
+                                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editApplicabilityIndustryModal-{{$applicabilityIndustryPending->id}}"><i class="fas fa-edit"></i></button>
                                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteApplicabilityIndustryModal-{{$applicabilityIndustryPending->id}}"><i class="fas fa-trash"></i></button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                     @foreach(Victorlap\Approvable\Approval::ofClass(App\ApplicabilityIndustry::class)->open()->get() as $applicabilityIndustryApprovals)
                                         <tr>
                                             <?php $industryUser = App\User::where('id', '=', $applicabilityIndustryApprovals->user_id)->get()->pluck('name')?>
