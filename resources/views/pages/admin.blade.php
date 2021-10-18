@@ -2483,13 +2483,13 @@
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <span>
-                                <?php $techApp = App\ApplicabilityIndustry::with('technologies')->find($applicabilityIndustry->id)->get(); ?>
-                                @if($techApp->where('approved','=','2')->count() > 0)
+                                <?php $techApp = DB::table('applicability_industry_technology')->where('applicability_industry_id', '=',$applicabilityIndustry->id)->get(); ?>
+                                @if($techApp->count() > 0)
                                     You cannot delete: <b>{{$applicabilityIndustry->name}}</b></br></br>
                                     The following technologies are still using this Technology Applicability - Industry:
                                     <ul>
-                                        @foreach($techApp->where('approved','=','2') as $tech)
-                                            <li>{{$tech->title}}</li>
+                                        @foreach($techApp as $techID)
+                                            <li>{{$tech->find($techID->technology_id)->title}}</li>
                                         @endforeach
                                     </ul>
                                 @else
@@ -2500,7 +2500,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                            @if($techApp->where('approved','=','2')->count() == 0)
+                            @if($techApp->count() == 0)
                             <input class="btn btn-danger" type="submit" value="Yes, Delete">
                             @endif
                         </div>

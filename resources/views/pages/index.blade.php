@@ -226,8 +226,8 @@
                                         <span class="tech-count-text">Agricultural Technologies</span>
                                     </div>
                                 </div>
-                                <div class="col-6 pl-0">
-                                    <img alt="Agri logo" class="tech-count-image" src="https://i.imgur.com/cTl6vKX.png" style="object-fit: contain;">
+                                <div class="col-6 pl-4 pt-2 pb-2" style="height:170px">
+                                    <img alt="Agri logo" class="" src="/storage/page_images/icon-agri.png" style="height:100%; ">
                                 </div>
                             </div>
                         </a>
