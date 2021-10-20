@@ -8,6 +8,9 @@
     </ol>
 @endsection
 @section('content')
+<?php
+    $landing_page = App\LandingPage::first();
+?>
 <div class="container-fluid px-0">
     <div class="row mr-0" style="max-height:inherit; min-height:40rem">
         <div class="col-sm-2 bg-dark pr-0">
@@ -127,6 +130,51 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <span style="font-size:23px; float:left">
+                                    Industry Profile Logos
+                                </span>
+                                <span class="text-muted float-right"><i>Manage the industry profile icons.</i></span>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered table-striped shadow-sm mb-5" id="user_table" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th width="45%">Name</th>
+                                            <th width="40%">Thumbnail</th>
+                                            <th width="15%">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><span class="text-muted">-</span></td>
+                                            <td><span class="text-muted">-</span></td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-primary px-3 py-1" data-toggle="modal" data-target="#editIndustryProfileModal"><i class="fas fa-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="text-muted">Agricultural Technologies</span></td>
+                                            <td><span class="text-muted"><img src="/storage/page_images/{{$landing_page->industry_profile_agri_icon}}" class="manage-image"></span></td>
+                                            <td><span class="text-muted"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="text-muted">Aquatic Resources</span></td>
+                                            <td><span class="text-muted"><img src="/storage/page_images/{{$landing_page->industry_profile_aqua_icon}}" class="manage-image"></span></td>
+                                            <td><span class="text-muted"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="text-muted">Natural Resources</span></td>
+                                            <td><span class="text-muted"><img src="/storage/page_images/{{$landing_page->industry_profile_natural_icon}}" class="manage-image"></span></td>
+                                            <td><span class="text-muted"></span></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -254,8 +302,7 @@
                                                     <input type="hidden" name="landing_page_item_technology_commodity_view" value="0"/>
                                                     <input name="landing_page_item_technology_commodity_view" type="checkbox" value="1" {{App\LandingPage::find(1)->landing_page_item_technology_commodity_view == 1 ? 'checked' : ''}}>
                                                     <i></i>
-                                                </label>Trying to access array offset on value of type bool
-
+                                                </label>
                                             </td>
                                         </tr>
                                         <tr>
@@ -486,6 +533,71 @@
     </div>
 @endforeach
 <!-- END of Header Links Modals -->
+
+<div class="modal fade" id="editIndustryProfileModal" tabindex="-1" role="dialog" aria-labelledby="imageLabel" aria-hidden="true" style="z-index:9999">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel">Edit Industry Profile</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {{ Form::open(['action' => ['LandingPageController@editIndustryProfile'], 'method' => 'POST', 'enctype' => 'multipart/form-data']) }}
+            <meta name="csrf-token" content="{{ csrf_token() }}">
+            {{ method_field('GET') }}
+            <div class="modal-body">
+                <div class="form-group">
+                    {{Form::label('image', 'Agriculture Icon', ['class' => 'col-form-label required'])}}
+                    <br>
+                    @if($landing_page->industry_profile_agri_icon!=null)
+                    <img src="/storage/page_images/{{$landing_page->industry_profile_agri_icon}}" class="card-img-top" style="object-fit: cover;overflow:hidden;width:200px;border:1px solid rgba(100,100,100,0.25);background:rgb(0,0,0)" >
+                    @else
+                    <div class="card-img-top center-vertically px-3" style="height:200px; width:200px; background-color: rgb(227, 227, 227);">
+                        <span class="font-weight-bold" style="font-size: 17px;line-height: 1.5em;color: #2b2b2b;">
+                            Upload a 250x250px logo for the icon.
+                        </span>
+                    </div>
+                    @endif 
+                    {{ Form::file('agri_icon', ['class' => 'form-control mt-2 mb-3 pt-1'])}}
+                </div>
+                <div class="form-group">
+                    {{Form::label('image', 'Aquatic Icon', ['class' => 'col-form-label required'])}}
+                    <br>
+                    @if($landing_page->industry_profile_aqua_icon!=null)
+                    <img src="/storage/page_images/{{$landing_page->industry_profile_aqua_icon}}" class="card-img-top" style="object-fit: cover;overflow:hidden;width:200px;border:1px solid rgba(100,100,100,0.25);background:rgb(0,0,0)" >
+                    @else
+                    <div class="card-img-top center-vertically px-3" style="height:200px; width:200px; background-color: rgb(227, 227, 227);">
+                        <span class="font-weight-bold" style="font-size: 17px;line-height: 1.5em;color: #2b2b2b;">
+                            Upload a 250x250px logo for the icon.
+                        </span>
+                    </div>
+                    @endif 
+                    {{ Form::file('aqua_icon', ['class' => 'form-control mt-2 mb-3 pt-1'])}}
+                </div>
+                <div class="form-group">
+                    {{Form::label('image', 'Natural Resources Icon', ['class' => 'col-form-label required'])}}
+                    <br>
+                    @if($landing_page->industry_profile_natural_icon!=null)
+                    <img src="/storage/page_images/{{$landing_page->industry_profile_natural_icon}}" class="card-img-top" style="object-fit: cover;overflow:hidden;width:200px;border:1px solid rgba(100,100,100,0.25);background:rgb(0,0,0)" >
+                    @else
+                    <div class="card-img-top center-vertically px-3" style="height:200px; width:200px; background-color: rgb(227, 227, 227);">
+                        <span class="font-weight-bold" style="font-size: 17px;line-height: 1.5em;color: #2b2b2b;">
+                            Upload a 250x250px logo for the icon.
+                        </span>
+                    </div>
+                    @endif 
+                    {{ Form::file('natural_icon', ['class' => 'form-control mt-2 mb-3 pt-1'])}}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success"><i class="fas fa-save"></i> Save</button>
+            </div>
+            {{ Form::close() }}
+        </div>
+    </div>
+</div>
 
 <style>
     .landing-page-center{

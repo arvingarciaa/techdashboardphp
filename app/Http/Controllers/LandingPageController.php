@@ -21,4 +21,46 @@ class LandingPageController extends Controller
         $page->save();
         return redirect('/admin/manageLandingPage')->with('success', 'Landing page items updated');
     }
+
+    public function editIndustryProfile(Request $request){
+        $page = LandingPage::first();
+        if($request->hasFile('agri_icon')){
+            if($page->industry_profile_agri_icon != null){
+                $image_path = public_path().'/storage/page_images/'.$page->industry_profile_agri_icon;
+                if(file_exists($image_path)){
+                    unlink($image_path);
+                }
+            }
+            $imageFile = $request->file('agri_icon');
+            $imageName = uniqid().$imageFile->getClientOriginalName();
+            $imageFile->move(public_path('/storage/page_images/'), $imageName);
+            $page->industry_profile_agri_icon = $imageName;
+        } 
+        if($request->hasFile('aqua_icon')){
+            if($page->industry_profile_aqua_icon != null){
+                $image_path = public_path().'/storage/page_images/'.$page->industry_profile_aqua_icon;
+                if(file_exists($image_path)){
+                    unlink($image_path);
+                }
+            }
+            $imageFile = $request->file('aqua_icon');
+            $imageName = uniqid().$imageFile->getClientOriginalName();
+            $imageFile->move(public_path('/storage/page_images/'), $imageName);
+            $page->industry_profile_aqua_icon = $imageName;
+        }
+        if($request->hasFile('natural_icon')){
+            if($page->industry_profile_natural_icon != null){
+                $image_path = public_path().'/storage/page_images/'.$page->industry_profile_natural_icon;
+                if(file_exists($image_path)){
+                    unlink($image_path);
+                }
+            }
+            $imageFile = $request->file('natural_icon');
+            $imageName = uniqid().$imageFile->getClientOriginalName();
+            $imageFile->move(public_path('/storage/page_images/'), $imageName);
+            $page->industry_profile_natural_icon = $imageName;
+        }
+        $page->save();
+        return redirect('/admin/manageLandingPage')->with('success', 'Industry profile icons updated');
+    }
 }

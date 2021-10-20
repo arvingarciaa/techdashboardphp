@@ -6,6 +6,10 @@
     </ol>
 @endsection
 @section('content')
+    <?php
+        $landing_page = App\LandingPage::first();
+    ?>
+
     <div title="Know more about Tech Dashboard in different platforms" class="icon-bar" style="z-index:1000">
         <a href="#" rel="noreferrer" class="sarai"><img alt="sarai logo" src="https://i.imgur.com/TRr6O4s.png" height="30" width="26.7"></a> 
         <a href="#" aria-label="Facebook" rel="noreferrer" class="facebook"><i class="fab fa-facebook"></i></a> 
@@ -227,7 +231,7 @@
                                     </div>
                                 </div>
                                 <div class="col-6 pl-4 pt-2 pb-2" style="height:170px">
-                                    <img alt="Agri logo" class="" src="/storage/page_images/icon-agri.png" style="height:100%; ">
+                                    <img alt="Agri logo" class="" src="/storage/page_images/{{$landing_page->industry_profile_agri_icon}}" style="height:100%; ">
                                 </div>
                             </div>
                         </a>
@@ -243,8 +247,8 @@
                                         <span class="tech-count-text">Aquatic Resources</span>
                                     </div>
                                 </div>
-                                <div class="col-6 pl-0">
-                                    <img alt="Aquatic logo" class="tech-count-image" src="https://i.imgur.com/ETFwTqr.png" style="object-fit: contain;">
+                                <div class="col-6 pl-4 pt-2 pb-2" style="height:170px">
+                                    <img alt="Agri logo" class="" src="/storage/page_images/{{$landing_page->industry_profile_aqua_icon}}" style="height:100%; ">
                                 </div>
                             </div>
                         </a>
@@ -260,8 +264,8 @@
                                         <span class="tech-count-text">Natural Resources</span>
                                     </div>
                                 </div>
-                                <div class="col-6 pl-0">
-                                    <img alt="Natural Resources logo" class="tech-count-image" src="https://i.imgur.com/d09nMpk.png" style="object-fit: contain;">
+                                <div class="col-6 pl-4 pt-2 pb-2" style="height:170px">
+                                    <img alt="Agri logo" class="" src="/storage/page_images/{{$landing_page->industry_profile_natural_icon}}" style="height:100%; ">
                                 </div>
                             </div>
                         </div>

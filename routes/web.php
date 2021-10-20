@@ -26,6 +26,7 @@ Route::get('aanr-industry-profile/{id}', 'PagesController@industryProfileView')-
 //Landing Page
 Route::get('/admin/updateLandingPageItems', 'LandingPageController@updateLandingPageItems')->name('pages.updateLandingPageItems');
 Route::get('/admin/manageLandingPage', 'PagesController@manageLandingPage')->name('pages.manageLandingPage');
+Route::get('/admin/editIndustryProfile', 'LandingPageController@editIndustryProfile')->name('landingpage.editIndustryProfile');
 
 //UserMessages
 Route::post('/contactUs/send' , 'UserMessagesController@send')->name('send');
