@@ -2484,6 +2484,7 @@
                             {{ method_field('DELETE') }}
                             <span>
                                 <?php $techApp = DB::table('applicability_industry_technology')->where('applicability_industry_id', '=',$applicabilityIndustry->id)->get(); ?>
+                                <?php $tech = App\Technology::all()?>
                                 @if($techApp->count() > 0)
                                     You cannot delete: <b>{{$applicabilityIndustry->name}}</b></br></br>
                                     The following technologies are still using this Technology Applicability - Industry:
