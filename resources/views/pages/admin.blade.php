@@ -486,8 +486,8 @@
                                                 {{ Form::open(['action' => ['ApplicabilityIndustriesController@rejectApplicabilityIndustry', $applicabilityIndustryApprovals->approvable_id], 'method' => 'POST', 'style="display:inline"']) }}
                                                     <button class="btn btn-danger px-1 py-1" style="font-weight:800">Reject</button> 
                                                 {{ Form::close() }}
-                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editApplicabilityIndustryModal-{{$applicabilityIndustryPending->id}}"><i class="fas fa-edit"></i></button>
-                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteApplicabilityIndustryModal-{{$applicabilityIndustryPending->id}}"><i class="fas fa-trash"></i></button>
+                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editApplicabilityIndustryModal-{{$applicabilityIndustryApprovals->approvable_id}}"><i class="fas fa-edit"></i></button>
+                                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteApplicabilityIndustryModal-{{$applicabilityIndustryApprovals->approvable_id}}"><i class="fas fa-trash"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
