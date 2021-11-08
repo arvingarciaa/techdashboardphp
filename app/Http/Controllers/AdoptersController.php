@@ -79,7 +79,7 @@ class AdoptersController extends Controller
 
     public function deleteAdopter($adopter_id, Request $request){
         $adopter = Adopter::find($adopter_id);
-        $deletedName = $appIndustry->name;
+        $deletedName = $adopter->name;
         $adopter->technologies()->detach();
         $adopter->delete();
 

@@ -22,6 +22,7 @@ class AgenciesController extends Controller
         $agency->district = $request->district;
         $agency->phone = $request->phone;
         $agency->fax = $request->fax;
+        $agency->user_id = $user->id;
         $agency->email = $request->email;
         if($user->user_level == 5){
             $agency->approved = 2;

@@ -35,17 +35,17 @@
                 ?>
                 <a class="list-group-item active" data-toggle="tab" href="#technology">Technologies <span class="badge badge-danger" style="{{$techApprovalCount > 0 ? '' : 'display:none'}}">{{$techApprovalCount}}</span></a>
                 <div id="data-management-accordion" class="w-100">
-                    <a class="list-group-item accordion-toggle collapsed" data-toggle="collapse" data-target="#data-management-collapse" aria-expanded="false" href="#">Administration <span class="badge badge-danger" style="{{$administrationCount > 0 ? '' : 'display:none'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">!</span></a>
+                    <a class="list-group-item accordion-toggle collapsed" data-toggle="collapse" data-target="#data-management-collapse" aria-expanded="false" href="#">Administration <span class="badge badge-danger" style="{{$administrationCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">!</span></a>
                     <div id="data-management-collapse" class="collapse" data-parent="#data-management-accordion">
-                        <a class="list-group-item ml-3" data-toggle="tab" href="#applicabilityIndustry">Technology Applicability - Industry <span class="badge badge-danger" style="{{$applicabilityIndustryApprovalCount > 0 ? '' : 'display:none'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$applicabilityIndustryApprovalCount}}</span></a>
-                        <a class="list-group-item ml-3" data-toggle="tab" href="#industry">Industries <span class="badge badge-danger" style="{{$industryApprovalCount > 0 ? '' : 'display:none'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$industryApprovalCount}}</span></a>
-                        <a class="list-group-item ml-3" data-toggle="tab" href="#sector">Sectors <span class="badge badge-danger" style="{{$sectorApprovalCount > 0 ? '' : 'display:none'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$sectorApprovalCount}}</span></a>
-                        <a class="list-group-item ml-3" data-toggle="tab" href="#commodity">Commodities <span class="badge badge-danger" style="{{$commoditiesApprovalCount > 0 ? '' : 'display:none'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$commoditiesApprovalCount}}</span></a>
-                        <a class="list-group-item ml-3" data-toggle="tab" href="#technologyCategory">Technology Categories <span class="badge badge-danger" style="{{$techCategoriesApprovalCount > 0 ? '' : 'display:none'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$techCategoriesApprovalCount}}</span></a>
-                        <a class="list-group-item ml-3" data-toggle="tab" href="#adopterType">Adopter Types <span class="badge badge-danger" style="{{$adopterTypesApprovalCount > 0 ? '' : 'display:none'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$adopterTypesApprovalCount}}</span></a>
-                        <a class="list-group-item ml-3" data-toggle="tab" href="#adopter">Adopters <span class="badge badge-danger" style="{{$adoptersApprovalCount > 0 ? '' : 'display:none'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$adoptersApprovalCount}}</span></a>
-                        <a class="list-group-item ml-3" data-toggle="tab" href="#agency">Agencies (Owner) <span class="badge badge-danger" style="{{$agencyApprovalCount > 0 ? '' : 'display:none'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$agencyApprovalCount}}</span></a>
-                        <a class="list-group-item ml-3" data-toggle="tab" href="#generator">Generators <span class="badge badge-danger" style="{{$generatorsApprovalCount > 0 ? '' : 'display:none'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$generatorsApprovalCount}}</span></a>
+                        <a class="list-group-item ml-3" data-toggle="tab" href="#applicabilityIndustry">Technology Applicability - Industry <span class="badge badge-danger" style="{{$applicabilityIndustryApprovalCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$applicabilityIndustryApprovalCount}}</span></a>
+                        <a class="list-group-item ml-3" data-toggle="tab" href="#industry">Industries <span class="badge badge-danger" style="{{$industryApprovalCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$industryApprovalCount}}</span></a>
+                        <a class="list-group-item ml-3" data-toggle="tab" href="#sector">Sectors <span class="badge badge-danger" style="{{$sectorApprovalCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$sectorApprovalCount}}</span></a>
+                        <a class="list-group-item ml-3" data-toggle="tab" href="#commodity">Commodities <span class="badge badge-danger" style="{{$commoditiesApprovalCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$commoditiesApprovalCount}}</span></a>
+                        <a class="list-group-item ml-3" data-toggle="tab" href="#technologyCategory">Technology Categories <span class="badge badge-danger" style="{{$techCategoriesApprovalCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$techCategoriesApprovalCount}}</span></a>
+                        <a class="list-group-item ml-3" data-toggle="tab" href="#adopterType">Adopter Types <span class="badge badge-danger" style="{{$adopterTypesApprovalCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$adopterTypesApprovalCount}}</span></a>
+                        <a class="list-group-item ml-3" data-toggle="tab" href="#adopter">Adopters <span class="badge badge-danger" style="{{$adoptersApprovalCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$adoptersApprovalCount}}</span></a>
+                        <a class="list-group-item ml-3" data-toggle="tab" href="#agency">Agencies (Owner) <span class="badge badge-danger" style="{{$agencyApprovalCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$agencyApprovalCount}}</span></a>
+                        <a class="list-group-item ml-3" data-toggle="tab" href="#generator">Generators <span class="badge badge-danger" style="{{$generatorsApprovalCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$generatorsApprovalCount}}</span></a>
                     </div>
                 </div>
                 @if(auth()->user()->user_level == 5)
@@ -1442,7 +1442,7 @@
                                                 </div>
                                             </td>
                                             <td style="text-align:center">
-                                                {{ Form::open(['action' => ['Adopters@togglePublishAdopter', $adopter->id], 'method' => 'POST', 'style="display:inline"']) }}
+                                                {{ Form::open(['action' => ['AdoptersController@togglePublishAdopter', $adopter->id], 'method' => 'POST', 'style="display:inline"']) }}
                                                     <button class="btn btn-primary px-1 py-1" style="font-weight:800">{{$adopter->approved == 0 ? 'Publish' : 'Unpublish'}}</button> 
                                                 {{ Form::close() }}
                                                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editAdopterModal-{{$adopter->id}}"><i class="fas fa-edit"></i></button>
@@ -1626,7 +1626,7 @@
                                                 </div>
                                             </td>
                                             <td style="text-align:center">
-                                                {{ Form::open(['action' => ['Agencies@togglePublishAgency', $agency->id], 'method' => 'POST', 'style="display:inline"']) }}
+                                                {{ Form::open(['action' => ['AgenciesController@togglePublishAgency', $agency->id], 'method' => 'POST', 'style="display:inline"']) }}
                                                     <button class="btn btn-primary px-1 py-1" style="font-weight:800">{{$agency->approved == 0 ? 'Publish' : 'Unpublish'}}</button> 
                                                 {{ Form::close() }}
                                                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editAgencyModal-{{$agency->id}}"><i class="fas fa-edit"></i></button>
@@ -1810,7 +1810,7 @@
                                                 </div>
                                             </td>
                                             <td style="text-align:center">
-                                                {{ Form::open(['action' => ['Generators@togglePublishGenerator', $generator->id], 'method' => 'POST', 'style="display:inline"']) }}
+                                                {{ Form::open(['action' => ['GeneratorsController@togglePublishGenerator', $generator->id], 'method' => 'POST', 'style="display:inline"']) }}
                                                     <button class="btn btn-primary px-1 py-1" style="font-weight:800">{{$generator->approved == 0 ? 'Publish' : 'Unpublish'}}</button> 
                                                 {{ Form::close() }}
                                                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editGeneratorModal-{{$generator->id}}"><i class="fas fa-edit"></i></button>
