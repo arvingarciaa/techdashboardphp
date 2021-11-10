@@ -122,9 +122,12 @@ class TechnologiesController extends Controller
         $deletedName = $tech->name;
         if($tech->banner != null){
             $image_path = public_path().'/storage/page_images/'.$tech->banner;
-            unlink($image_path);
+            if(file_exists($image_path)){
+                unlink($image_path);
+            }
         }
         $tech->technology_categories()->detach();
+        $tech->applicability_industries()->detach();
         $tech->commodities()->detach();
         $tech->generators()->detach();
         $tech->agencies()->detach();
