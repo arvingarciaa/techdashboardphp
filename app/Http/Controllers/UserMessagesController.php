@@ -36,4 +36,16 @@ class UserMessagesController extends Controller
         $userMessage->save();
         return redirect()->back()->with('success','Message resolved.'); 
     }
+
+    function deleteMessages(Request $request){
+        if(!$request->input('messages_check')){
+            return redirect()->back()->with('error','Nothing selected.');
+        } else {
+            $messages = UserMessage::whereIn('id', $request->input('messages_check'))->get();
+            foreach ($messages as $message) {
+                $message->delete();
+            }
+            return redirect()->back()->with('success','Messages Deleted.'); 
+        }
+    }
 }

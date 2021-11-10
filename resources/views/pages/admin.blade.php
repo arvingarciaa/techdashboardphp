@@ -2026,16 +2026,21 @@
                 </div>
                 <div class="tab-pane fade" id="userMessages">
                     <div class="card shadow">
+                        <form action="{{ route('deleteMessages')}}" id="deleteForm" method="POST">
+                        {{ csrf_field() }}
                         <div class="card-header">
                             <i class="far fa-envelope" style="font-size:25px;"></i>
                             <span style="font-size:22px;">User Messages 
-                                <button type="button" class="btn btn-primary text-right float-right" data-toggle="modal" data-target="#createUserModal">Create User</button> 
+                                <span class="float-right">
+                                    <input type="submit" class="btn btn-default" value="- Delete Checked">
+                                </span>
                             </span>
                         </div>
                         <div class="card-body">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Concern</th>
@@ -2046,6 +2051,7 @@
                                 <tbody>
                                     @foreach(App\UserMessage::all() as $userMessage)
                                         <tr>
+                                            <td style="text-align:center"><input class="form-check-input" type="checkbox" name="messages_check[]" value="{{$userMessage->id}}" id="flexCheckDefault"></td>
                                             <td>{{ $userMessage->name }}</td>
                                             <td>{{ $userMessage->email }}</td>
                                             <td>
@@ -2077,6 +2083,7 @@
                                 </tbody>
                             </table>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>

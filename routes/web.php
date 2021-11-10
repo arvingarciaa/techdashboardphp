@@ -31,6 +31,7 @@ Route::get('/admin/editIndustryProfile', 'LandingPageController@editIndustryProf
 //UserMessages
 Route::post('/contactUs/send' , 'UserMessagesController@send')->name('send');
 Route::post('/resolveMessage/{id}' , 'UserMessagesController@resolveMessage')->name('resolveMessage');
+Route::delete('/admin/deleteMessages', 'UserMessagesController@deleteMessages')->name('deleteMessages');
 
 //API
 Route::get('/data/current', 'PagesController@getJSON')->name('pages.getJSON');
