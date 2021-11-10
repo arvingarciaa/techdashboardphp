@@ -472,6 +472,31 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="deleteCarouselItemModal-{{$carouselItem->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action="{{ route('deleteCarouselItem', $carouselItem->id) }}" id="deleteForm" method="POST">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="exampleModalLabel">Confirm Delete</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
+                        <span>
+                            Are you sure you want to delete: <b>{{$carouselItem->title}}</b>
+                        </span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
+                        <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     <!-- END modal add new banner for carousel -->
     @endforeach
 <!-- END BANNERS -->

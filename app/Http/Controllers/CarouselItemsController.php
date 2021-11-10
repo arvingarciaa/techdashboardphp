@@ -44,4 +44,17 @@ class CarouselItemsController extends Controller
 
         return redirect('/admin/manageLandingPage')->with('success', 'Carousel item added');
     }
+
+    public function deleteCarouselItem($slider_id){
+        $slider = CarouselItem::find($slider_id);
+        if($slider->banner != null){
+            $image_path = public_path().'/storage/page_images/'.$slider->banner;
+            if(file_exists($image_path)){
+                    unlink($image_path);
+                }
+        }
+        $slider->delete();
+        return redirect()->back()->with('success','Carousel Slider Deleted.'); 
+    }
+
 }

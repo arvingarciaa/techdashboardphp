@@ -158,6 +158,7 @@ Route::delete('admin/{id}/deleteCopyright', 'CopyrightsController@deleteCopyrigh
 //Caruosel Items
 Route::post('admin/manageLandingPage/addCarouselItem', ['uses' => 'CarouselItemsController@addCarouselItem', 'as' => 'carousel.addCarouselItem']);
 Route::post('admin/manageLandingPage/{id}/editCarouselItem', ['uses' => 'CarouselItemsController@editCarouselItem', 'as' => 'carousel.editCarouselItem']);
+Route::delete('admin/manageLandingPage/{id}/deleteCarouselItem', 'CarouselItemsController@deleteCarouselItem')->name('deleteCarouselItem');
 
 //Header Links
 Route::post('admin/manageLandingPage/addHeaderLink', ['uses' => 'HeaderLinksController@addHeaderLink', 'as' => 'carousel.addHeaderLink']);
