@@ -464,58 +464,60 @@
                             <?php $techCount = 0; ?>
                             @foreach($results as $tech)
                             <div class="col-md-4 tech-card-container">
-                                <div class="card card-overlay-container front-card h-auto shadow rounded">
-                                    @if( $tech->banner == null)
-                                    <div class="card-img-top center-vertically px-3 tech-card-color" style="height:200px">
-                                        <span class="font-weight-bold" style="font-size: 17px;line-height: 1.5em;color: #2b2b2b;">
-                                            {{$tech->title}}
-                                        </span>
-                                    </div>
-                                    @else
-                                    <img alt="Page banner" class="card-img-top center-vertically" src="/storage/page_images/{{$tech->banner}}" style="height:200px;object-fit:cover">
-                                    @endif
-                                    <div class="card-body">
-                                        <h4 class="card-title trail-end font-weight-bold">{{$tech->title}}</h4>
-                                        <div class="card-text trail-end" style="line-height: 120%;">
-                                            <p class="mb-2"><b>{{$tech->year_developed}} • {{$tech->applicability_location}}</b></p>
-                                            <span>
-                                                @foreach($tech->applicability_industries as $applicability_industry)
-                                                    @if( $loop->first ) 
-                                                        {{ $applicability_industry->name }}
-                                                    @else
-                                                        • {{ $applicability_industry->name }}
-                                                    @endif
-                                                @endforeach
-                                                @foreach($tech->technology_categories as $category)
-                                                    @if( $loop->first ) 
-                                                        {{ $category->name }} 
-                                                    @else
-                                                        • {{ $category->name }}
-                                                    @endif  
-                                                @endforeach
-                                                <br>
-                                                @foreach($tech->commodities as $commodity)
-                                                    @if( $loop->first ) 
-                                                        {{ $commodity->name }} 
-                                                    @else
-                                                        • {{ $commodity->name }}
-                                                    @endif  
-                                                @endforeach
+                                <a data-toggle="modal" data-id="2" data-target="#techModal-{{$tech->id}}">
+                                    <div class="card card-overlay-container front-card h-auto shadow rounded">
+                                        @if( $tech->banner == null)
+                                        <div class="card-img-top center-vertically px-3 tech-card-color" style="height:200px">
+                                            <span class="font-weight-bold" style="font-size: 17px;line-height: 1.5em;color: #2b2b2b;">
+                                                {{$tech->title}}
+                                            </span>
+                                        </div>
+                                        @else
+                                        <img alt="Page banner" class="card-img-top center-vertically" src="/storage/page_images/{{$tech->banner}}" style="height:200px;object-fit:cover">
+                                        @endif
+                                        <div class="card-body">
+                                            <h4 class="card-title trail-end font-weight-bold">{{$tech->title}}</h4>
+                                            <div class="card-text trail-end" style="line-height: 120%;">
+                                                <p class="mb-2"><b>{{$tech->year_developed}} • {{$tech->applicability_location}}</b></p>
+                                                <span>
+                                                    @foreach($tech->applicability_industries as $applicability_industry)
+                                                        @if( $loop->first ) 
+                                                            {{ $applicability_industry->name }}
+                                                        @else
+                                                            • {{ $applicability_industry->name }}
+                                                        @endif
+                                                    @endforeach
+                                                    @foreach($tech->technology_categories as $category)
+                                                        @if( $loop->first ) 
+                                                            {{ $category->name }} 
+                                                        @else
+                                                            • {{ $category->name }}
+                                                        @endif  
+                                                    @endforeach
+                                                    <br>
+                                                    @foreach($tech->commodities as $commodity)
+                                                        @if( $loop->first ) 
+                                                            {{ $commodity->name }} 
+                                                        @else
+                                                            • {{ $commodity->name }}
+                                                        @endif  
+                                                    @endforeach
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <!--<a href="/posts/76" class="stretched-link"></a>-->
+                                        <div class="card-hover-overlay px-4">
+                                            <span style="color:white">
+                                                <h4 class="font-weight-bold card-overlay-content">
+                                                    {{$tech->title}}
+                                                </h4>
+                                                <h6 class="card-overlay-content">
+                                                    {{$tech->description}}
+                                                </h6>
                                             </span>
                                         </div>
                                     </div>
-                                    <!--<a href="/posts/76" class="stretched-link"></a>-->
-                                    <div class="card-hover-overlay px-4">
-                                        <span style="color:white">
-                                            <h4 class="font-weight-bold card-overlay-content">
-                                                {{$tech->title}}
-                                            </h4>
-                                            <h6 class="card-overlay-content">
-                                                {{$tech->description}}
-                                            </h6>
-                                        </span>
-                                    </div>
-                                </div>
+                                </a>
                             </div>
                             <?php $techCount++; ?>
                             @endforeach
