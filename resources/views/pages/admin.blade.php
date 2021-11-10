@@ -2028,6 +2028,7 @@
                     <div class="card shadow">
                         <form action="{{ route('deleteMessages')}}" id="deleteForm" method="POST">
                         {{ csrf_field() }}
+                        {{ method_field('DELETE') }}
                         <div class="card-header">
                             <i class="far fa-envelope" style="font-size:25px;"></i>
                             <span style="font-size:22px;">User Messages 
