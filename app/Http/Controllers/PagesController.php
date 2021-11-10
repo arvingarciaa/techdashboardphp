@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 use App\Industry;
 use App\Technology;
 use App\TechnologyCategory;
@@ -64,7 +64,7 @@ class PagesController extends Controller
         $headerLinks = HeaderLink::all();
         $userMessages = UserMessage::all();
         $applicabilityIndustries = ApplicabilityIndustry::where('approved','=', '2')->get();
-        $query = Input::get ( 'searchForm' );
+        $query = Request::get ( 'searchForm' );
         $results = Technology::where('approved', '=', '2')->where('title','LIKE','%'.$query.'%')->paginate(6);
         if($query != ''){
             if(count($technologies) > 0)
