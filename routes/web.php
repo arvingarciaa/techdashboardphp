@@ -177,5 +177,9 @@ Route::post('admin/createUser', 'UsersController@createUser')->name('createUser'
 Route::post('admin/{id}/changeUserLevel', 'UsersController@changeUserLevel')->name('changeUserLevel');
 Route::delete('admin/{id}/deleteUser', 'UsersController@deleteUser')->name('deleteUser');
 
+//Social Media
+Route::post('headlines/addSocial', 'SocialMediaStickyController@addSocial')->name('addSocial');
+Route::post('headlines/{id}/editSocial', 'SocialMediaStickyController@editSocial')->name('editSocial');
+
 Auth::routes();
 

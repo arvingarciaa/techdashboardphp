@@ -10,12 +10,14 @@
         $landing_page = App\LandingPage::first();
     ?>
 
-    <div title="Know more about Tech Dashboard in different platforms" class="icon-bar" style="z-index:1000">
-        <a href="#" rel="noreferrer" class="sarai"><img alt="sarai logo" src="https://i.imgur.com/TRr6O4s.png" height="30" width="26.7"></a> 
-        <a href="#" aria-label="Facebook" rel="noreferrer" class="facebook"><i class="fab fa-facebook"></i></a> 
-        <a href="#" aria-label="Twitter" rel="noreferrer" class="twitter"><i class="fab fa-twitter"></i></a> 
-        <a href="#" aria-label="Email" rel="noreferrer" class="email"><i class="fas fa-envelope"></i></a>
-        <a href="#" aria-label="Youtube" rel="noreferrer" class="youtube"><i class="fab fa-youtube"></i></a> 
+    <div title="Know more about Tech Dashboard in different platforms" class="icon-bar hide-when-mobile" style="z-index:1000">
+        <?php $sticky = App\SocialMediaSticky::all()?>
+        <a target="_blank" href="{{$sticky->where('name', '=', 'PCAARRD')->first()->link}}" class="sarai"><img src="/storage/page_images/TRr6O4s.png" height="30" width="30"></a> 
+        <a target="_blank" data-toggle="tooltip" title="Visit our Facebook"href="{{$sticky->where('name', '=', 'Facebook')->first()->link}}" class="facebook"><i class="fab fa-facebook"></i></a> 
+        <a target="_blank" data-toggle="tooltip" title="Visit our Twitter" href="{{$sticky->where('name', '=', 'Twitter')->first()->link}}" class="twitter"><i class="fab fa-twitter"></i></a> 
+        <a target="_blank" data-toggle="tooltip" title="Visit our Instagram" href="{{$sticky->where('name', '=', 'Instagram')->first()->link}}" class="instagram"><i class="fab fa-instagram"></i></a> 
+        <a target="_blank" data-toggle="tooltip" title="Send us an email" href="mailto:{{$sticky->where('name', '=', 'Email')->first()->link}}" class="email"><i class="fas fa-envelope"></i></a>
+        <a target="_blank" data-toggle="tooltip" title="Visit our YouTube" href="{{$sticky->where('name', '=', 'YouTube')->first()->link}}" class="youtube"><i class="fab fa-youtube"></i></a> 
     </div>
     <div class="container-fluid px-0">
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
@@ -67,6 +69,15 @@
             padding-bottom: 20px;
             color: #fff;
             text-align: center;
+        }
+        @media only screen and (max-width: 600px) {
+            .hide-when-mobile {
+                display:none !important
+            }
+        }
+        .instagram {
+            background: #D62976;
+            color: white;
         }
     </style>
     <?php

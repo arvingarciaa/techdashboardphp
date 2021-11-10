@@ -10,6 +10,7 @@
 @section('content')
 <?php
     $landing_page = App\LandingPage::first();
+    $social_media = App\SocialMediaSticky::all();
 ?>
 <div class="container-fluid px-0">
     <div class="row mr-0" style="max-height:inherit; min-height:40rem">
@@ -175,6 +176,48 @@
                                             <td><span class="text-muted"><img src="/storage/page_images/{{$landing_page->industry_profile_natural_icon}}" class="manage-image"></span></td>
                                             <td><span class="text-muted"></span></td>
                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <span style="font-size:23px; float:left">
+                                    Social Media Icons
+                                </span>
+                                <span class="text-muted float-right"><i>Edit sticky social media icons.</i></span>
+                            </div>
+                            <div class="card-body">
+                                <table class="table data-table tech-table table-hover" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th width="10%">#</th>
+                                            <th width="45%">Name</th>
+                                            <th width="30%">Link</th>
+                                            <th width="15%">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><span class="text-muted">-</span></td>
+                                            <td><span class="text-muted">-</span></td>
+                                            <td><span class="text-muted">-</span></td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-primary px-3 py-1" data-toggle="modal" data-target="#addStickyModal"><i class="fas fa-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                        @foreach($social_media as $social)
+                                        <tr>
+                                            <td><span class="text-muted">{{$social->id}}</span></td>
+                                            <td><span class="text-muted">{{$social->name}}</span></td>
+                                            <td><span class="text-muted">{{$social->link}}</span></td>
+                                            <td class="">
+                                                <button class="btn btn-primary pl-1 pr-1 pt-0 pb-0" data-toggle="modal" data-target="#editStickyModal-{{$social->id}}"><i class="fas fa-edit"></i> Edit Details</button>
+                                            </td>
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -533,6 +576,69 @@
     </div>
 @endforeach
 <!-- END of Header Links Modals -->
+
+<!-- Social Media Modals -->
+    <div class="modal fade" id="addStickyModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-l" role="document">
+            <div class="modal-content">
+                {{ Form::open(['action' => ['SocialMediaStickyController@addSocial'], 'method' => 'POST']) }}
+                <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">Edit Sticky</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        {{Form::label('name', 'Name', ['class' => 'col-form-label'])}}
+                        {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Add a name'])}}
+                    </div>
+                    <div class="form-group">
+                        {{Form::label('link', 'Link to social', ['class' => 'col-form-label'])}}
+                        {{Form::text('link', '', ['class' => 'form-control', 'placeholder' => 'Add a link'])}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    {{Form::submit('Save Changes', ['class' => 'btn btn-success'])}}
+                </div>
+                {{Form::close()}}
+            </div>
+        </div>
+    </div>
+    @foreach($social_media as $social)
+        <!-- Modal for EDIT Headline -->
+            <div class="modal fade" id="editStickyModal-{{$social->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-l" role="document">
+                    <div class="modal-content">
+                        {{ Form::open(['action' => ['SocialMediaStickyController@editSocial', $social->id], 'method' => 'POST']) }}
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="exampleModalLabel">Edit Sticky</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                {{Form::label('name', 'Name', ['class' => 'col-form-label'])}}
+                                {{Form::text('name', $social->name, ['class' => 'form-control', 'disabled' => true, 'placeholder' => 'Add a name'])}}
+                            </div>
+                            <div class="form-group">
+                                {{Form::label('link', 'Link to social', ['class' => 'col-form-label'])}}
+                                {{Form::text('link', $social->link, ['class' => 'form-control', 'placeholder' => 'Add a link'])}}
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            {{Form::submit('Save Changes', ['class' => 'btn btn-success'])}}
+                        </div>
+                        {{Form::close()}}
+                    </div>
+                </div>
+            </div>
+    @endforeach
+<!-- END of Social Media Modals -->
+
 
 <div class="modal fade" id="editIndustryProfileModal" tabindex="-1" role="dialog" aria-labelledby="imageLabel" aria-hidden="true" style="z-index:9999">
     <div class="modal-dialog" role="document">
