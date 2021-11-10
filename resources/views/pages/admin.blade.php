@@ -2028,7 +2028,7 @@
                     <div class="card shadow">
                         <form action="{{ route('deleteMessages')}}" id="deleteForm" method="POST">
                         {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
+                        <input type="hidden" name="_method" value="delete">
                         <div class="card-header">
                             <i class="far fa-envelope" style="font-size:25px;"></i>
                             <span style="font-size:22px;">User Messages 
@@ -2077,7 +2077,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <button class="btn btn-primary px-2 py-1" id="viewUserMessageButton" data-toggle="modal" data-target="#viewUserMessageModal-{{$userMessage->id}}">View Message <i class="far fa-eye"></i></button>
+                                                <button class="btn btn-primary px-2 py-1" type="button" id="viewUserMessageButton" data-toggle="modal" data-target="#viewUserMessageModal-{{$userMessage->id}}">View Message <i class="far fa-eye"></i></button>
                                             </td>
                                         </tr>
                                     @endforeach
