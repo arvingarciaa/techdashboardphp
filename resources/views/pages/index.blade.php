@@ -1867,8 +1867,8 @@
                 }
                 foreach($techPerCategoryQuery as $item)
                 {
-                    echo "<script>console.log(\"$item->name\")</script>";
-                    echo "<script>console.log(\"$item->technologies_count\")</script>";
+                    //echo "<script>console.log(\"$item->name\")</script>";
+                    //echo "<script>console.log(\"$item->technologies_count\")</script>";
                     if($techPerCategoryCounter < 5 && $item->technologies_count != 0){
                         array_push($techPerCategoryArray[0],$item->name);
                         array_push($techPerCategoryArray[1],$item->technologies_count);
@@ -3429,10 +3429,10 @@
     var popupShown = Cookies.get('colorboxShown');
 
     if (popupShown) {
-        console.log("Cookie found. No action necessary");
+        //console.log("Cookie found. No action necessary");
         $(".clear-cookie").show();
     } else {
-        console.log("No cookie found. Opening popup in 3 seconds");
+        //console.log("No cookie found. Opening popup in 3 seconds");
         $(".clear-cookie").hide();
         setTimeout(function() {
             lastFocus = document.activeElement;
@@ -3454,7 +3454,7 @@
             var value = $(this).val();
             var dependent = $(this).data('dependent');
             var identifier = $(this).data('identifier');
-            console.log(identifier);
+            //console.log(identifier);
             var _token = $('input[name="_token"]').val();
             $.ajax({
                 url:"{{ route('fetchDependent') }}",
