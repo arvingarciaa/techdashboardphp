@@ -1935,11 +1935,14 @@
                 <div class="tab-pane fade" id="activity">
                     <div class="card shadow mb-5">
                         <div class="card-header">
+                            <form action="{{ route('exportLog')}}" id="exportLog" method="GET">
                             <h2>
                             Activity Logs
-                            <span class="float-right">
-                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#createGeneratorModal"><i class="fas fa-plus"></i> Download Excel</button>
-                            </span></h2>
+                                <span class="float-right">
+                                    <button type="submit" class="btn btn-default"><i class="fas fa-plus"></i> Download Excel</button>
+                                </span>
+                            </h2>
+                            </form>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

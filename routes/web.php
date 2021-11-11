@@ -167,6 +167,7 @@ Route::post('admin/manageLandingPage/{id}/deleteHeaderLink', ['uses' => 'HeaderL
 
 //Logs
 Route::post('admin/addLog', 'LogsController@addLog')->name('addLog');
+Route::get('admin/exportLog/', 'LogsController@exportLog')->name('exportLog');
 Route::post('admin/downloadLogs', 'LogsController@downloadLogs')->name('downloadLogs');
 
 //Files

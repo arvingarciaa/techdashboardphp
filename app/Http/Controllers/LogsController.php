@@ -4,8 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Log;
+use App\Exports\LogExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 class LogsController extends Controller
 {
+    public function exportLog() 
+    {
+        return Excel::download(new LogExport, 'activity_log.xlsx');
+    }
+
     public function downloadLogs(){
         $headers = array(
             "Content-type" => "text/csv",
