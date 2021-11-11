@@ -3,7 +3,7 @@
     <ol class="breadcrumb pb-0" style="background-color:transparent">
         <li class="breadcrumb-item"><a class="breadcrumb-link" href="/">km4aanr</a></li>
         <li class="breadcrumb-item"><a class="breadcrumb-link" href="/">Technology Dashboard</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Admin</li>
+        <li class="breadcrumb-item active" aria-current="page">Admin Settings</li>
     </ol>
 @endsection
 @section('content')
@@ -35,7 +35,7 @@
                 ?>
                 <a class="list-group-item active" data-toggle="tab" href="#technology">Technologies <span class="badge badge-danger" style="{{$techApprovalCount > 0 ? '' : 'display:none'}}">{{$techApprovalCount}}</span></a>
                 <div id="data-management-accordion" class="w-100">
-                    <a class="list-group-item accordion-toggle collapsed" data-toggle="collapse" data-target="#data-management-collapse" aria-expanded="false" href="#">Administration <span class="badge badge-danger" style="{{$administrationCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">!</span></a>
+                    <a class="list-group-item accordion-toggle collapsed" data-toggle="collapse" data-target="#data-management-collapse" aria-expanded="false" href="#">Manage Resources <span class="badge badge-danger" style="{{$administrationCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">!</span></a>
                     <div id="data-management-collapse" class="collapse" data-parent="#data-management-accordion">
                         <a class="list-group-item ml-3" data-toggle="tab" href="#applicabilityIndustry">Technology Applicability - Industry <span class="badge badge-danger" style="{{$applicabilityIndustryApprovalCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$applicabilityIndustryApprovalCount}}</span></a>
                         <a class="list-group-item ml-3" data-toggle="tab" href="#industry">Industries <span class="badge badge-danger" style="{{$industryApprovalCount > 0 ? '' : 'display:none;'}}{{auth()->user()->user_level == 5 ? '' : 'display:none'}}">{{$industryApprovalCount}}</span></a>
@@ -52,7 +52,6 @@
                 <div id="manage-users-accordion" class="w-100">
                     <a class="list-group-item accordion-toggle collapsed" data-toggle="collapse" data-target="#manage-users-collapse" aria-expanded="false" href="#">Manage Users</a>
                     <div id="manage-users-collapse" class="collapse" data-parent="#manage-users-accordion">
-                        <a class="list-group-item ml-3" data-toggle="tab" href="#access_levels">Manage Access Levels</a>
                         <a class="list-group-item ml-3" data-toggle="tab" href="#manageUsers">Manage Users</a>
                         <a class="list-group-item ml-3" data-toggle="tab" href="#userMessages">User Messages</a>
                     </div>
@@ -325,10 +324,7 @@
                 <div class="tab-pane fade" id="access_levels">
                     <div class="card shadow mb-5">
                         <div class="card-header">
-                            <h2>Access Levels
-                            <span class="float-right">
-                                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#createTechFieldModal"><i class="fas fa-plus"></i> Add</button>
-                            </span></h2>
+                            <h2>Access Levels</h2>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -352,7 +348,6 @@
                                                 <td class="text-right">
                                                     @if(auth()->user()->user_level == 5)
                                                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editTechFieldModal-{{$tech_field->id}}"><i class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteTechFieldModal-{{$tech_field->id}}"><i class="fas fa-trash"></i></button>
                                                     @endif
                                                 </td>
                                             </tr>
