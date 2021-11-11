@@ -3610,7 +3610,25 @@
     }
     */
     // ==================== OLD Dashboard JS ====================
-    let techPerSector = new Chart(document.getElementById('techPerSector').getContext('2d'), {
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    };
+
+    var view = getUrlParameter('view');
+    if(view == 'dashboardView'){
+        let techPerSector = new Chart(document.getElementById('techPerSector').getContext('2d'), {
             type:'bar',
             data:{
                 labels: <?php echo json_encode($techPerSectorArray[0]);?>,
@@ -3644,511 +3662,511 @@
                     }]
                 }
             }
-    }); 
-    let techPerCommodityChart = new Chart(document.getElementById('techPerCommodityChart').getContext('2d'), {
-        type:'pie',
-        data:{
-            labels: <?php echo json_encode($techPerCommodityArray[0]);?>,
-            datasets:[{
-                label: 'Number of Technologies',
-                data: <?php echo json_encode($techPerCommodityArray[1]);?>,
-                backgroundColor:[
-                    'rgba(255,99,132,1)',
-                    'rgba(54,38,195,1)',
-                    'rgba(108,21,105,1)',
-                    'rgba(169,201,51,1)',
-                    'rgba(20,21,20,1)',
-                    'rgb(213,213,213)'
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-        }
-    }); 
-
-    let techPerYearChart = new Chart(document.getElementById('techPerYearChart').getContext('2d'), {
-        type:'line',
-        data:{
-            labels: <?php echo json_encode($techPerYearArray[0]);?>,
-            datasets:[{
-                label: 'Number of Technologies',
-                data: <?php echo json_encode($techPerYearArray[1]);?>,
-                backgroundColor:[
-                    'rgba(20,99,20,1)',
-                    'rgba(54,38,195,1)',
-                    'rgba(108,21,105,1)',
-                    'rgba(169,201,51,1)',
-                    'rgba(20,21,20,1)',
-                    'rgb(213,213,213)'
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            legend: {
-                display: false
+        }); 
+        let techPerCommodityChart = new Chart(document.getElementById('techPerCommodityChart').getContext('2d'), {
+            type:'pie',
+            data:{
+                labels: <?php echo json_encode($techPerCommodityArray[0]);?>,
+                datasets:[{
+                    label: 'Number of Technologies',
+                    data: <?php echo json_encode($techPerCommodityArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(255,99,132,1)',
+                        'rgba(54,38,195,1)',
+                        'rgba(108,21,105,1)',
+                        'rgba(169,201,51,1)',
+                        'rgba(20,21,20,1)',
+                        'rgb(213,213,213)'
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
+                }]
             },
-            responsive:true,
-            scales: {
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1
-                    }
-                }]
+            options:{
+                responsive:true,
             }
-        }
-    }); 
-    
-    let techPerAgencyChart = new Chart(document.getElementById('techPerAgencyChart').getContext('2d'), {
-        type:'bar',
-        data:{
-            labels: <?php echo json_encode($techPerAgencyArray[0]);?>,
-            datasets:[{
-                label: 'Number of Technologies',
-                data: <?php echo json_encode($techPerAgencyArray[1]);?>,
-                backgroundColor:[
-                    'rgba(5,99,255,1)',
-                    'rgba(54,38,195,1)',
-                    'rgba(108,21,105,1)',
-                    'rgba(169,201,51,1)',
-                    'rgba(20,21,20,1)',
-                    'rgb(213,213,213)'
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            legend: {
-                display: false
+        }); 
+
+        let techPerYearChart = new Chart(document.getElementById('techPerYearChart').getContext('2d'), {
+            type:'line',
+            data:{
+                labels: <?php echo json_encode($techPerYearArray[0]);?>,
+                datasets:[{
+                    label: 'Number of Technologies',
+                    data: <?php echo json_encode($techPerYearArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(20,99,20,1)',
+                        'rgba(54,38,195,1)',
+                        'rgba(108,21,105,1)',
+                        'rgba(169,201,51,1)',
+                        'rgba(20,21,20,1)',
+                        'rgb(213,213,213)'
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
+                }]
             },
-            responsive:true,
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        callback: function(value) {
-                            return value.substr(0, 10) + '...';//truncate
-                        },
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1
-                    }
-                }]
+            options:{
+                legend: {
+                    display: false
+                },
+                responsive:true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
             }
-        }
-    }); 
-
-    let techPerCategoryChart = new Chart(document.getElementById('techPerCategoryChart').getContext('2d'), {
-        type:'bar',
-        data:{
-            labels: <?php echo json_encode($techPerCategoryArray[0]);?>,
-            datasets:[{
-                label: 'Number of Technologies',
-                data: <?php echo json_encode($techPerCategoryArray[1]);?>,
-                backgroundColor:[
-                    'rgba(72,255,132,1)',
-                    'rgba(54,38,195,1)',
-                    'rgba(108,21,105,1)',
-                    'rgba(169,201,51,1)',
-                    'rgba(20,21,20,1)',
-                    'rgb(213,213,213)'
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            legend: {
-                display: false
+        }); 
+        
+        let techPerAgencyChart = new Chart(document.getElementById('techPerAgencyChart').getContext('2d'), {
+            type:'bar',
+            data:{
+                labels: <?php echo json_encode($techPerAgencyArray[0]);?>,
+                datasets:[{
+                    label: 'Number of Technologies',
+                    data: <?php echo json_encode($techPerAgencyArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(5,99,255,1)',
+                        'rgba(54,38,195,1)',
+                        'rgba(108,21,105,1)',
+                        'rgba(169,201,51,1)',
+                        'rgba(20,21,20,1)',
+                        'rgb(213,213,213)'
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
+                }]
             },
-            responsive:true,
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        callback: function(value) {
-                            return value.substr(0, 10) + '...';//truncate
-                        },
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1
-                    }
-                }]
+            options:{
+                legend: {
+                    display: false
+                },
+                responsive:true,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            callback: function(value) {
+                                return value.substr(0, 10) + '...';//truncate
+                            },
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
             }
-        }
-    }); 
+        }); 
 
-    let techPerRegionChart = new Chart(document.getElementById('techPerRegionChart').getContext('2d'), {
-        type:'pie',
-        data:{
-            labels: <?php echo json_encode($techPerRegionArray[0]);?>,
-            datasets:[{
-                label: 'Number of Technologies',
-                data: <?php echo json_encode($techPerRegionArray[1]);?>,
-                backgroundColor:[
-                    'rgba(106,99,132,1)',
-                    'rgba(54,38,195,1)',
-                    'rgba(108,21,105,1)',
-                    'rgba(169,201,51,1)',
-                    'rgba(20,21,20,1)',
-                    'rgb(213,213,213)'
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-        }
-    }); 
-
-    let adoptersPerSectorChart = new Chart(document.getElementById('adoptersPerSectorChart').getContext('2d'), {
-        type:'doughnut',
-        data:{
-            labels: <?php echo json_encode($adoptersPerSectorArray[0]);?>,
-            datasets:[{
-                label: 'Number of Technologies',
-                data: <?php echo json_encode($adoptersPerSectorArray[1]);?>,
-                backgroundColor:[
-                    'rgba(8,99,132,1)',
-                    'rgba(54,38,8,1)',
-                    'rgba(9,21,5,1)',
-                    'rgba(3,201,51,1)',
-                    'rgba(210,7,100,1)',
-                    'rgba(31,7,100,1)',
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-        }
-    });
-
-    let adoptersPerCommodityChart = new Chart(document.getElementById('adoptersPerCommodityChart').getContext('2d'), {
-        type:'bar',
-        data:{
-            labels: <?php echo json_encode($adoptersPerCommodityArray[0]);?>,
-            datasets:[{
-                label: 'Number of Technologies',
-                data: <?php echo json_encode($adoptersPerCommodityArray[1]);?>,
-                backgroundColor:[
-                    'rgba(8,99,132,1)',
-                    'rgba(54,38,8,1)',
-                    'rgba(9,21,5,1)',
-                    'rgba(3,201,51,1)',
-                    'rgba(210,7,100,1)',
-                    'rgba(31,7,100,1)',
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-        }
-    });
-
-    let adoptersPerYearChart = new Chart(document.getElementById('adoptersPerYearChart').getContext('2d'), {
-        type:'line',
-        data:{
-            labels: <?php echo json_encode($adoptersPerYearArray[0]);?>,
-            datasets:[{
-                label: 'Number of Technologies',
-                data: <?php echo json_encode($adoptersPerYearArray[1]);?>,
-                backgroundColor:[
-                    'rgba(8,99,132,1)',
-                    'rgba(54,38,8,1)',
-                    'rgba(9,21,5,1)',
-                    'rgba(3,201,51,1)',
-                    'rgba(210,7,100,1)',
-                    'rgba(31,7,100,1)',
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-            scales: {
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1
-                    }
+        let techPerCategoryChart = new Chart(document.getElementById('techPerCategoryChart').getContext('2d'), {
+            type:'bar',
+            data:{
+                labels: <?php echo json_encode($techPerCategoryArray[0]);?>,
+                datasets:[{
+                    label: 'Number of Technologies',
+                    data: <?php echo json_encode($techPerCategoryArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(72,255,132,1)',
+                        'rgba(54,38,195,1)',
+                        'rgba(108,21,105,1)',
+                        'rgba(169,201,51,1)',
+                        'rgba(20,21,20,1)',
+                        'rgb(213,213,213)'
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
                 }]
+            },
+            options:{
+                legend: {
+                    display: false
+                },
+                responsive:true,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            callback: function(value) {
+                                return value.substr(0, 10) + '...';//truncate
+                            },
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
             }
-        }
-    });
+        }); 
 
-    let adoptersPerAgencyChart = new Chart(document.getElementById('adoptersPerAgencyChart').getContext('2d'), {
-        type:'bar',
-        data:{
-            labels: <?php echo json_encode($adoptersPerAgencyArray[0]);?>,
-            datasets:[{
-                label: 'Number of Technologies',
-                data: <?php echo json_encode($adoptersPerAgencyArray[1]);?>,
-                backgroundColor:[
-                    'rgba(8,99,132,1)',
-                    'rgba(54,38,8,1)',
-                    'rgba(9,21,5,1)',
-                    'rgba(3,201,51,1)',
-                    'rgba(210,7,100,1)',
-                    'rgba(31,7,100,1)',
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        callback: function(value) {
-                            return value.substr(0, 10) + '...';//truncate
-                        },
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1
-                    }
+        let techPerRegionChart = new Chart(document.getElementById('techPerRegionChart').getContext('2d'), {
+            type:'pie',
+            data:{
+                labels: <?php echo json_encode($techPerRegionArray[0]);?>,
+                datasets:[{
+                    label: 'Number of Technologies',
+                    data: <?php echo json_encode($techPerRegionArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(106,99,132,1)',
+                        'rgba(54,38,195,1)',
+                        'rgba(108,21,105,1)',
+                        'rgba(169,201,51,1)',
+                        'rgba(20,21,20,1)',
+                        'rgb(213,213,213)'
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
                 }]
+            },
+            options:{
+                responsive:true,
             }
-        }
-    });
+        }); 
 
-    let adoptersPerCategoryChart = new Chart(document.getElementById('adoptersPerCategoryChart').getContext('2d'), {
-        type:'doughnut',
-        data:{
-            labels: <?php echo json_encode($adoptersPerCategoryArray[0]);?>,
-            datasets:[{
-                label: 'Number of Technologies',
-                data: <?php echo json_encode($adoptersPerCategoryArray[1]);?>,
-                backgroundColor:[
-                    'rgba(8,99,132,1)',
-                    'rgba(54,38,8,1)',
-                    'rgba(9,21,5,1)',
-                    'rgba(3,201,51,1)',
-                    'rgba(210,7,100,1)',
-                    'rgba(31,7,100,1)',
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-        }
-    });
-
-    let adoptersPerRegionChart = new Chart(document.getElementById('adoptersPerRegionChart').getContext('2d'), {
-        type:'line',
-        data:{
-            labels: <?php echo json_encode($adoptersPerRegionArray[0]);?>,
-            datasets:[{
-                label: 'Number of Technologies',
-                data: <?php echo json_encode($adoptersPerRegionArray[1]);?>,
-                backgroundColor:[
-                    'rgba(8,99,132,1)',
-                    'rgba(54,38,8,1)',
-                    'rgba(9,21,5,1)',
-                    'rgba(3,201,51,1)',
-                    'rgba(210,7,100,1)',
-                    'rgba(31,7,100,1)',
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-            scales: {
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1
-                    }
+        let adoptersPerSectorChart = new Chart(document.getElementById('adoptersPerSectorChart').getContext('2d'), {
+            type:'doughnut',
+            data:{
+                labels: <?php echo json_encode($adoptersPerSectorArray[0]);?>,
+                datasets:[{
+                    label: 'Number of Technologies',
+                    data: <?php echo json_encode($adoptersPerSectorArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(8,99,132,1)',
+                        'rgba(54,38,8,1)',
+                        'rgba(9,21,5,1)',
+                        'rgba(3,201,51,1)',
+                        'rgba(210,7,100,1)',
+                        'rgba(31,7,100,1)',
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
                 }]
+            },
+            options:{
+                responsive:true,
             }
-        }
-    });
+        });
 
-    let fundedPerSectorChart = new Chart(document.getElementById('fundedPerSectorChart').getContext('2d'), {
-        type:'line',
-        data:{
-            labels: <?php echo json_encode($fundedPerSectorArray[0]);?>,
-            datasets:[{
-                label: 'Amount of Funds in Millions',
-                data: <?php echo json_encode($fundedPerSectorArray[1]);?>,
-                backgroundColor:[
-                    'rgba(85,32,200,1)',
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1
-                    }
+        let adoptersPerCommodityChart = new Chart(document.getElementById('adoptersPerCommodityChart').getContext('2d'), {
+            type:'bar',
+            data:{
+                labels: <?php echo json_encode($adoptersPerCommodityArray[0]);?>,
+                datasets:[{
+                    label: 'Number of Technologies',
+                    data: <?php echo json_encode($adoptersPerCommodityArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(8,99,132,1)',
+                        'rgba(54,38,8,1)',
+                        'rgba(9,21,5,1)',
+                        'rgba(3,201,51,1)',
+                        'rgba(210,7,100,1)',
+                        'rgba(31,7,100,1)',
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
                 }]
+            },
+            options:{
+                responsive:true,
             }
-        }
-    });
+        });
 
-    let fundedPerCommodityChart = new Chart(document.getElementById('fundedPerCommodityChart').getContext('2d'), {
-        type:'line',
-        data:{
-            labels: <?php echo json_encode($fundedPerCommodityArray[0]);?>,
-            datasets:[{
-                label: 'Amount of Funds in Millions',
-                data: <?php echo json_encode($fundedPerCommodityArray[1]);?>,
-                backgroundColor:[
-                    'rgba(85,32,200,1)',
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1
-                    }
+        let adoptersPerYearChart = new Chart(document.getElementById('adoptersPerYearChart').getContext('2d'), {
+            type:'line',
+            data:{
+                labels: <?php echo json_encode($adoptersPerYearArray[0]);?>,
+                datasets:[{
+                    label: 'Number of Technologies',
+                    data: <?php echo json_encode($adoptersPerYearArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(8,99,132,1)',
+                        'rgba(54,38,8,1)',
+                        'rgba(9,21,5,1)',
+                        'rgba(3,201,51,1)',
+                        'rgba(210,7,100,1)',
+                        'rgba(31,7,100,1)',
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
                 }]
+            },
+            options:{
+                responsive:true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
             }
-        }
-    });
+        });
 
-    let fundedPerYearChart = new Chart(document.getElementById('fundedPerYearChart').getContext('2d'), {
-        type:'line',
-        data:{
-            labels: <?php echo json_encode($fundedPerYearArray[0]);?>,
-            datasets:[{
-                label: 'Amount of Funds in Millions',
-                data: <?php echo json_encode($fundedPerYearArray[1]);?>,
-                backgroundColor:[
-                    'rgba(85,32,200,1)',
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-            maintainAspectRatio: false,
-            scales: {
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1
-                    }
+        let adoptersPerAgencyChart = new Chart(document.getElementById('adoptersPerAgencyChart').getContext('2d'), {
+            type:'bar',
+            data:{
+                labels: <?php echo json_encode($adoptersPerAgencyArray[0]);?>,
+                datasets:[{
+                    label: 'Number of Technologies',
+                    data: <?php echo json_encode($adoptersPerAgencyArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(8,99,132,1)',
+                        'rgba(54,38,8,1)',
+                        'rgba(9,21,5,1)',
+                        'rgba(3,201,51,1)',
+                        'rgba(210,7,100,1)',
+                        'rgba(31,7,100,1)',
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
                 }]
+            },
+            options:{
+                responsive:true,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            callback: function(value) {
+                                return value.substr(0, 10) + '...';//truncate
+                            },
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
             }
-        }
-    });
+        });
 
-    let fundedPerAgencyChart = new Chart(document.getElementById('fundedPerAgencyChart').getContext('2d'), {
-        type:'line',
-        data:{
-            labels: <?php echo json_encode($fundedPerAgencyArray[0]);?>,
-            datasets:[{
-                label: 'Amount of Funds in Millions',
-                data: <?php echo json_encode($fundedPerAgencyArray[1]);?>,
-                backgroundColor:[
-                    'rgba(85,32,200,1)',
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-            maintainAspectRatio: false,
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        callback: function(value) {
-                            return value.substr(0, 10) + '...';//truncate
-                        },
-                    }
+        let adoptersPerCategoryChart = new Chart(document.getElementById('adoptersPerCategoryChart').getContext('2d'), {
+            type:'doughnut',
+            data:{
+                labels: <?php echo json_encode($adoptersPerCategoryArray[0]);?>,
+                datasets:[{
+                    label: 'Number of Technologies',
+                    data: <?php echo json_encode($adoptersPerCategoryArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(8,99,132,1)',
+                        'rgba(54,38,8,1)',
+                        'rgba(9,21,5,1)',
+                        'rgba(3,201,51,1)',
+                        'rgba(210,7,100,1)',
+                        'rgba(31,7,100,1)',
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
                 }]
+            },
+            options:{
+                responsive:true,
             }
-        }
-    });
+        });
 
-    let fundedPerCategoryChart = new Chart(document.getElementById('fundedPerCategoryChart').getContext('2d'), {
-        type:'line',
-        data:{
-            labels: <?php echo json_encode($fundedPerCategoryArray[0]);?>,
-            datasets:[{
-                label: 'Amount of Funds in Millions',
-                data: <?php echo json_encode($fundedPerCategoryArray[1]);?>,
-                backgroundColor:[
-                    'rgba(85,32,200,1)',
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-            maintainAspectRatio: false,
-        }
-    });
+        let adoptersPerRegionChart = new Chart(document.getElementById('adoptersPerRegionChart').getContext('2d'), {
+            type:'line',
+            data:{
+                labels: <?php echo json_encode($adoptersPerRegionArray[0]);?>,
+                datasets:[{
+                    label: 'Number of Technologies',
+                    data: <?php echo json_encode($adoptersPerRegionArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(8,99,132,1)',
+                        'rgba(54,38,8,1)',
+                        'rgba(9,21,5,1)',
+                        'rgba(3,201,51,1)',
+                        'rgba(210,7,100,1)',
+                        'rgba(31,7,100,1)',
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
+                }]
+            },
+            options:{
+                responsive:true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
 
-    let fundedPerRegionChart = new Chart(document.getElementById('fundedPerRegionChart').getContext('2d'), {
-        type:'line',
-        data:{
-            labels: <?php echo json_encode($fundedPerRegionArray[0]);?>,
-            datasets:[{
-                label: 'Amount of Funds in Millions',
-                data: <?php echo json_encode($fundedPerRegionArray[1]);?>,
-                backgroundColor:[
-                    'rgba(85,32,200,1)',
-                ],
-                hoverBorderWidth:3,
-                hoverBorderColor:'rgb(0,0,0)'
-            }]
-        },
-        options:{
-            responsive:true,
-            maintainAspectRatio: false,
-        }
-    });
+        let fundedPerSectorChart = new Chart(document.getElementById('fundedPerSectorChart').getContext('2d'), {
+            type:'line',
+            data:{
+                labels: <?php echo json_encode($fundedPerSectorArray[0]);?>,
+                datasets:[{
+                    label: 'Amount of Funds in Millions',
+                    data: <?php echo json_encode($fundedPerSectorArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(85,32,200,1)',
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
+                }]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
 
+        let fundedPerCommodityChart = new Chart(document.getElementById('fundedPerCommodityChart').getContext('2d'), {
+            type:'line',
+            data:{
+                labels: <?php echo json_encode($fundedPerCommodityArray[0]);?>,
+                datasets:[{
+                    label: 'Amount of Funds in Millions',
+                    data: <?php echo json_encode($fundedPerCommodityArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(85,32,200,1)',
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
+                }]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
+
+        let fundedPerYearChart = new Chart(document.getElementById('fundedPerYearChart').getContext('2d'), {
+            type:'line',
+            data:{
+                labels: <?php echo json_encode($fundedPerYearArray[0]);?>,
+                datasets:[{
+                    label: 'Amount of Funds in Millions',
+                    data: <?php echo json_encode($fundedPerYearArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(85,32,200,1)',
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
+                }]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true,
+                            stepSize: 1
+                        }
+                    }]
+                }
+            }
+        });
+
+        let fundedPerAgencyChart = new Chart(document.getElementById('fundedPerAgencyChart').getContext('2d'), {
+            type:'line',
+            data:{
+                labels: <?php echo json_encode($fundedPerAgencyArray[0]);?>,
+                datasets:[{
+                    label: 'Amount of Funds in Millions',
+                    data: <?php echo json_encode($fundedPerAgencyArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(85,32,200,1)',
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
+                }]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            callback: function(value) {
+                                return value.substr(0, 10) + '...';//truncate
+                            },
+                        }
+                    }]
+                }
+            }
+        });
+
+        let fundedPerCategoryChart = new Chart(document.getElementById('fundedPerCategoryChart').getContext('2d'), {
+            type:'line',
+            data:{
+                labels: <?php echo json_encode($fundedPerCategoryArray[0]);?>,
+                datasets:[{
+                    label: 'Amount of Funds in Millions',
+                    data: <?php echo json_encode($fundedPerCategoryArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(85,32,200,1)',
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
+                }]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio: false,
+            }
+        });
+
+        let fundedPerRegionChart = new Chart(document.getElementById('fundedPerRegionChart').getContext('2d'), {
+            type:'line',
+            data:{
+                labels: <?php echo json_encode($fundedPerRegionArray[0]);?>,
+                datasets:[{
+                    label: 'Amount of Funds in Millions',
+                    data: <?php echo json_encode($fundedPerRegionArray[1]);?>,
+                    backgroundColor:[
+                        'rgba(85,32,200,1)',
+                    ],
+                    hoverBorderWidth:3,
+                    hoverBorderColor:'rgb(0,0,0)'
+                }]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio: false,
+            }
+        });
+    }
 </script>
 
 <style>
