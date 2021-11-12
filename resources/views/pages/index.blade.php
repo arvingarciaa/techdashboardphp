@@ -3394,7 +3394,7 @@
         $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
         $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
     });
-
+    /*
     $(".take-survey").on("click", function() {
         $.colorbox.close();
     });
@@ -3439,7 +3439,7 @@
             displayPopup();
         }, 3000);
     }
-
+*/
     $('.toggle-item').click(function() {
         $('.toggle-item').removeClass('active');
         $(this).addClass('active');
@@ -3628,7 +3628,6 @@
     };
 
     var view = getUrlParameter('view');
-    /*
     if(view == 'dashboardView'){
         let techPerSector = new Chart(document.getElementById('techPerSector').getContext('2d'), {
             type:'bar',
@@ -4168,7 +4167,7 @@
                 maintainAspectRatio: false,
             }
         });
-    }*/
+    }
 </script>
 
 <style>
