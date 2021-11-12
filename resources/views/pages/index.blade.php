@@ -3374,7 +3374,7 @@
 <script>   
     $(document).ready(function() {
         // init datatable on #example table
-        //$('.data-table').DataTable();
+        $('.data-table').DataTable();
     });
     $(".list-group-item-action").on('click', function() {
         $(".list-group-item-action").each(function(index) {
