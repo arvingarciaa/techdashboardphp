@@ -2122,7 +2122,7 @@
             ?>
              <!-- END DYNAMIC DATA INPUT FOR ADOPTERS PER ____ PIE Graph -->
              <!-- DYNAMIC DATA INPUT FOR AMOUNT FUNDED PER ____ --> 
-             <?php
+            <?php
                 $fundedChartArray = array();
                 $fundedChartArray[0] = array();
                 $fundedChartArray[1] = array();
@@ -2134,44 +2134,25 @@
                 $stringCheck = 0;
                 $nullYears = 0;
 
-                    //Amount funded per year
-                    $fundedPerYearArray = array();
-                    $fundedPerYearArray[0] = array();
-                    $fundedPerYearArray[1] = array();
-                    $fundedPerYearOthersCount = 0;
-                    $fundedPerYearCounter = 0;
-                    foreach(DB::table('technologies')->where('approved', '=', 2)->get() as $tech){
-                        foreach(DB::table('r_d_results')->where('technology_id', '=', $tech->id)->get() as $rd){
-                            if($rd->cost != 0){
-                                foreach($fundedPerYearArray[0] as $key => $val){
-                                    if($tech->year_developed == $val){
-                                        $fundedPerYearArray[1][$key] = $fundedPerYearArray[1][$key] + (int)$rd->cost/1000000;
-                                        $stringCheck = 1;
-                                    }
-                                }
-                                if($stringCheck == 0){
-                                    if($fundedPerYearCounter < 5){
-                                        array_push($fundedPerYearArray[0], $tech->year_developed);
-                                        array_push($fundedPerYearArray[1], (int)$rd->cost/1000000);
-                                        $fundedPerYearCounter++;
-                                    } else {
-                                        $fundedPerYearOthersCount++;
-                                    }
-                                }
-                                $stringCheck = 0;
-                            }
-                        }
-                        if($tech->basic_research_cost != 0 || $tech->applied_research_cost != 0){
+                //Amount funded per year
+                $fundedPerYearArray = array();
+                $fundedPerYearArray[0] = array();
+                $fundedPerYearArray[1] = array();
+                $fundedPerYearOthersCount = 0;
+                $fundedPerYearCounter = 0;
+                foreach(DB::table('technologies')->where('approved', '=', 2)->get()->take(1) as $tech){
+                    foreach(DB::table('r_d_results')->where('technology_id', '=', $tech->id)->get() as $rd){
+                        if($rd->cost != 0){
                             foreach($fundedPerYearArray[0] as $key => $val){
                                 if($tech->year_developed == $val){
-                                    $fundedPerYearArray[1][$key] = $fundedPerYearArray[1][$key] + (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000;
+                                    $fundedPerYearArray[1][$key] = $fundedPerYearArray[1][$key] + (int)$rd->cost/1000000;
                                     $stringCheck = 1;
                                 }
                             }
                             if($stringCheck == 0){
                                 if($fundedPerYearCounter < 5){
                                     array_push($fundedPerYearArray[0], $tech->year_developed);
-                                    array_push($fundedPerYearArray[1], (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000);
+                                    array_push($fundedPerYearArray[1], (int)$rd->cost/1000000);
                                     $fundedPerYearCounter++;
                                 } else {
                                     $fundedPerYearOthersCount++;
@@ -2179,11 +2160,29 @@
                             }
                             $stringCheck = 0;
                         }
-                        if($fundedPerYearOthersCount!= 0){
-                            array_push($fundedPerYearArray[0],'Others');
-                            array_push($fundedPerYearArray[1],$othersCount);
+                    }
+                    if($tech->basic_research_cost != 0 || $tech->applied_research_cost != 0){
+                        foreach($fundedPerYearArray[0] as $key => $val){
+                            if($tech->year_developed == $val){
+                                $fundedPerYearArray[1][$key] = $fundedPerYearArray[1][$key] + (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000;
+                                $stringCheck = 1;
+                            }
                         }
-                    
+                        if($stringCheck == 0){
+                            if($fundedPerYearCounter < 5){
+                                array_push($fundedPerYearArray[0], $tech->year_developed);
+                                array_push($fundedPerYearArray[1], (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000);
+                                $fundedPerYearCounter++;
+                            } else {
+                                $fundedPerYearOthersCount++;
+                            }
+                        }
+                        $stringCheck = 0;
+                    }
+                    if($fundedPerYearOthersCount!= 0){
+                        array_push($fundedPerYearArray[0],'Others');
+                        array_push($fundedPerYearArray[1],$othersCount);
+                    }
                     //Amount funded per Commodity
                     $fundedPerCommodityArray = array();
                     $fundedPerCommodityArray[0] = array();
@@ -2192,99 +2191,98 @@
                     $fundedPerCommodityCounter = 0;
                     /*
                     foreach(DB::table('commodity_technology')->get() as $ct){
-                        $tech = DB::table('technologies')->where('approved', '=', 2)->where('id', '=', $ct->technology_id)->first();
-                        $comm = DB::table('commodities')->where('id', '=', $ct->commodity_id)->first();
-                        foreach(DB::table('r_d_results')->where('technology_id', '=', $tech->id)->get() as $rd){
-                            if($rd->cost != 0){
+                            $tech = DB::table('technologies')->where('approved', '=', 2)->where('id', '=', $ct->technology_id)->first();
+                            $comm = DB::table('commodities')->where('id', '=', $ct->commodity_id)->first();
+                            foreach(DB::table('r_d_results')->where('technology_id', '=', $tech->id)->get() as $rd){
+                                if($rd->cost != 0){
+                                    foreach($fundedPerCommodityArray[0] as $key => $val){
+                                    if($comm->name == $val){
+                                        $fundedPerCommodityArray[1][$key] = $fundedPerCommodityArray[1][$key] + (int)$rd->cost/1000000;
+                                        $stringCheck = 1;
+                                    }
+                                }
+                                if($stringCheck == 0){
+                                    if($fundedPerCommodityCounter < 5){
+                                        array_push($fundedPerCommodityArray[0], $comm->name);
+                                        array_push($fundedPerCommodityArray[1], (int)$rd->cost/1000000);
+                                        $fundedPerCommodityCounter++;
+                                    } else {
+                                        $fundedPerCommodityOthersCount++;
+                                    }
+                                }
+                                $stringCheck = 0;
+                                }
+                            }
+                            if($tech->basic_research_cost != 0 || $tech->applied_research_cost != 0){
                                 foreach($fundedPerCommodityArray[0] as $key => $val){
-                                if($comm->name == $val){
-                                    $fundedPerCommodityArray[1][$key] = $fundedPerCommodityArray[1][$key] + (int)$rd->cost/1000000;
-                                    $stringCheck = 1;
+                                    if($comm->name == $val){
+                                        $fundedPerCommodityArray[1][$key] = $fundedPerCommodityArray[1][$key] + (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000;
+                                        $stringCheck = 1;
+                                    }
+                                }
+                                if($stringCheck == 0){
+                                    if($fundedPerCommodityCounter < 5){
+                                        array_push($fundedPerCommodityArray[0], $comm->name);
+                                        array_push($fundedPerCommodityArray[1], (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000);
+                                        $fundedPerCommodityCounter++;
+                                    } else {
+                                        $fundedPerCommodityOthersCount++;
+                                    }
+                                }
+                                $stringCheck = 0;
+                            }
+                        }*/
+                        //Amount funded per Sector
+                        $fundedPerSectorArray = array();
+                        $fundedPerSectorArray[0] = array();
+                        $fundedPerSectorArray[1] = array();
+                        $fundedPerSectorOthersCount = 0;
+                        $fundedPerSectorCounter = 0;
+                        /*
+                        foreach(DB::table('commodity_technology')->get() as $ct){
+                            $tech = DB::table('technologies')->where('approved', '=', 2)->where('id', '=', $ct->technology_id)->first();
+                            $comm = DB::table('commodities')->where('id', '=', $ct->commodity_id)->first();
+                            $sect = App\Sector::where('id', '=', $comm->sector_id)->first();
+                            foreach(DB::table('r_d_results')->where('technology_id', '=', $tech->id)->get() as $rd){
+                                if($rd->cost != 0){
+                                    foreach($fundedPerSectorArray[0] as $key => $val){
+                                    if($sect->name == $val){
+                                        $fundedPerSectorArray[1][$key] = $fundedPerSectorArray[1][$key] + (int)$rd->cost/1000000;
+                                        $stringCheck = 1;
+                                    }
+                                }
+                                if($stringCheck == 0){
+                                    if($fundedPerSectorCounter < 5){
+                                        array_push($fundedPerSectorArray[0], $sect->name);
+                                        array_push($fundedPerSectorArray[1], (int)$rd->cost/1000000);
+                                        $fundedPerSectorCounter++;
+                                    } else {
+                                        $fundedPerSectorOthersCount++;
+                                    }
+                                }
+                                $stringCheck = 0;
                                 }
                             }
-                            if($stringCheck == 0){
-                                if($fundedPerCommodityCounter < 5){
-                                    array_push($fundedPerCommodityArray[0], $comm->name);
-                                    array_push($fundedPerCommodityArray[1], (int)$rd->cost/1000000);
-                                    $fundedPerCommodityCounter++;
-                                } else {
-                                    $fundedPerCommodityOthersCount++;
-                                }
-                            }
-                            $stringCheck = 0;
-                            }
-                        }
-                        if($tech->basic_research_cost != 0 || $tech->applied_research_cost != 0){
-                            foreach($fundedPerCommodityArray[0] as $key => $val){
-                                if($comm->name == $val){
-                                    $fundedPerCommodityArray[1][$key] = $fundedPerCommodityArray[1][$key] + (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000;
-                                    $stringCheck = 1;
-                                }
-                            }
-                            if($stringCheck == 0){
-                                if($fundedPerCommodityCounter < 5){
-                                    array_push($fundedPerCommodityArray[0], $comm->name);
-                                    array_push($fundedPerCommodityArray[1], (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000);
-                                    $fundedPerCommodityCounter++;
-                                } else {
-                                    $fundedPerCommodityOthersCount++;
-                                }
-                            }
-                            $stringCheck = 0;
-                        }
-                    }*/
-
-                    //Amount funded per Sector
-                    $fundedPerSectorArray = array();
-                    $fundedPerSectorArray[0] = array();
-                    $fundedPerSectorArray[1] = array();
-                    $fundedPerSectorOthersCount = 0;
-                    $fundedPerSectorCounter = 0;
-                    /*
-                    foreach(DB::table('commodity_technology')->get() as $ct){
-                        $tech = DB::table('technologies')->where('approved', '=', 2)->where('id', '=', $ct->technology_id)->first();
-                        $comm = DB::table('commodities')->where('id', '=', $ct->commodity_id)->first();
-                        $sect = App\Sector::where('id', '=', $comm->sector_id)->first();
-                        foreach(DB::table('r_d_results')->where('technology_id', '=', $tech->id)->get() as $rd){
-                            if($rd->cost != 0){
+                            if($tech->basic_research_cost != 0 || $tech->applied_research_cost != 0){
                                 foreach($fundedPerSectorArray[0] as $key => $val){
-                                if($sect->name == $val){
-                                    $fundedPerSectorArray[1][$key] = $fundedPerSectorArray[1][$key] + (int)$rd->cost/1000000;
-                                    $stringCheck = 1;
+                                    if($sect->name == $val){
+                                        $fundedPerSectorArray[1][$key] = $fundedPerSectorArray[1][$key] + (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000;
+                                        $stringCheck = 1;
+                                    }
                                 }
-                            }
-                            if($stringCheck == 0){
-                                if($fundedPerSectorCounter < 5){
-                                    array_push($fundedPerSectorArray[0], $sect->name);
-                                    array_push($fundedPerSectorArray[1], (int)$rd->cost/1000000);
-                                    $fundedPerSectorCounter++;
-                                } else {
-                                    $fundedPerSectorOthersCount++;
+                                if($stringCheck == 0){
+                                    if($fundedPerSectorCounter < 5){
+                                        array_push($fundedPerSectorArray[0], $sect->name);
+                                        array_push($fundedPerSectorArray[1], (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000);
+                                        $fundedPerSectorCounter++;
+                                    } else {
+                                        $fundedPerSectorOthersCount++;
+                                    }
                                 }
-                            }
-                            $stringCheck = 0;
+                                $stringCheck = 0;
                             }
                         }
-                        if($tech->basic_research_cost != 0 || $tech->applied_research_cost != 0){
-                            foreach($fundedPerSectorArray[0] as $key => $val){
-                                if($sect->name == $val){
-                                    $fundedPerSectorArray[1][$key] = $fundedPerSectorArray[1][$key] + (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000;
-                                    $stringCheck = 1;
-                                }
-                            }
-                            if($stringCheck == 0){
-                                if($fundedPerSectorCounter < 5){
-                                    array_push($fundedPerSectorArray[0], $sect->name);
-                                    array_push($fundedPerSectorArray[1], (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000);
-                                    $fundedPerSectorCounter++;
-                                } else {
-                                    $fundedPerSectorOthersCount++;
-                                }
-                            }
-                            $stringCheck = 0;
-                        }
-                    }
-*/
+                    */
                     //Amount funded per Region
                     $fundedPerRegionArray = array();
                     $fundedPerRegionArray[0] = array();
