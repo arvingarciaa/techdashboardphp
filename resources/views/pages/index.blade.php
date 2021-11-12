@@ -2141,7 +2141,7 @@
                 $fundedPerYearArray[1] = array();
                 $fundedPerYearOthersCount = 0;
                 $fundedPerYearCounter = 0;
-                foreach(DB::table('technologies')->where('approved', '=', 2)->get()->take(1) as $tech){
+                foreach(DB::table('technologies')->where('approved', '=', 2)->get() as $tech){
                     foreach(DB::table('r_d_results')->where('technology_id', '=', $tech->id)->get() as $rd){
                         if($rd->cost != 0){
                             foreach($fundedPerYearArray[0] as $key => $val){
