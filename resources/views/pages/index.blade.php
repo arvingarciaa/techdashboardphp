@@ -7,7 +7,6 @@
 @endsection
 @section('content')
     <?php
-        phpinfo();
         $landing_page = App\LandingPage::first();
     ?>
 
