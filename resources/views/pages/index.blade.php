@@ -3467,11 +3467,14 @@
         }
     });
 
+    // ==================== OLD Dashboard JS ====================
+    /*
     //Global Options
     Chart.defaults.global.defaultFontFamily = 'Raleway';
     Chart.defaults.global.defaultFontSize = 18;
     Chart.defaults.global.defaultFontColor = '#777';
     Chart.defaults.global.defaultFontStyle = 'bold';
+
     //Philippine Map Chart
     const country = fetch(
         'https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/phl.topo.json'
@@ -3480,49 +3483,47 @@
         'https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/topojson/regions/lowres/regions.topo.0.001.json'
     ).then((r) => r.json());
     Promise.all([regions, country]).then((data) => {
-            const regions = ChartGeo.topojson.feature(data[0], data[0].objects["regions.0.001"]).features;
-            const country = ChartGeo.topojson.feature(data[1], data[1].objects.phl).features[0];
-            if(document.getElementById('mapChart') != null){
-                const chart = new Chart(document.getElementById('mapChart').getContext('2d'), {
-                    type: 'choropleth',
-                    data: {
-                        labels: regions.map((d) => d.properties.ADM1_EN),
-                        datasets: [
-                        {
-                            label: 'Regions',
-                            outline: country,
-                            data: regions.map((d) => ({
-                            feature: d,
-                            value: Math.random(),
-                            })),
-                        },
-                        ],
+        const regions = ChartGeo.topojson.feature(data[0], data[0].objects["regions.0.001"]).features;
+        const country = ChartGeo.topojson.feature(data[1], data[1].objects.phl).features[0];
+        if(document.getElementById('mapChart') != null){
+            const chart = new Chart(document.getElementById('mapChart').getContext('2d'), {
+                type: 'choropleth',
+                data: {
+                    labels: regions.map((d) => d.properties.ADM1_EN),
+                    datasets: [
+                    {
+                        label: 'Regions',
+                        outline: country,
+                        data: regions.map((d) => ({
+                        feature: d,
+                        value: Math.random(),
+                        })),
                     },
-                    options: {
+                    ],
+                },
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    scale: {
+                        projection: 'equirectangular'
+                    },
+                    geo: {
+                        colorScale: {
+                        display: true,
+                        position: 'bottom',
+                        quantize: 5,
                         legend: {
-                            display: false
+                            position: 'bottom-right',
                         },
-                        scale: {
-                            projection: 'equirectangular'
                         },
-                        geo: {
-                            colorScale: {
-                            display: true,
-                            position: 'bottom',
-                            quantize: 5,
-                            legend: {
-                                position: 'bottom-right',
-                            },
-                            },
-                        },
-                        responsive:true,
-                        maintainAspectRatio: false
                     },
-                });
-            }
+                    responsive:true,
+                    maintainAspectRatio: false
+                },
+            });
+        }
     });
-    // ==================== OLD Dashboard JS ====================
-    /*
     //Technology Per Region Bar Chart
     var a = document.getElementById("techBarChart");
     if(a != null){
@@ -3609,7 +3610,7 @@
         });
     }
     */
-    // ==================== OLD Dashboard JS ====================
+    // ==================== END OF OLD Dashboard JS ====================
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
@@ -3627,14 +3628,15 @@
     };
 
     var view = getUrlParameter('view');
+    /*
     if(view == 'dashboardView'){
         let techPerSector = new Chart(document.getElementById('techPerSector').getContext('2d'), {
             type:'bar',
             data:{
-                labels: <?php echo json_encode($techPerSectorArray[0]);?>,
+                labels: @php echo json_encode($techPerSectorArray[0]);@endphp,
                 datasets:[{
                     label: 'Number of Technologies',
-                    data: <?php echo json_encode($techPerSectorArray[1]);?>,
+                    data: @php echo json_encode($techPerSectorArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(255,99,132,1)',
                         'rgba(54,38,195,1)',
@@ -3666,10 +3668,10 @@
         let techPerCommodityChart = new Chart(document.getElementById('techPerCommodityChart').getContext('2d'), {
             type:'pie',
             data:{
-                labels: <?php echo json_encode($techPerCommodityArray[0]);?>,
+                labels: @php echo json_encode($techPerCommodityArray[0]);@endphp,
                 datasets:[{
                     label: 'Number of Technologies',
-                    data: <?php echo json_encode($techPerCommodityArray[1]);?>,
+                    data: @php echo json_encode($techPerCommodityArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(255,99,132,1)',
                         'rgba(54,38,195,1)',
@@ -3690,10 +3692,10 @@
         let techPerYearChart = new Chart(document.getElementById('techPerYearChart').getContext('2d'), {
             type:'line',
             data:{
-                labels: <?php echo json_encode($techPerYearArray[0]);?>,
+                labels: @php echo json_encode($techPerYearArray[0]);@endphp,
                 datasets:[{
                     label: 'Number of Technologies',
-                    data: <?php echo json_encode($techPerYearArray[1]);?>,
+                    data: @php echo json_encode($techPerYearArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(20,99,20,1)',
                         'rgba(54,38,195,1)',
@@ -3726,10 +3728,10 @@
         let techPerAgencyChart = new Chart(document.getElementById('techPerAgencyChart').getContext('2d'), {
             type:'bar',
             data:{
-                labels: <?php echo json_encode($techPerAgencyArray[0]);?>,
+                labels: @php echo json_encode($techPerAgencyArray[0]);@endphp,
                 datasets:[{
                     label: 'Number of Technologies',
-                    data: <?php echo json_encode($techPerAgencyArray[1]);?>,
+                    data: @php echo json_encode($techPerAgencyArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(5,99,255,1)',
                         'rgba(54,38,195,1)',
@@ -3769,10 +3771,10 @@
         let techPerCategoryChart = new Chart(document.getElementById('techPerCategoryChart').getContext('2d'), {
             type:'bar',
             data:{
-                labels: <?php echo json_encode($techPerCategoryArray[0]);?>,
+                labels: @php echo json_encode($techPerCategoryArray[0]);@endphp,
                 datasets:[{
                     label: 'Number of Technologies',
-                    data: <?php echo json_encode($techPerCategoryArray[1]);?>,
+                    data: @php echo json_encode($techPerCategoryArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(72,255,132,1)',
                         'rgba(54,38,195,1)',
@@ -3812,10 +3814,10 @@
         let techPerRegionChart = new Chart(document.getElementById('techPerRegionChart').getContext('2d'), {
             type:'pie',
             data:{
-                labels: <?php echo json_encode($techPerRegionArray[0]);?>,
+                labels: @php echo json_encode($techPerRegionArray[0]);@endphp,
                 datasets:[{
                     label: 'Number of Technologies',
-                    data: <?php echo json_encode($techPerRegionArray[1]);?>,
+                    data: @php echo json_encode($techPerRegionArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(106,99,132,1)',
                         'rgba(54,38,195,1)',
@@ -3836,10 +3838,10 @@
         let adoptersPerSectorChart = new Chart(document.getElementById('adoptersPerSectorChart').getContext('2d'), {
             type:'doughnut',
             data:{
-                labels: <?php echo json_encode($adoptersPerSectorArray[0]);?>,
+                labels: @php echo json_encode($adoptersPerSectorArray[0]);@endphp,
                 datasets:[{
                     label: 'Number of Technologies',
-                    data: <?php echo json_encode($adoptersPerSectorArray[1]);?>,
+                    data: @php echo json_encode($adoptersPerSectorArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(8,99,132,1)',
                         'rgba(54,38,8,1)',
@@ -3860,10 +3862,10 @@
         let adoptersPerCommodityChart = new Chart(document.getElementById('adoptersPerCommodityChart').getContext('2d'), {
             type:'bar',
             data:{
-                labels: <?php echo json_encode($adoptersPerCommodityArray[0]);?>,
+                labels: @php echo json_encode($adoptersPerCommodityArray[0]);@endphp,
                 datasets:[{
                     label: 'Number of Technologies',
-                    data: <?php echo json_encode($adoptersPerCommodityArray[1]);?>,
+                    data: @php echo json_encode($adoptersPerCommodityArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(8,99,132,1)',
                         'rgba(54,38,8,1)',
@@ -3884,10 +3886,10 @@
         let adoptersPerYearChart = new Chart(document.getElementById('adoptersPerYearChart').getContext('2d'), {
             type:'line',
             data:{
-                labels: <?php echo json_encode($adoptersPerYearArray[0]);?>,
+                labels: @php echo json_encode($adoptersPerYearArray[0]);@endphp,
                 datasets:[{
                     label: 'Number of Technologies',
-                    data: <?php echo json_encode($adoptersPerYearArray[1]);?>,
+                    data: @php echo json_encode($adoptersPerYearArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(8,99,132,1)',
                         'rgba(54,38,8,1)',
@@ -3917,10 +3919,10 @@
         let adoptersPerAgencyChart = new Chart(document.getElementById('adoptersPerAgencyChart').getContext('2d'), {
             type:'bar',
             data:{
-                labels: <?php echo json_encode($adoptersPerAgencyArray[0]);?>,
+                labels: @php echo json_encode($adoptersPerAgencyArray[0]);@endphp,
                 datasets:[{
                     label: 'Number of Technologies',
-                    data: <?php echo json_encode($adoptersPerAgencyArray[1]);?>,
+                    data: @php echo json_encode($adoptersPerAgencyArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(8,99,132,1)',
                         'rgba(54,38,8,1)',
@@ -3957,10 +3959,10 @@
         let adoptersPerCategoryChart = new Chart(document.getElementById('adoptersPerCategoryChart').getContext('2d'), {
             type:'doughnut',
             data:{
-                labels: <?php echo json_encode($adoptersPerCategoryArray[0]);?>,
+                labels: @php echo json_encode($adoptersPerCategoryArray[0]);@endphp,
                 datasets:[{
                     label: 'Number of Technologies',
-                    data: <?php echo json_encode($adoptersPerCategoryArray[1]);?>,
+                    data: @php echo json_encode($adoptersPerCategoryArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(8,99,132,1)',
                         'rgba(54,38,8,1)',
@@ -3981,10 +3983,10 @@
         let adoptersPerRegionChart = new Chart(document.getElementById('adoptersPerRegionChart').getContext('2d'), {
             type:'line',
             data:{
-                labels: <?php echo json_encode($adoptersPerRegionArray[0]);?>,
+                labels: @php echo json_encode($adoptersPerRegionArray[0]);@endphp,
                 datasets:[{
                     label: 'Number of Technologies',
-                    data: <?php echo json_encode($adoptersPerRegionArray[1]);?>,
+                    data: @php echo json_encode($adoptersPerRegionArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(8,99,132,1)',
                         'rgba(54,38,8,1)',
@@ -4014,10 +4016,10 @@
         let fundedPerSectorChart = new Chart(document.getElementById('fundedPerSectorChart').getContext('2d'), {
             type:'line',
             data:{
-                labels: <?php echo json_encode($fundedPerSectorArray[0]);?>,
+                labels: @php echo json_encode($fundedPerSectorArray[0]);@endphp,
                 datasets:[{
                     label: 'Amount of Funds in Millions',
-                    data: <?php echo json_encode($fundedPerSectorArray[1]);?>,
+                    data: @php echo json_encode($fundedPerSectorArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(85,32,200,1)',
                     ],
@@ -4043,10 +4045,10 @@
         let fundedPerCommodityChart = new Chart(document.getElementById('fundedPerCommodityChart').getContext('2d'), {
             type:'line',
             data:{
-                labels: <?php echo json_encode($fundedPerCommodityArray[0]);?>,
+                labels: @php echo json_encode($fundedPerCommodityArray[0]);@endphp,
                 datasets:[{
                     label: 'Amount of Funds in Millions',
-                    data: <?php echo json_encode($fundedPerCommodityArray[1]);?>,
+                    data: @php echo json_encode($fundedPerCommodityArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(85,32,200,1)',
                     ],
@@ -4072,10 +4074,10 @@
         let fundedPerYearChart = new Chart(document.getElementById('fundedPerYearChart').getContext('2d'), {
             type:'line',
             data:{
-                labels: <?php echo json_encode($fundedPerYearArray[0]);?>,
+                labels: @php echo json_encode($fundedPerYearArray[0]);@endphp,
                 datasets:[{
                     label: 'Amount of Funds in Millions',
-                    data: <?php echo json_encode($fundedPerYearArray[1]);?>,
+                    data: @php echo json_encode($fundedPerYearArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(85,32,200,1)',
                     ],
@@ -4101,10 +4103,10 @@
         let fundedPerAgencyChart = new Chart(document.getElementById('fundedPerAgencyChart').getContext('2d'), {
             type:'line',
             data:{
-                labels: <?php echo json_encode($fundedPerAgencyArray[0]);?>,
+                labels: @php echo json_encode($fundedPerAgencyArray[0]);@endphp,
                 datasets:[{
                     label: 'Amount of Funds in Millions',
-                    data: <?php echo json_encode($fundedPerAgencyArray[1]);?>,
+                    data: @php echo json_encode($fundedPerAgencyArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(85,32,200,1)',
                     ],
@@ -4130,10 +4132,10 @@
         let fundedPerCategoryChart = new Chart(document.getElementById('fundedPerCategoryChart').getContext('2d'), {
             type:'line',
             data:{
-                labels: <?php echo json_encode($fundedPerCategoryArray[0]);?>,
+                labels: @php echo json_encode($fundedPerCategoryArray[0]);@endphp,
                 datasets:[{
                     label: 'Amount of Funds in Millions',
-                    data: <?php echo json_encode($fundedPerCategoryArray[1]);?>,
+                    data: @php echo json_encode($fundedPerCategoryArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(85,32,200,1)',
                     ],
@@ -4150,10 +4152,10 @@
         let fundedPerRegionChart = new Chart(document.getElementById('fundedPerRegionChart').getContext('2d'), {
             type:'line',
             data:{
-                labels: <?php echo json_encode($fundedPerRegionArray[0]);?>,
+                labels: @php echo json_encode($fundedPerRegionArray[0]);@endphp,
                 datasets:[{
                     label: 'Amount of Funds in Millions',
-                    data: <?php echo json_encode($fundedPerRegionArray[1]);?>,
+                    data: @php echo json_encode($fundedPerRegionArray[1]);@endphp,
                     backgroundColor:[
                         'rgba(85,32,200,1)',
                     ],
@@ -4166,7 +4168,7 @@
                 maintainAspectRatio: false,
             }
         });
-    }
+    }*/
 </script>
 
 <style>
