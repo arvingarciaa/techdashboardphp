@@ -1571,6 +1571,7 @@
                             These graphs show the amount in millions for projects funded by DOST-PCAARRD under <span class="font-weight-bold">{{$dashboardIndustryString}}</span> per year, sector, commodity, implementing agency, category, and region.
                         </h3>
                         <div class="row">
+                            <!--
                             <div class="col-sm-12" >
                                 <div class="card shadow" style="height:350px">
                                     <div title="Click to see available funded per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
@@ -1594,7 +1595,7 @@
                                         <canvas id="fundedPerCommodityChart"></canvas>
                                     </div>   
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="col-sm-12">
                                 <div class="card shadow" style="height:350px">
                                     <div title="Click to see available funded per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
@@ -2183,6 +2184,8 @@
                         array_push($fundedPerYearArray[0],'Others');
                         array_push($fundedPerYearArray[1],$othersCount);
                     }
+
+                }
                     //Amount funded per Commodity
                     $fundedPerCommodityArray = array();
                     $fundedPerCommodityArray[0] = array();
@@ -2431,7 +2434,6 @@
                             $stringCheck = 0;
                         }
                     }
-                }
             ?>
              <!-- END DYNAMIC DATA INPUT FOR AMOUNT FUNDED PER ____ --> 
         </div> 
@@ -3392,7 +3394,6 @@
         $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
         $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
     });
-    /*
     $(".take-survey").on("click", function() {
         $.colorbox.close();
     });
@@ -3437,7 +3438,6 @@
             displayPopup();
         }, 3000);
     }
-*/
     $('.toggle-item').click(function() {
         $('.toggle-item').removeClass('active');
         $(this).addClass('active');
@@ -3685,7 +3685,6 @@
                 responsive:true,
             }
         }); 
-
         let techPerYearChart = new Chart(document.getElementById('techPerYearChart').getContext('2d'), {
             type:'line',
             data:{
@@ -3721,7 +3720,6 @@
                 }
             }
         }); 
-        
         let techPerAgencyChart = new Chart(document.getElementById('techPerAgencyChart').getContext('2d'), {
             type:'bar',
             data:{
@@ -3763,8 +3761,7 @@
                     }]
                 }
             }
-        }); 
-
+        });
         let techPerCategoryChart = new Chart(document.getElementById('techPerCategoryChart').getContext('2d'), {
             type:'bar',
             data:{
@@ -3807,7 +3804,6 @@
                 }
             }
         }); 
-
         let techPerRegionChart = new Chart(document.getElementById('techPerRegionChart').getContext('2d'), {
             type:'pie',
             data:{
@@ -3831,7 +3827,6 @@
                 responsive:true,
             }
         }); 
-
         let adoptersPerSectorChart = new Chart(document.getElementById('adoptersPerSectorChart').getContext('2d'), {
             type:'doughnut',
             data:{
@@ -3855,7 +3850,6 @@
                 responsive:true,
             }
         });
-
         let adoptersPerCommodityChart = new Chart(document.getElementById('adoptersPerCommodityChart').getContext('2d'), {
             type:'bar',
             data:{
@@ -3879,7 +3873,6 @@
                 responsive:true,
             }
         });
-
         let adoptersPerYearChart = new Chart(document.getElementById('adoptersPerYearChart').getContext('2d'), {
             type:'line',
             data:{
@@ -3912,7 +3905,6 @@
                 }
             }
         });
-
         let adoptersPerAgencyChart = new Chart(document.getElementById('adoptersPerAgencyChart').getContext('2d'), {
             type:'bar',
             data:{
@@ -3952,7 +3944,6 @@
                 }
             }
         });
-
         let adoptersPerCategoryChart = new Chart(document.getElementById('adoptersPerCategoryChart').getContext('2d'), {
             type:'doughnut',
             data:{
@@ -3976,7 +3967,6 @@
                 responsive:true,
             }
         });
-
         let adoptersPerRegionChart = new Chart(document.getElementById('adoptersPerRegionChart').getContext('2d'), {
             type:'line',
             data:{
@@ -4009,7 +3999,7 @@
                 }
             }
         });
-
+        /*
         let fundedPerSectorChart = new Chart(document.getElementById('fundedPerSectorChart').getContext('2d'), {
             type:'line',
             data:{
@@ -4038,7 +4028,6 @@
                 }
             }
         });
-
         let fundedPerCommodityChart = new Chart(document.getElementById('fundedPerCommodityChart').getContext('2d'), {
             type:'line',
             data:{
@@ -4066,8 +4055,7 @@
                     }]
                 }
             }
-        });
-
+        });*/
         let fundedPerYearChart = new Chart(document.getElementById('fundedPerYearChart').getContext('2d'), {
             type:'line',
             data:{
@@ -4096,7 +4084,6 @@
                 }
             }
         });
-
         let fundedPerAgencyChart = new Chart(document.getElementById('fundedPerAgencyChart').getContext('2d'), {
             type:'line',
             data:{
@@ -4125,7 +4112,6 @@
                 }
             }
         });
-
         let fundedPerCategoryChart = new Chart(document.getElementById('fundedPerCategoryChart').getContext('2d'), {
             type:'line',
             data:{
@@ -4145,7 +4131,6 @@
                 maintainAspectRatio: false,
             }
         });
-
         let fundedPerRegionChart = new Chart(document.getElementById('fundedPerRegionChart').getContext('2d'), {
             type:'line',
             data:{
