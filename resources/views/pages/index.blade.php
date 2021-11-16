@@ -1719,7 +1719,7 @@
                             $sectorCommodityCount = $sectorCommodityCount + $item->technologies_count; 
                         }
                         if($sectorCommodityCount != 0){
-                            if($techPerSectorCounter < 5){
+                            if($techPerSectorCounter < 10){
                                 array_push($techPerSectorArray[0],$itemSector->name);
                                 array_push($techPerSectorArray[1],$sectorCommodityCount);
                                 $techPerSectorCounter++;
@@ -1728,6 +1728,7 @@
                             }
                         }
                     }
+                    sort($techPerSectorArray[0]);
                     if($techPerSectorOthersCount!= 0){
                         array_push($techPerSectorArray[0],'Others');
                         array_push($techPerSectorArray[1],$techPerSectorOthersCount);
@@ -1756,7 +1757,7 @@
                     }
                     foreach($techPerCommodityQuery as $item)
                     {
-                        if($techPerCommodityCounter < 5 && $item->technologies_count != 0){
+                        if($techPerCommodityCounter < 10 && $item->technologies_count != 0){
                             array_push($techPerCommodityArray[0],$item->name);
                             array_push($techPerCommodityArray[1],$item->technologies_count);
                             $techPerCommodityCounter++;
@@ -1764,6 +1765,7 @@
                             $techPerCommodityOthersCount = $techPerCommodityOthersCount + $item->technologies_count;
                         }
                     }
+                    sort($techPerCommodityArray[0]);
                     if($techPerCommodityOthersCount != 0){
                         array_push($techPerCommodityArray[0],'Others');
                         array_push($techPerCommodityArray[1],$techPerCommodityOthersCount);
@@ -1795,7 +1797,7 @@
                             ->get();
                     }
                     foreach($techPerYearQuery as $item){
-                        if($techPerYearCounter < 5){
+                        if($techPerYearCounter < 10){
                             if($item->year_developed == NULL){
                                 $nullYears = $nullYears + $item->total;
                             } else {
@@ -1807,7 +1809,6 @@
                             $techPerYearOthersCount = $techPerYearOthersCount + $item->total;
                         }
                     }
-                    
                     sort($techPerYearArray[0]);
                     if($nullYears != 0){
                         array_push($techPerYearArray[0], 'No Year');
@@ -1828,7 +1829,7 @@
                         $q->where('approved', '=', 2);
                     }])->where('approved', '=', 2)->orderBy('technologies_count', 'desc')->get() as $item)
                     {
-                        if($techPerAgencyCounter < 5 && $item->technologies_count != 0){
+                        if($techPerAgencyCounter < 10 && $item->technologies_count != 0){
                             array_push($techPerAgencyArray[0], $item->name);
                             array_push($techPerAgencyArray[1], $item->technologies_count);
                             $techPerAgencyCounter++;
@@ -1836,6 +1837,7 @@
                             $techPerAgencyOthersCount = $techPerAgencyOthersCount + $item->total;
                         }
                     }
+                    sort($techPerAgencyArray[0]);
                     if($techPerAgencyOthersCount!= 0){
                         array_push($techPerAgencyArray[0],'Others');
                         array_push($techPerAgencyArray[1],$techPerAgencyOthersCount);
@@ -1870,7 +1872,7 @@
                     }
                     foreach($techPerCategoryQuery as $item)
                     {
-                        if($techPerCategoryCounter < 5 && $item->technologies_count != 0){
+                        if($techPerCategoryCounter < 10 && $item->technologies_count != 0){
                             array_push($techPerCategoryArray[0],$item->name);
                             array_push($techPerCategoryArray[1],$item->technologies_count);
                             $techPerCategoryCounter++;
@@ -1878,6 +1880,7 @@
                             $techPerCategoryOthersCount = $techPerCategoryOthersCount + $item->technologies_count;
                         }
                     }
+                    sort($techPerCategoryArray[0]);
                     if($techPerCategoryOthersCount!= 0){
                         array_push($techPerCategoryArray[0],'Others');
                         array_push($techPerCategoryArray[1],$techPerCategoryOthersCount);
@@ -1898,6 +1901,7 @@
                             $othersCount = $othersCount + $item->total;
                         }
                     }
+                    sort($techPerRegionArray[0]);
                     if($othersCount!= 0){
                         array_push($techPerRegionArray[0],'Others');
                         array_push($techPerRegionArray[1],$othersCount);
@@ -1922,7 +1926,7 @@
                 $adoptersPerRegionOthersCount = 0;
                 $adoptersPerRegionCounter = 0;
                 foreach(App\Adopter::where('approved', '=', 2)->select('region', DB::raw('count(*) as total'))->groupBy('region')->orderBy('total', 'desc')->get() as $item){
-                    if($adoptersPerRegionCounter < 5){
+                    if($adoptersPerRegionCounter < 10){
                         array_push($adoptersPerRegionArray[0],$item->region);
                         array_push($adoptersPerRegionArray[1],$item->total);
                         $adoptersPerRegionCounter++;
@@ -1930,6 +1934,7 @@
                         $adoptersPerRegionOthersCount = $adoptersPerRegionOthersCount + $item->total;
                     }
                 }
+                sort($adoptersPerRegionArray[0]);
                 if($adoptersPerRegionOthersCount!= 0){
                     array_push($adoptersPerRegionArray[0],'Others');
                     array_push($adoptersPerRegionArray[1],$adoptersPerRegionOthersCount);
@@ -1972,7 +1977,7 @@
                                 }
                             }
                             if($stringCheck == 0){
-                                if($adoptersPerSectorCounter < 5){
+                                if($adoptersPerSectorCounter < 10){
                                     array_push($adoptersPerSectorArray[0], App\Sector::find($sectorID)->name);
                                     array_push($adoptersPerSectorArray[1], $commodityTempArray[1][$keyComm]);
                                     $adoptersPerSectorCounter++;
@@ -1984,6 +1989,7 @@
                         }
                     }
                 }
+                sort($adoptersPerSectorArray[0]);
                 if($adoptersPerSectorOthersCount!= 0){
                     array_push($adoptersPerSectorArray[0],'Others');
                     array_push($adoptersPerSectorArray[1],$adoptersPerSectorOthersCount);
@@ -2005,7 +2011,7 @@
                                 }
                             }
                             if($stringCheck == 0){
-                                if($adoptersPerYearCounter < 5){
+                                if($adoptersPerYearCounter < 10){
                                     array_push($adoptersPerYearArray[0], $tech->year_developed);
                                     array_push($adoptersPerYearArray[1], 1);
                                     $adoptersPerYearCounter++;
@@ -2039,7 +2045,7 @@
                                 }
                             }
                             if($stringCheck == 0){
-                                if($adoptersPerCommodityCounter < 5){
+                                if($adoptersPerCommodityCounter < 10){
                                     array_push($adoptersPerCommodityArray[0], App\Commodity::find($ct->commodity_id)->name);
                                     array_push($adoptersPerCommodityArray[1], 1);
                                     $adoptersPerCommodityCounter++;
@@ -2051,6 +2057,7 @@
                         }
                     }
                 }
+                sort($adoptersPerCommodityArray[0]);
                 if($adoptersPerCommodityOthersCount!= 0){
                     array_push($adoptersPerCommodityArray[0],'Others');
                     array_push($adoptersPerCommodityArray[1],$adoptersPerCommodityOthersCount);
@@ -2072,7 +2079,7 @@
                                 }
                             }
                             if($stringCheck == 0){
-                                if($adoptersPerAgencyCounter < 5){
+                                if($adoptersPerAgencyCounter < 10){
                                     array_push($adoptersPerAgencyArray[0], App\Agency::find($ot->agency_id)->name);
                                     array_push($adoptersPerAgencyArray[1], 1);
                                     $adoptersPerAgencyCounter++;
@@ -2084,6 +2091,7 @@
                         }
                     }
                 }
+                sort($adoptersPerAgencyArray[0]);
                 if($adoptersPerAgencyOthersCount!= 0){
                     array_push($adoptersPerAgencyArray[0],'Others');
                     array_push($adoptersPerAgencyArray[1],$adoptersPerAgencyOthersCount);
@@ -2105,7 +2113,7 @@
                                 }
                             }
                             if($stringCheck == 0){
-                                if($adoptersPerCategoryCounter < 5){
+                                if($adoptersPerCategoryCounter < 10){
                                     array_push($adoptersPerCategoryArray[0], App\TechnologyCategory::where('id', '=', $tct->technology_category_id)->first()->name);
                                     array_push($adoptersPerCategoryArray[1], 1);
                                     $adoptersPerCategoryCounter++;
@@ -2117,6 +2125,7 @@
                         }
                     }
                 }
+                sort($adoptersPerCategoryArray[0]);
                 if($adoptersPerCategoryOthersCount!= 0){
                     array_push($adoptersPerCategoryArray[0],'Others');
                     array_push($adoptersPerCategoryArray[1],$adoptersPerCategoryOthersCount);
@@ -2153,7 +2162,7 @@
                                 }
                             }
                             if($stringCheck == 0){
-                                if($fundedPerYearCounter < 5){
+                                if($fundedPerYearCounter < 10){
                                     array_push($fundedPerYearArray[0], $tech->year_developed);
                                     array_push($fundedPerYearArray[1], (int)$rd->cost/1000000);
                                     $fundedPerYearCounter++;
@@ -2172,7 +2181,7 @@
                             }
                         }
                         if($stringCheck == 0){
-                            if($fundedPerYearCounter < 5){
+                            if($fundedPerYearCounter < 10){
                                 array_push($fundedPerYearArray[0], $tech->year_developed);
                                 array_push($fundedPerYearArray[1], (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000);
                                 $fundedPerYearCounter++;
@@ -2207,7 +2216,7 @@
                                     }
                                 }
                                 if($stringCheck == 0){
-                                    if($fundedPerCommodityCounter < 5){
+                                    if($fundedPerCommodityCounter < 10){
                                         array_push($fundedPerCommodityArray[0], $comm->name);
                                         array_push($fundedPerCommodityArray[1], (int)$rd->cost/1000000);
                                         $fundedPerCommodityCounter++;
@@ -2226,7 +2235,7 @@
                                     }
                                 }
                                 if($stringCheck == 0){
-                                    if($fundedPerCommodityCounter < 5){
+                                    if($fundedPerCommodityCounter < 10){
                                         array_push($fundedPerCommodityArray[0], $comm->name);
                                         array_push($fundedPerCommodityArray[1], (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000);
                                         $fundedPerCommodityCounter++;
@@ -2257,7 +2266,7 @@
                                     }
                                 }
                                 if($stringCheck == 0){
-                                    if($fundedPerSectorCounter < 5){
+                                    if($fundedPerSectorCounter < 10){
                                         array_push($fundedPerSectorArray[0], $sect->name);
                                         array_push($fundedPerSectorArray[1], (int)$rd->cost/1000000);
                                         $fundedPerSectorCounter++;
@@ -2276,7 +2285,7 @@
                                     }
                                 }
                                 if($stringCheck == 0){
-                                    if($fundedPerSectorCounter < 5){
+                                    if($fundedPerSectorCounter < 10){
                                         array_push($fundedPerSectorArray[0], $sect->name);
                                         array_push($fundedPerSectorArray[1], (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000);
                                         $fundedPerSectorCounter++;
@@ -2304,7 +2313,7 @@
                                 }
                             }
                             if($stringCheck == 0){
-                                if($fundedPerRegionCounter < 5){
+                                if($fundedPerRegionCounter < 10){
                                     array_push($fundedPerRegionArray[0], $tech->applicability_location);
                                     array_push($fundedPerRegionArray[1], (int)$rd->cost/1000000);
                                     $fundedPerRegionCounter++;
@@ -2323,7 +2332,7 @@
                                 }
                             }
                             if($stringCheck == 0){
-                                if($fundedPerRegionCounter < 5){
+                                if($fundedPerRegionCounter < 10){
                                     array_push($fundedPerRegionArray[0], $tech->applicability_location);
                                     array_push($fundedPerRegionArray[1], (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000);
                                     $fundedPerRegionCounter++;
@@ -2334,6 +2343,7 @@
                             $stringCheck = 0;
                         }
                     }
+                    sort($fundedPerRegionArray[0]);
                     if($fundedPerRegionOthersCount!= 0){
                         array_push($fundedPerRegionArray[0],'Others');
                         array_push($fundedPerRegionArray[1], $fundedPerRegionOthersCount);
@@ -2357,7 +2367,7 @@
                                 }
                             }
                             if($stringCheck == 0){
-                                if($fundedPerCategoryCounter < 5){
+                                if($fundedPerCategoryCounter < 10){
                                     array_push($fundedPerCategoryArray[0], $categ->name);
                                     array_push($fundedPerCategoryArray[1], (int)$rd->cost/1000000);
                                     $fundedPerCategoryCounter++;
@@ -2376,7 +2386,7 @@
                                 }
                             }
                             if($stringCheck == 0){
-                                if($fundedPerCategoryCounter < 5){
+                                if($fundedPerCategoryCounter < 10){
                                     array_push($fundedPerCategoryArray[0], $categ->name);
                                     array_push($fundedPerCategoryArray[1], (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000);
                                     $fundedPerCategoryCounter++;
@@ -2387,6 +2397,7 @@
                             $stringCheck = 0;
                         }
                     }
+                    sort($fundedPerCategoryArray[0]);
                     if($fundedPerCategoryOthersCount!= 0){
                         array_push($fundedPerCategoryArray[0],'Others');
                         array_push($fundedPerCategoryArray[1], $fundedPerCategoryOthersCount);
@@ -2410,7 +2421,7 @@
                                 }
                             }
                             if($stringCheck == 0){
-                                if($fundedPerAgencyCounter < 5){
+                                if($fundedPerAgencyCounter < 10){
                                     array_push($fundedPerAgencyArray[0], $agenc->name);
                                     array_push($fundedPerAgencyArray[1], (int)$rd->cost/1000000);
                                     $fundedPerAgencyCounter++;
@@ -2429,7 +2440,7 @@
                                 }
                             }
                             if($stringCheck == 0){
-                                if($fundedPerAgencyCounter < 5){
+                                if($fundedPerAgencyCounter < 10){
                                     array_push($fundedPerAgencyArray[0], $agenc->name);
                                     array_push($fundedPerAgencyArray[1], (int)$tech->basic_research_cost + (int)$tech->applied_research_cost);
                                     $fundedPerAgencyCounter++;
@@ -2440,6 +2451,7 @@
                             $stringCheck = 0;
                         }
                     }
+                    sort($fundedPerRegionArray[0]);
             ?>
              <!-- END DYNAMIC DATA INPUT FOR AMOUNT FUNDED PER ____ --> 
         </div> 
@@ -3502,7 +3514,11 @@
                         'rgba(108,21,105,1)',
                         'rgba(169,201,51,1)',
                         'rgba(20,21,20,1)',
-                        'rgb(213,213,213)'
+                        'rgb(213,213,213)', 
+                        'rgb(168,254,56)',
+                        'rgb(182,11,201)',
+                        'rgb(60,193,255)',
+                        'rgb(60,105,66)',
                     ],
                     hoverBorderWidth:3,
                     hoverBorderColor:'rgb(0,0,0)'
@@ -3537,7 +3553,11 @@
                         'rgba(108,21,105,1)',
                         'rgba(169,201,51,1)',
                         'rgba(20,21,20,1)',
-                        'rgb(213,213,213)'
+                        'rgb(213,213,213)',
+                        'rgb(168,254,56)', 
+                        'rgb(182,11,201)',
+                        'rgb(60,193,255)',
+                        'rgb(60,105,66)',
                     ],
                     hoverBorderWidth:3,
                     hoverBorderColor:'rgb(0,0,0)'
@@ -3560,7 +3580,11 @@
                         'rgba(108,21,105,1)',
                         'rgba(169,201,51,1)',
                         'rgba(20,21,20,1)',
-                        'rgb(213,213,213)'
+                        'rgb(213,213,213)',
+                        'rgb(168,254,56)',
+                        'rgb(182,11,201)',
+                        'rgb(60,193,255)',
+                        'rgb(60,105,66)',
                     ],
                     hoverBorderWidth:3,
                     hoverBorderColor:'rgb(0,0,0)'
@@ -3595,7 +3619,11 @@
                         'rgba(108,21,105,1)',
                         'rgba(169,201,51,1)',
                         'rgba(20,21,20,1)',
-                        'rgb(213,213,213)'
+                        'rgb(213,213,213)',     
+                        'rgb(168,254,56)',
+                        'rgb(182,11,201)',
+                        'rgb(60,193,255)',
+                        'rgb(60,105,66)',
                     ],
                     hoverBorderWidth:3,
                     hoverBorderColor:'rgb(0,0,0)'
@@ -3637,7 +3665,11 @@
                         'rgba(108,21,105,1)',
                         'rgba(169,201,51,1)',
                         'rgba(20,21,20,1)',
-                        'rgb(213,213,213)'
+                        'rgb(213,213,213)',
+                        'rgb(168,254,56)',                
+                        'rgb(182,11,201)',    
+                        'rgb(60,193,255)',   
+                        'rgb(60,105,66)',
                     ],
                     hoverBorderWidth:3,
                     hoverBorderColor:'rgb(0,0,0)'
@@ -3679,7 +3711,11 @@
                         'rgba(108,21,105,1)',
                         'rgba(169,201,51,1)',
                         'rgba(20,21,20,1)',
-                        'rgb(213,213,213)'
+                        'rgb(213,213,213)',              
+                        'rgb(168,254,56)',                      
+                        'rgb(182,11,201)',                      
+                        'rgb(60,193,255)',                    
+                        'rgb(60,105,66)',
                     ],
                     hoverBorderWidth:3,
                     hoverBorderColor:'rgb(0,0,0)'
@@ -3733,7 +3769,17 @@
             },
             options:{
                 responsive:true,
-            }
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                        reverse: false,
+                        min: 0,
+                        stepSize: 1
+                        },
+                    }]
+                }
+            },
+
         });
         let adoptersPerYearChart = new Chart(document.getElementById('adoptersPerYearChart').getContext('2d'), {
             type:'line',
@@ -3991,6 +4037,15 @@
             options:{
                 responsive:true,
                 maintainAspectRatio: false,
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            callback: function(value) {
+                                return value.substr(0, 10) + '...';//truncate
+                            },
+                        }
+                    }],
+                }
             }
         });
         let fundedPerRegionChart = new Chart(document.getElementById('fundedPerRegionChart').getContext('2d'), {
