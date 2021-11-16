@@ -1420,7 +1420,7 @@
                             <div class="col-sm-6">
                                 <div class="card shadow">
                                     <div title="Click to see available technologies per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
-                                        <h5 class="font-weight-bold my-1 text-primary">Technology per Sector</h5>
+                                        <h5 class="font-weight-bold my-1 text-primary">Technology Generated per Sector</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
@@ -1432,7 +1432,7 @@
                             <div class="col-sm-6">
                                 <div class="card shadow">
                                     <div title="Click to see available technologies per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
-                                        <h5 class="font-weight-bold my-1 text-primary">Technology per Commodity</h5>
+                                        <h5 class="font-weight-bold my-1 text-primary">Technology Generated per Commodity</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
@@ -1444,7 +1444,7 @@
                             <div class="col-sm-6">
                                 <div class="card shadow">
                                     <div title="Click to see available technologies per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
-                                        <h5 class="font-weight-bold my-1 text-primary">Technology per Year</h5>
+                                        <h5 class="font-weight-bold my-1 text-primary">Technology Generated per Year</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
@@ -1456,7 +1456,7 @@
                             <div class="col-sm-6">
                                 <div class="card shadow">
                                     <div title="Click to see available technologies per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
-                                        <h5 class="font-weight-bold my-1 text-primary">Technology per Implementing Agency</h5>
+                                        <h5 class="font-weight-bold my-1 text-primary">Technology Generated per Implementing Agency</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
@@ -1468,7 +1468,7 @@
                             <div class="col-sm-6">
                                 <div class="card shadow">
                                     <div title="Click to see available technologies per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
-                                        <h5 class="font-weight-bold my-1 text-primary">Technology per Category</h5>
+                                        <h5 class="font-weight-bold my-1 text-primary">Technology Generated per Category</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
@@ -1480,7 +1480,7 @@
                             <div class="col-sm-6">
                                 <div class="card shadow">
                                     <div title="Click to see available technologies per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
-                                        <h5 class="font-weight-bold my-1 text-primary">Technology per Region</h5>
+                                        <h5 class="font-weight-bold my-1 text-primary">Technology Generated per Region</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
@@ -1497,7 +1497,7 @@
                             <div class="col-sm-6">
                                 <div class="card shadow">
                                     <div title="Click to see available adopters per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
-                                        <h5 class="font-weight-bold my-1 text-primary">Adopters per Sector</h5>
+                                        <h5 class="font-weight-bold my-1 text-primary">Number of Adopters per Sector</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
@@ -1509,7 +1509,7 @@
                             <div class="col-sm-6">
                                 <div class="card shadow">
                                     <div title="Click to see available adopters per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
-                                        <h5 class="font-weight-bold my-1 text-primary">Adopters per Commodity</h5>
+                                        <h5 class="font-weight-bold my-1 text-primary">Number of Adopters per Commodity</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
@@ -1521,7 +1521,7 @@
                             <div class="col-sm-6">
                                 <div class="card shadow">
                                     <div title="Click to see available adopters per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
-                                        <h5 class="font-weight-bold my-1 text-primary">Adopters per Year</h5>
+                                        <h5 class="font-weight-bold my-1 text-primary">Number of Adopters per Year</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
@@ -1533,7 +1533,7 @@
                             <div class="col-sm-6">
                                 <div class="card shadow">
                                     <div title="Click to see available adopters per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
-                                        <h5 class="font-weight-bold my-1 text-primary">Adopters per Agency</h5>
+                                        <h5 class="font-weight-bold my-1 text-primary">Number of Adopters per Agency</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
@@ -1545,7 +1545,7 @@
                             <div class="col-sm-6">
                                 <div class="card shadow">
                                     <div title="Click to see available adopters per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
-                                        <h5 class="font-weight-bold my-1 text-primary">Adopters per Category</h5>
+                                        <h5 class="font-weight-bold my-1 text-primary">Number of Adopters per Category</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
@@ -1557,7 +1557,7 @@
                             <div class="col-sm-6">
                                 <div class="card shadow">
                                     <div title="Click to see available adopters per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
-                                        <h5 class="font-weight-bold my-1 text-primary">Adopters per Region</h5>
+                                        <h5 class="font-weight-bold my-1 text-primary">Number of Adopters per Region</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
@@ -1807,6 +1807,8 @@
                             $techPerYearOthersCount = $techPerYearOthersCount + $item->total;
                         }
                     }
+                    
+                    sort($techPerYearArray[0]);
                     if($nullYears != 0){
                         array_push($techPerYearArray[0], 'No Year');
                         array_push($techPerYearArray[1],$nullYears);
@@ -2015,6 +2017,7 @@
                         }
                     }
                 }
+                sort($adoptersPerYearArray[0]);
                 if($adoptersPerYearOthersCount!= 0){
                     array_push($adoptersPerYearArray[0],'Others');
                     array_push($adoptersPerYearArray[1],$adoptersPerYearOthersCount);
@@ -2180,6 +2183,7 @@
                         $stringCheck = 0;
                     }
                 }
+                sort($fundedPerYearArray[0]);
                 if($fundedPerYearOthersCount!= 0){
                     array_push($fundedPerYearArray[0],'Others');
                     array_push($fundedPerYearArray[1],$othersCount);
