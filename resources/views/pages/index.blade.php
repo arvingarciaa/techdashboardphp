@@ -231,7 +231,7 @@
             <div class="content-margin">
                 <div class="row">
                     <div class="col-md-4">
-                        <a class="" style="text-decoration: none;color:inherit" title="Number of Agricultural Technologies Available" href="/aanr-industry-profile/1">
+                        <a class="" style="text-decoration: none;color:inherit" title="Number of Agricultural Technologies Available" href="/?view=dashboardView&dashboard=AgriculturalTechnologies#posts-anchor">
                             <div class="card mb-3 shadow" style="flex-wrap:wrap;height:170px;background-color:rgb(253,186,5)">
                                 <div class="col-6 pr-0 ml-2" style="display:grid">
                                     <div class="w-100 mt-2">
@@ -248,7 +248,7 @@
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a class="" style="text-decoration: none;color:inherit" title="Number of Aquatic Resources Available" href="">
+                        <a class="" style="text-decoration: none;color:inherit" title="Number of Aquatic Resources Available" href="/?view=dashboardView&dashboard=AquaticResources#posts-anchor">
                             <div class="card mb-3 shadow" style="flex-wrap:wrap;height:170px;background-color:rgb(41,136,235)">
                                 <div class="col-6 pr-0 ml-2" style="display:grid">
                                     <div class="w-100 mt-2">
@@ -265,7 +265,7 @@
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a class="" style="text-decoration: none;color:inherit" title="Number of Natural Resources Available" href="">
+                        <a class="" style="text-decoration: none;color:inherit" title="Number of Natural Resources Available" href="/?view=dashboardView&dashboard=NaturalResources#posts-anchor">
                             <div class="card bg-success mb-3 shadow" style="flex-wrap:wrap;height:170px">
                                 <div class="col-6 pr-0 ml-2" style="display:grid">
                                     <div class="w-100 mt-2">
