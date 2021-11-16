@@ -23,27 +23,19 @@
                     <li><i class="fas fa-phone-alt" style="font-size:25px"></i> +63 (049) 536-2302</li>
                     <li><i class="fas fa-envelope" style="font-size:25px;margin-top:3px"></i> km4aanr@gmail.com</li>
                     <li><i class="fas fa-map-marker-alt" style="font-size:25px;margin-top:3px"></i> ICS, UPLB, Laguna, Philippines 4030</li>
-                    <li style="margin-top:15px">
-                        <a aria-label="Footer FB" href="#" style="font-size:30px;margin-right:5px;color:#3b5998"><i class="fab fa-facebook"></i></a> 
-                        <a aria-label="Footer twitter" href="#" style="font-size:30px;margin-right:5px;color:#00acee"><i class="fab fa-twitter"></i></a> 
-                        <a aria-label="Footer youtube" href="#" style="font-size:30px;margin-right:5px;color:#c4302b"><i class="fab fa-youtube"></i></a>
-                    </li>
                 </ul>
             </div>
             <div class="col-sm-3 ">
                 <h5 class="footer-title">Links</h5>
                 <ul class="list-unstyled text-small">
                     <li>
-                        <a href="http://aanr.ph/en/about-project/">About us</a>
+                        <a href="https://aanr.ph/about/">About us</a>
                     </li>
                     <li>
-                        <a href="http://167.71.210.45:8080/">KM Community</a>
+                        <a href="http://community.aanr.ph//">KM Community</a>
                     </li>
                     <li>
-                        <a href="http://167.71.210.45/">FIESTA</a>
-                    </li>
-                    <li>
-                        <a href="http://167.71.210.45:8081/">Technology Dashboard</a>
+                        <a href="/">Technology Dashboard</a>
                     </li>
                     <li>
                         <a href="http://www.pcaarrd.dost.gov.ph/home/portal/">DOST-PCAARRD</a>

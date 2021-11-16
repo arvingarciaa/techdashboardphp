@@ -3,7 +3,7 @@
 <div class="container-fluid px-0">
    <nav class="navbar shadow navbar-expand-lg navbar-dark bg-light pl-3 pt-0 pb-0" style="height:90px" class="px-3">
         <div class="navbar-header" style="margin-top:auto;margin-bottom:auto">
-            <a href="/">
+            <a href="https://aanr.ph/">
                 <img alt="PCAARRD logo" src="/storage/page_images/pcaarrd-logo-invert.png" style="max-width:400px">
             </a>
         </div>

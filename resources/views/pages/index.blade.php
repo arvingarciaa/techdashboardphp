@@ -1664,244 +1664,245 @@
 
             <!-- DYNAMIC DATA INPUT FOR TECHNOLOGY PER ____ Bar Graph -->
             <?php
-                //data input for technology per ___ bar graph
-                $techChartArray = array();
-                $techChartArray[0] = array();
-                $techChartArray[1] = array();
-                $othersCount = 0;
-                $counter = 0;
-                $nullYears = 0;
-                if(request()->dashboard == 'AgriculturalTechnologies'){
-                    $industryID = 1;
-                } elseif(request()->dashboard == 'AquaticResources'){
-                    $industryID = 2;
-                } elseif(request()->dashboard == 'NaturalResources'){
-                    $industryID = 3;
-                } 
+                    //data input for technology per ___ bar graph
+                    $techChartArray = array();
+                    $techChartArray[0] = array();
+                    $techChartArray[1] = array();
+                    $othersCount = 0;
+                    $counter = 0;
+                    $nullYears = 0;
+                    if(request()->dashboard == 'AgriculturalTechnologies'){
+                        $industryID = 1;
+                    } elseif(request()->dashboard == 'AquaticResources'){
+                        $industryID = 2;
+                    } elseif(request()->dashboard == 'NaturalResources'){
+                        $industryID = 3;
+                    } 
 
-                //Tech Per Sector
-                $techPerSectorArray = array();
-                $techPerSectorArray[0] = array();
-                $techPerSectorArray[1] = array();
-                $techPerSectorOthersCount = 0;
-                $techPerSectorCounter = 0;
-                
-                if(!request()->dashboard || request()->dashboard == 'All'){
-                    $techPerSectorForeachQuery = App\Sector::where('approved', '=', 2)->get();
-                } else {
-                    $techPerSectorForeachQuery = App\Sector::where('approved', '=', 2)->where('industry_id', '=', $industryID)->get();
-                }
-                foreach($techPerSectorForeachQuery as $itemSector){
+                    //Tech Per Sector
+                    $techPerSectorArray = array();
+                    $techPerSectorArray[0] = array();
+                    $techPerSectorArray[1] = array();
                     $techPerSectorOthersCount = 0;
-                    $sectorCommodityCount = 0;
+                    $techPerSectorCounter = 0;
+                    
                     if(!request()->dashboard || request()->dashboard == 'All'){
-                    $techPerSectorQuery = App\Commodity::withCount(['technologies' => function($q){
-                            $q->where('approved', '=', 2);
-                        }])
-                        ->where('commodities.sector_id', '=', $itemSector->id)
-                        ->orderBy('technologies_count', 'desc')
-                        ->where('approved', '=', 2)
-                        ->get();
+                        $techPerSectorForeachQuery = App\Sector::where('approved', '=', 2)->get();
                     } else {
+                        $techPerSectorForeachQuery = App\Sector::where('approved', '=', 2)->where('industry_id', '=', $industryID)->get();
+                    }
+                    foreach($techPerSectorForeachQuery as $itemSector){
+                        $techPerSectorOthersCount = 0;
+                        $sectorCommodityCount = 0;
+                        if(!request()->dashboard || request()->dashboard == 'All'){
                         $techPerSectorQuery = App\Commodity::withCount(['technologies' => function($q){
                                 $q->where('approved', '=', 2);
                             }])
-                            ->where('commodities.approved', '=', 2)
                             ->where('commodities.sector_id', '=', $itemSector->id)
-                            ->join('sectors', 'sectors.id', '=', 'sector_id')
+                            ->orderBy('technologies_count', 'desc')
+                            ->where('approved', '=', 2)
+                            ->get();
+                        } else {
+                            $techPerSectorQuery = App\Commodity::withCount(['technologies' => function($q){
+                                    $q->where('approved', '=', 2);
+                                }])
+                                ->where('commodities.approved', '=', 2)
+                                ->where('commodities.sector_id', '=', $itemSector->id)
+                                ->join('sectors', 'sectors.id', '=', 'sector_id')
+                                ->where('sectors.industry_id', '=', $industryID)
+                                ->where('sectors.approved', '=', 2)
+                                ->orderBy('technologies_count', 'desc')
+                                ->get();
+                        }
+                        foreach($techPerSectorQuery as $item)
+                        {
+                            $sectorCommodityCount = $sectorCommodityCount + $item->technologies_count; 
+                        }
+                        if($sectorCommodityCount != 0){
+                            if($techPerSectorCounter < 5){
+                                array_push($techPerSectorArray[0],$itemSector->name);
+                                array_push($techPerSectorArray[1],$sectorCommodityCount);
+                                $techPerSectorCounter++;
+                            } else {    
+                                $techPerSectorOthersCount = $techPerSectorOthersCount + $item->technologies_count;
+                            }
+                        }
+                    }
+                    if($techPerSectorOthersCount!= 0){
+                        array_push($techPerSectorArray[0],'Others');
+                        array_push($techPerSectorArray[1],$techPerSectorOthersCount);
+                    }
+                    
+                    //Tech Per Commodity
+                    $techPerCommodityArray = array();
+                    $techPerCommodityArray[0] = array();
+                    $techPerCommodityArray[1] = array();
+                    $techPerCommodityOthersCount = 0;
+                    $techPerCommodityCounter = 0;
+                    if(!request()->dashboard || request()->dashboard == 'All'){
+                        $techPerCommodityQuery = App\Commodity::withCount(['technologies' => function($q){
+                                $q->where('approved', '=', 2);
+                            }])
+                            ->where('commodities.approved', '=', 2)
+                            ->orderBy('technologies_count', 'desc')->get();
+                    } else {
+                        $techPerCommodityQuery = App\Commodity::withCount(['technologies' => function($q){
+                                $q->where('approved', '=', 2);
+                            }])
+                            ->join('sectors', 'sectors.id', '=', 'commodities.sector_id')
                             ->where('sectors.industry_id', '=', $industryID)
-                            ->where('sectors.approved', '=', 2)
+                            ->where('commodities.approved', '=', 2)
+                            ->orderBy('technologies_count', 'desc')->get();
+                    }
+                    foreach($techPerCommodityQuery as $item)
+                    {
+                        if($techPerCommodityCounter < 5 && $item->technologies_count != 0){
+                            array_push($techPerCommodityArray[0],$item->name);
+                            array_push($techPerCommodityArray[1],$item->technologies_count);
+                            $techPerCommodityCounter++;
+                        } else {
+                            $techPerCommodityOthersCount = $techPerCommodityOthersCount + $item->technologies_count;
+                        }
+                    }
+                    if($techPerCommodityOthersCount != 0){
+                        array_push($techPerCommodityArray[0],'Others');
+                        array_push($techPerCommodityArray[1],$techPerCommodityOthersCount);
+                    }
+
+                    //Tech Per Year
+                    $techPerYearArray = array();
+                    $techPerYearArray[0] = array();
+                    $techPerYearArray[1] = array();
+                    $techPerYearOthersCount = 0;
+                    $techPerYearCounter = 0;
+                    if(!request()->dashboard || request()->dashboard == 'All'){
+                        $techPerYearQuery = DB::table('technologies')
+                            ->where('technologies.approved', '=', 2)
+                            ->select('year_developed', DB::raw('count(*) as total'))
+                            ->groupBy('year_developed')
+                            ->orderBy('total', 'desc')
+                            ->get();
+                    } else {
+                        $techPerYearQuery = DB::table('technologies')
+                            ->join('commodity_technology', 'technologies.id', '=', 'commodity_technology.technology_id')
+                            ->join('commodities', 'commodity_technology.commodity_id', '=', 'commodities.id')
+                            ->join('sectors', 'commodities.id', '=', 'sectors.id')
+                            ->where('sectors.industry_id', '=', $industryID)
+                            ->where('technologies.approved', '=', 2)
+                            ->select('year_developed', DB::raw('count(*) as total'))
+                            ->groupBy('year_developed')
+                            ->orderBy('total', 'desc')
+                            ->get();
+                    }
+                    foreach($techPerYearQuery as $item){
+                        if($techPerYearCounter < 5){
+                            if($item->year_developed == NULL){
+                                $nullYears = $nullYears + $item->total;
+                            } else {
+                                array_push($techPerYearArray[0],$item->year_developed);
+                                array_push($techPerYearArray[1],$item->total);
+                            }
+                            $techPerYearCounter++;
+                        } else {
+                            $techPerYearOthersCount = $techPerYearOthersCount + $item->total;
+                        }
+                    }
+                    if($nullYears != 0){
+                        array_push($techPerYearArray[0], 'No Year');
+                        array_push($techPerYearArray[1],$nullYears);
+                    }
+                    if($techPerYearOthersCount!= 0){
+                        array_push($techPerYearArray[0], 'Others');
+                        array_push($techPerYearArray[1],$techPerYearOthersCount);
+                    }
+
+                    //Tech Per Agency
+                    $techPerAgencyArray = array();
+                    $techPerAgencyArray[0] = array();
+                    $techPerAgencyArray[1] = array();
+                    $techPerAgencyOthersCount = 0;
+                    $techPerAgencyCounter = 0;
+                    foreach(App\Agency::withCount(['technologies' => function($q){
+                        $q->where('approved', '=', 2);
+                    }])->where('approved', '=', 2)->orderBy('technologies_count', 'desc')->get() as $item)
+                    {
+                        if($techPerAgencyCounter < 5 && $item->technologies_count != 0){
+                            array_push($techPerAgencyArray[0], $item->name);
+                            array_push($techPerAgencyArray[1], $item->technologies_count);
+                            $techPerAgencyCounter++;
+                        } else {
+                            $techPerAgencyOthersCount = $techPerAgencyOthersCount + $item->total;
+                        }
+                    }
+                    if($techPerAgencyOthersCount!= 0){
+                        array_push($techPerAgencyArray[0],'Others');
+                        array_push($techPerAgencyArray[1],$techPerAgencyOthersCount);
+                    }
+
+                    //Tech Per Category
+                    $techPerCategoryArray = array();
+                    $techPerCategoryArray[0] = array();
+                    $techPerCategoryArray[1] = array();
+                    $techPerCategoryOthersCount = 0;
+                    $techPerCategoryCounter = 0;
+                    if(!request()->dashboard || request()->dashboard == 'All'){
+                        $techPerCategoryQuery = App\TechnologyCategory::withCount(['technologies' => function($q){
+                                $q->where('approved', '=', 2);
+                            }])
+                            ->where('technology_categories.approved', '=', 2)
+                            ->orderBy('technologies_count', 'desc')
+                            ->get();
+                    } else {
+                        $techPerCategoryQuery = App\TechnologyCategory::withCount(['technologies' => function($q){
+                                $q->where('approved', '=', 2);
+                            }])
+                            ->join('technology_technology_category', 'technology_technology_category.technology_category_id', '=', 'technology_categories.id')
+                            ->join('technologies', 'technologies.id', '=', 'technology_technology_category.technology_id')
+                            ->join('commodity_technology', 'commodity_technology.technology_id', '=', 'technologies.id')
+                            ->join('commodities', 'commodities.id', '=', 'commodity_technology.commodity_id')
+                            ->join('sectors', 'sectors.id', '=', 'commodities.id')
+                            ->where('sectors.industry_id', '=', $industryID)
+                            ->where('technology_categories.approved', '=', 2)
                             ->orderBy('technologies_count', 'desc')
                             ->get();
                     }
-                    foreach($techPerSectorQuery as $item)
+                    foreach($techPerCategoryQuery as $item)
                     {
-                        $sectorCommodityCount = $sectorCommodityCount + $item->technologies_count; 
-                    }
-                    if($sectorCommodityCount != 0){
-                        if($techPerSectorCounter < 5){
-                            array_push($techPerSectorArray[0],$itemSector->name);
-                            array_push($techPerSectorArray[1],$sectorCommodityCount);
-                            $techPerSectorCounter++;
-                        } else {    
-                            $techPerSectorOthersCount = $techPerSectorOthersCount + $item->technologies_count;
-                        }
-                    }
-                }
-                if($techPerSectorOthersCount!= 0){
-                    array_push($techPerSectorArray[0],'Others');
-                    array_push($techPerSectorArray[1],$techPerSectorOthersCount);
-                }
-                
-                //Tech Per Commodity
-                $techPerCommodityArray = array();
-                $techPerCommodityArray[0] = array();
-                $techPerCommodityArray[1] = array();
-                $techPerCommodityOthersCount = 0;
-                $techPerCommodityCounter = 0;
-                if(!request()->dashboard || request()->dashboard == 'All'){
-                    $techPerCommodityQuery = App\Commodity::withCount(['technologies' => function($q){
-                            $q->where('approved', '=', 2);
-                        }])
-                        ->where('commodities.approved', '=', 2)
-                        ->orderBy('technologies_count', 'desc')->get();
-                } else {
-                    $techPerCommodityQuery = App\Commodity::withCount(['technologies' => function($q){
-                            $q->where('approved', '=', 2);
-                        }])
-                        ->join('sectors', 'sectors.id', '=', 'commodities.sector_id')
-                        ->where('sectors.industry_id', '=', $industryID)
-                        ->where('commodities.approved', '=', 2)
-                        ->orderBy('technologies_count', 'desc')->get();
-                }
-                foreach($techPerCommodityQuery as $item)
-                {
-                    if($techPerCommodityCounter < 5 && $item->technologies_count != 0){
-                        array_push($techPerCommodityArray[0],$item->name);
-                        array_push($techPerCommodityArray[1],$item->technologies_count);
-                        $techPerCommodityCounter++;
-                    } else {
-                        $techPerCommodityOthersCount = $techPerCommodityOthersCount + $item->technologies_count;
-                    }
-                }
-                if($techPerCommodityOthersCount != 0){
-                    array_push($techPerCommodityArray[0],'Others');
-                    array_push($techPerCommodityArray[1],$techPerCommodityOthersCount);
-                }
-
-                //Tech Per Year
-                $techPerYearArray = array();
-                $techPerYearArray[0] = array();
-                $techPerYearArray[1] = array();
-                $techPerYearOthersCount = 0;
-                $techPerYearCounter = 0;
-                if(!request()->dashboard || request()->dashboard == 'All'){
-                    $techPerYearQuery = DB::table('technologies')
-                        ->where('technologies.approved', '=', 2)
-                        ->select('year_developed', DB::raw('count(*) as total'))
-                        ->groupBy('year_developed')
-                        ->orderBy('total', 'desc')
-                        ->get();
-                } else {
-                    $techPerYearQuery = DB::table('technologies')
-                        ->join('commodity_technology', 'technologies.id', '=', 'commodity_technology.technology_id')
-                        ->join('commodities', 'commodity_technology.commodity_id', '=', 'commodities.id')
-                        ->join('sectors', 'commodities.id', '=', 'sectors.id')
-                        ->where('sectors.industry_id', '=', $industryID)
-                        ->where('technologies.approved', '=', 2)
-                        ->select('year_developed', DB::raw('count(*) as total'))
-                        ->groupBy('year_developed')
-                        ->orderBy('total', 'desc')
-                        ->get();
-                }
-                foreach($techPerYearQuery as $item){
-                    if($techPerYearCounter < 5){
-                        if($item->year_developed == NULL){
-                            $nullYears = $nullYears + $item->total;
+                        //echo "<script>console.log(\"$item->name\")</script>";
+                        //echo "<script>console.log(\"$item->technologies_count\")</script>";
+                        if($techPerCategoryCounter < 5 && $item->technologies_count != 0){
+                            array_push($techPerCategoryArray[0],$item->name);
+                            array_push($techPerCategoryArray[1],$item->technologies_count);
+                            $techPerCategoryCounter++;
                         } else {
-                            array_push($techPerYearArray[0],$item->year_developed);
-                            array_push($techPerYearArray[1],$item->total);
+                            $techPerCategoryOthersCount = $techPerCategoryOthersCount + $item->technologies_count;
                         }
-                        $techPerYearCounter++;
-                    } else {
-                        $techPerYearOthersCount = $techPerYearOthersCount + $item->total;
                     }
-                }
-                if($nullYears != 0){
-                    array_push($techPerYearArray[0], 'No Year');
-                    array_push($techPerYearArray[1],$nullYears);
-                }
-                if($techPerYearOthersCount!= 0){
-                    array_push($techPerYearArray[0], 'Others');
-                    array_push($techPerYearArray[1],$techPerYearOthersCount);
-                }
+                    if($techPerCategoryOthersCount!= 0){
+                        array_push($techPerCategoryArray[0],'Others');
+                        array_push($techPerCategoryArray[1],$techPerCategoryOthersCount);
+                    }
 
-                //Tech Per Agency
-                $techPerAgencyArray = array();
-                $techPerAgencyArray[0] = array();
-                $techPerAgencyArray[1] = array();
-                $techPerAgencyOthersCount = 0;
-                $techPerAgencyCounter = 0;
-                foreach(App\Agency::withCount(['technologies' => function($q){
-                    $q->where('approved', '=', 2);
-                }])->where('approved', '=', 2)->orderBy('technologies_count', 'desc')->get() as $item)
-                {
-                    if($techPerAgencyCounter < 5 && $item->technologies_count != 0){
-                        array_push($techPerAgencyArray[0], $item->name);
-                        array_push($techPerAgencyArray[1], $item->technologies_count);
-                        $techPerAgencyCounter++;
-                    } else {
-                        $techPerAgencyOthersCount = $techPerAgencyOthersCount + $item->total;
+                    //Tech Per Region
+                    $techPerRegionArray = array();
+                    $techPerRegionArray[0] = array();
+                    $techPerRegionArray[1] = array();
+                    $techPerRegionOthersCount = 0;
+                    $techPerRegionCounter = 0;
+                    foreach(DB::table('technologies')->where('approved', '=', 2)->where('applicability_location', '!=' , NULL)->select('applicability_location', DB::raw('count(*) as total'))->groupBy('applicability_location')->orderBy('total', 'desc')->get() as $item){
+                        if($counter < 5){
+                            array_push($techPerRegionArray[0],$item->applicability_location);
+                            array_push($techPerRegionArray[1],$item->total);
+                            $counter++;
+                        } else {
+                            $othersCount = $othersCount + $item->total;
+                        }
                     }
-                }
-                if($techPerAgencyOthersCount!= 0){
-                    array_push($techPerAgencyArray[0],'Others');
-                    array_push($techPerAgencyArray[1],$techPerAgencyOthersCount);
-                }
-
-                //Tech Per Category
-                $techPerCategoryArray = array();
-                $techPerCategoryArray[0] = array();
-                $techPerCategoryArray[1] = array();
-                $techPerCategoryOthersCount = 0;
-                $techPerCategoryCounter = 0;
-                if(!request()->dashboard || request()->dashboard == 'All'){
-                    $techPerCategoryQuery = App\TechnologyCategory::withCount(['technologies' => function($q){
-                            $q->where('approved', '=', 2);
-                        }])
-                        ->where('technology_categories.approved', '=', 2)
-                        ->orderBy('technologies_count', 'desc')
-                        ->get();
-                } else {
-                    $techPerCategoryQuery = App\TechnologyCategory::withCount(['technologies' => function($q){
-                            $q->where('approved', '=', 2);
-                        }])
-                        ->join('technology_technology_category', 'technology_technology_category.technology_category_id', '=', 'technology_categories.id')
-                        ->join('technologies', 'technologies.id', '=', 'technology_technology_category.technology_id')
-                        ->join('commodity_technology', 'commodity_technology.technology_id', '=', 'technologies.id')
-                        ->join('commodities', 'commodities.id', '=', 'commodity_technology.commodity_id')
-                        ->join('sectors', 'sectors.id', '=', 'commodities.id')
-                        ->where('sectors.industry_id', '=', $industryID)
-                        ->where('technology_categories.approved', '=', 2)
-                        ->orderBy('technologies_count', 'desc')
-                        ->get();
-                }
-                foreach($techPerCategoryQuery as $item)
-                {
-                    //echo "<script>console.log(\"$item->name\")</script>";
-                    //echo "<script>console.log(\"$item->technologies_count\")</script>";
-                    if($techPerCategoryCounter < 5 && $item->technologies_count != 0){
-                        array_push($techPerCategoryArray[0],$item->name);
-                        array_push($techPerCategoryArray[1],$item->technologies_count);
-                        $techPerCategoryCounter++;
-                    } else {
-                        $techPerCategoryOthersCount = $techPerCategoryOthersCount + $item->technologies_count;
+                    if($othersCount!= 0){
+                        array_push($techPerRegionArray[0],'Others');
+                        array_push($techPerRegionArray[1],$othersCount);
                     }
-                }
-                if($techPerCategoryOthersCount!= 0){
-                    array_push($techPerCategoryArray[0],'Others');
-                    array_push($techPerCategoryArray[1],$techPerCategoryOthersCount);
-                }
-
-                //Tech Per Region
-                $techPerRegionArray = array();
-                $techPerRegionArray[0] = array();
-                $techPerRegionArray[1] = array();
-                $techPerRegionOthersCount = 0;
-                $techPerRegionCounter = 0;
-                foreach(DB::table('technologies')->where('approved', '=', 2)->where('applicability_location', '!=' , NULL)->select('applicability_location', DB::raw('count(*) as total'))->groupBy('applicability_location')->orderBy('total', 'desc')->get() as $item){
-                    if($counter < 5){
-                        array_push($techPerRegionArray[0],$item->applicability_location);
-                        array_push($techPerRegionArray[1],$item->total);
-                        $counter++;
-                    } else {
-                        $othersCount = $othersCount + $item->total;
-                    }
-                }
-                if($othersCount!= 0){
-                    array_push($techPerRegionArray[0],'Others');
-                    array_push($techPerRegionArray[1],$othersCount);
-                }
+                
             ?>
             <!-- END OF DATA INPUT FOR TECHNOLOGY PER ____ Bar Graph -->
             <!-- DYNAMIC DATA INPUT FOR ADOPTERS PER ____ PIE Graph -->
@@ -3465,150 +3466,6 @@
         }
     });
 
-    // ==================== OLD Dashboard JS ====================
-    /*
-    //Global Options
-    Chart.defaults.global.defaultFontFamily = 'Raleway';
-    Chart.defaults.global.defaultFontSize = 18;
-    Chart.defaults.global.defaultFontColor = '#777';
-    Chart.defaults.global.defaultFontStyle = 'bold';
-
-    //Philippine Map Chart
-    const country = fetch(
-        'https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/phl.topo.json'
-    ).then((r) => r.json());
-    const regions = fetch(
-        'https://raw.githubusercontent.com/faeldon/philippines-json-maps/master/topojson/regions/lowres/regions.topo.0.001.json'
-    ).then((r) => r.json());
-    Promise.all([regions, country]).then((data) => {
-        const regions = ChartGeo.topojson.feature(data[0], data[0].objects["regions.0.001"]).features;
-        const country = ChartGeo.topojson.feature(data[1], data[1].objects.phl).features[0];
-        if(document.getElementById('mapChart') != null){
-            const chart = new Chart(document.getElementById('mapChart').getContext('2d'), {
-                type: 'choropleth',
-                data: {
-                    labels: regions.map((d) => d.properties.ADM1_EN),
-                    datasets: [
-                    {
-                        label: 'Regions',
-                        outline: country,
-                        data: regions.map((d) => ({
-                        feature: d,
-                        value: Math.random(),
-                        })),
-                    },
-                    ],
-                },
-                options: {
-                    legend: {
-                        display: false
-                    },
-                    scale: {
-                        projection: 'equirectangular'
-                    },
-                    geo: {
-                        colorScale: {
-                        display: true,
-                        position: 'bottom',
-                        quantize: 5,
-                        legend: {
-                            position: 'bottom-right',
-                        },
-                        },
-                    },
-                    responsive:true,
-                    maintainAspectRatio: false
-                },
-            });
-        }
-    });
-    //Technology Per Region Bar Chart
-    var a = document.getElementById("techBarChart");
-    if(a != null){
-        let techBarChart = new Chart(document.getElementById('techBarChart').getContext('2d'), {
-                type:'bar',
-                data:{
-                    labels: <?php echo json_encode($techChartArray[0]);?>,
-                    datasets:[{
-                        label: 'Number of Technologies',
-                        data: <?php echo json_encode($techChartArray[1]);?>,
-                        backgroundColor:[
-                            'rgba(255,99,132,1)',
-                            'rgba(54,38,195,1)',
-                            'rgba(108,21,105,1)',
-                            'rgba(169,201,51,1)',
-                            'rgba(20,21,20,1)',
-                        ],
-                        hoverBorderWidth:3,
-                        hoverBorderColor:'rgb(0,0,0)'
-                    }]
-                },
-                options:{
-                    responsive:true,
-                    scales: {
-                        yAxes: [{
-                            display: true,
-                            ticks: {
-                                beginAtZero: true,
-                                stepSize: 1
-                            }
-                        }]
-                    }
-                }
-        }); 
-    }
-    var b = document.getElementById('adopterPieChart');
-    if(b!=null){
-        //Technology per sector doughnut chart
-        let adopterPieChart = new Chart(document.getElementById('adopterPieChart').getContext('2d'), {
-                type:'doughnut',
-                data:{
-                    labels: <?php echo json_encode($adopterChartArray[0]);?>,
-                    datasets:[{
-                        label: 'Number of Technologies',
-                        data: <?php echo json_encode($adopterChartArray[1]);?>,
-                        backgroundColor:[
-                            'rgba(8,99,132,1)',
-                            'rgba(54,38,8,1)',
-                            'rgba(9,21,5,1)',
-                            'rgba(3,201,51,1)',
-                            'rgba(210,7,100,1)',
-                            'rgba(31,7,100,1)',
-                        ],
-                        hoverBorderWidth:3,
-                        hoverBorderColor:'rgb(0,0,0)'
-                    }]
-                },
-                options:{
-                    responsive:true,
-                }
-        });
-    }
-    var c = document.getElementById('amountFundedYearChart');
-    //Total Amound Funded per Year
-    if(c != null){
-        let amountFundedYearChart = new Chart(document.getElementById('amountFundedYearChart').getContext('2d'), {
-                type:'line',
-                data:{
-                    labels: <?php echo json_encode($fundedChartArray[0]);?>,
-                    datasets:[{
-                        label: 'Amount of Funds in Millions',
-                        data: <?php echo json_encode($fundedChartArray[1]);?>,
-                        backgroundColor:[
-                            'rgba(85,32,200,1)',
-                        ],
-                        hoverBorderWidth:3,
-                        hoverBorderColor:'rgb(0,0,0)'
-                    }]
-                },
-                options:{
-                    responsive:true,
-                    maintainAspectRatio: false
-                }
-        });
-    }
-    */
-    // ==================== END OF OLD Dashboard JS ====================
     var getUrlParameter = function getUrlParameter(sParam) {
         var sPageURL = window.location.search.substring(1),
             sURLVariables = sPageURL.split('&'),
