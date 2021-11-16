@@ -1868,8 +1868,6 @@
                     }
                     foreach($techPerCategoryQuery as $item)
                     {
-                        //echo "<script>console.log(\"$item->name\")</script>";
-                        //echo "<script>console.log(\"$item->technologies_count\")</script>";
                         if($techPerCategoryCounter < 5 && $item->technologies_count != 0){
                             array_push($techPerCategoryArray[0],$item->name);
                             array_push($techPerCategoryArray[1],$item->technologies_count);
@@ -2181,11 +2179,10 @@
                         }
                         $stringCheck = 0;
                     }
-                    if($fundedPerYearOthersCount!= 0){
-                        array_push($fundedPerYearArray[0],'Others');
-                        array_push($fundedPerYearArray[1],$othersCount);
-                    }
-
+                }
+                if($fundedPerYearOthersCount!= 0){
+                    array_push($fundedPerYearArray[0],'Others');
+                    array_push($fundedPerYearArray[1],$othersCount);
                 }
                     //Amount funded per Commodity
                     $fundedPerCommodityArray = array();
@@ -2332,10 +2329,10 @@
                             }
                             $stringCheck = 0;
                         }
-                        if($fundedPerRegionOthersCount!= 0){
-                            array_push($fundedPerRegionArray[0],'Others');
-                            array_push($fundedPerRegionArray[1],$fundedPerRegionOthersCount);
-                        }
+                    }
+                    if($fundedPerRegionOthersCount!= 0){
+                        array_push($fundedPerRegionArray[0],'Others');
+                        array_push($fundedPerRegionArray[1], $fundedPerRegionOthersCount);
                     }
                     
                     //Amount funded per Technology Category
@@ -2385,6 +2382,10 @@
                             }
                             $stringCheck = 0;
                         }
+                    }
+                    if($fundedPerCategoryOthersCount!= 0){
+                        array_push($fundedPerCategoryArray[0],'Others');
+                        array_push($fundedPerCategoryArray[1], $fundedPerCategoryOthersCount);
                     }
                     
                     //Amount funded per Agency
