@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "choices.js": "^7.0.0",
-    "jspdf": "^2.1.1",
+    "jspdf": "^2.3.1",
     "lightbox2": "^2.11.0",
     "normalize.css": "^8.0.1",
     "nouislider": "^15.5.0",
