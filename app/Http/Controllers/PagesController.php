@@ -54,6 +54,7 @@ class PagesController extends Controller
     }
 
     public function search(){
+        
         $technologies = Technology::where('approved', '=', '2')->get();
         $techGrid = Technology::where('approved', '=', '2')->paginate(6);
         $techCommodities = Technology::where('approved','=', '2')->get();
@@ -65,7 +66,14 @@ class PagesController extends Controller
         $userMessages = UserMessage::all();
         $applicabilityIndustries = ApplicabilityIndustry::where('approved','=', '2')->get();
         $query = Request::get ( 'searchForm' );
-        $results = Technology::where('approved', '=', '2')->where('title','LIKE','%'.$query.'%')->paginate(6);
+
+        $start = Request::get ( 'start' );
+        $end = Request::get ( 'end' );
+        if($start && $end){
+            $results = Technology::where('approved', '=', '2')->where('title','LIKE','%'.$query.'%')->whereBetween('year_developed', array($start, $end))->paginate(6);
+        } else {
+            $results = Technology::where('approved', '=', '2')->where('title','LIKE','%'.$query.'%')->paginate(6);
+        }
         if($query != ''){
             if(count($technologies) > 0)
                 return view('pages.index')

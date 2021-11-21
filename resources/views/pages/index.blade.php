@@ -22,12 +22,12 @@
     <div class="container-fluid px-0">
         <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
-            @foreach($carouselItems as $carousel_item)
+            @foreach(App\CarouselItem::all() as $carousel_item)
                 <li data-target="#carouselExampleCaptions" data-slide-to={{$loop->index}} class={{$loop->first ? "active" : ""}}></li>
             @endforeach
             </ol>
           <div class="carousel-inner" style="max-height:700px;">
-            @foreach($carouselItems as $carousel_item)
+            @foreach(App\CarouselItem::all() as $carousel_item)
             <div class="carousel-item {{$loop->first ? 'active' : ''}}">
                 <img alt="carousel image" class="card-img-top" src="/storage/page_images/{{$carousel_item->banner}}" width="100%" style="object-fit: cover; max-height:700px;min-height:450px">
                 <div class="carousel-overlay px-3">
@@ -295,7 +295,6 @@
                                 </button>
                             </span>
                     </div>
-                </form>   
                 <div class="row" style="display:contents">
                     <div class="btn-group" style="flex-wrap:wrap">
                         <h4 style="margin-top:6px" class="{{ request()->view == 'listView' || request()->view == 'dashboardView' || request()->view == 'commodityView' ? 'invisible' : ''}}">Filter:</h4>
@@ -313,26 +312,29 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="dropdown">
-                            <button style="font-size:18px" class="btn btn-default dropdown-toggle {{ request()->view == 'listView' || request()->view == 'dashboardView' || request()->view == 'commodityView' ? 'disabled invisible' : ''}}" type="button" id="dropdownMenuButtonYear" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="caret {{ request()->year ? '':'text-muted' }}">{!!request()->year ? '<b>'.request()->year.'</b>' : 'Any Year'!!}</span>
-                            </button>
-                            <?php
-                                $years_filter = App\Technology::where('approved', '=', '2 ')->select('year_developed')->groupBy(DB::raw('year_developed'))->orderBy('year_developed','desc')->get();
-                            ?>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonYear">
-                                <a class="dropdown-item" href="{{ route('pages.index', ['consortium' => request()->consortium, 'location' => request()->location,'sort' => request()->sort, 'sortOrder' => request()->sortOrder])}}#posts-anchor">Any Year</a>
-                                @foreach($years_filter as $year)
-                                    <a class="dropdown-item" style="{!! App\Technology::where('year_developed')->count() == $years_filter->count() ? 'display:none' : ''!!}" href="{!! route('pages.index', ['consortium' => request()->consortium, 'location' => request()->location,'sort' => request()->sort, 'sortOrder' => request()->sortOrder, 'year' => $year->year_developed])!!}#posts-anchor">{{$year->year_developed}}</a>
-                                @endforeach
+                        <!-- YEAR DROPDOWN
+                            <div class="dropdown">
+                                <button style="font-size:18px" class="btn btn-default dropdown-toggle {{ request()->view == 'listView' || request()->view == 'dashboardView' || request()->view == 'commodityView' ? 'disabled invisible' : ''}}" type="button" id="dropdownMenuButtonYear" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="caret {{ request()->year ? '':'text-muted' }}">{!!request()->year ? '<b>'.request()->year.'</b>' : 'Any Year'!!}</span>
+                                </button>
+                                <?php
+                                    $years_filter = App\Technology::where('approved', '=', '2 ')->select('year_developed')->groupBy(DB::raw('year_developed'))->orderBy('year_developed','desc')->get();
+                                ?>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonYear">
+                                    <a class="dropdown-item" href="{{ route('pages.index', ['consortium' => request()->consortium, 'location' => request()->location,'sort' => request()->sort, 'sortOrder' => request()->sortOrder])}}#posts-anchor">Any Year</a>
+                                    @foreach($years_filter as $year)
+                                        <a class="dropdown-item" style="{!! App\Technology::where('year_developed')->count() == $years_filter->count() ? 'display:none' : ''!!}" href="{!! route('pages.index', ['consortium' => request()->consortium, 'location' => request()->location,'sort' => request()->sort, 'sortOrder' => request()->sortOrder, 'year' => $year->year_developed])!!}#posts-anchor">{{$year->year_developed}}</a>
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
+                        -->
                         <div class="dropdown">
                             <button style="font-size:18px" class="btn btn-default dropdown-toggle {{ request()->view == 'listView' || request()->view == 'dashboardView' || request()->view == 'commodityView' ? 'disabled invisible' : ''}}" type="button" id="dropdownMenuButtonSort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="caret {{ request()->sort ? '':'text-muted' }}">{!!request()->sort ? '<b>'.request()->sort.'</b>' : 'SORT BY'!!}</span>
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonSort">
                                 <a class="dropdown-item" href="{{ route('pages.index', ['consortium' => request()->consortium, 'location' => request()->location, 'year' => request()->year, 'view' => request()->view, 'sortOrder' => request()->sortOrder, 'commodities' => request()->commodities, 'title' == request()->sort ? '' : 'sort=Title'])}}#posts-anchor">TITLE</a>
+                                <a class="dropdown-item" href="{{ route('pages.index', ['consortium' => request()->consortium, 'location' => request()->location, 'year' => request()->year, 'view' => request()->view, 'sortOrder' => request()->sortOrder, 'commodities' => request()->commodities, 'title' == request()->sort ? '' : 'sort=Year'])}}#posts-anchor">YEAR</a>
                             </div>
                         </div>
                         <div class="dropdown">
@@ -343,6 +345,15 @@
                                 <a class="dropdown-item" href="{{ route('pages.index', ['consortium' => request()->consortium, 'location' => request()->location, 'year' => request()->year, 'view' => request()->view, 'sort' => request()->sort, 'asc' == request()->sortOrder ? '' : 'sortOrder=Asc'])}}#posts-anchor">ASC</a>
                                 <a class="dropdown-item" href="{{ route('pages.index', ['consortium' => request()->consortium, 'location' => request()->location, 'year' => request()->year, 'view' => request()->view, 'sort' => request()->sort, 'desc' == request()->sortOrder ? '' : 'sortOrder=Desc'])}}#posts-anchor">DESC</a>
                             </div>
+                        </div>
+                        <span style="padding-top:0.3em;font-size:18px" class="text-muted {{ request()->view == 'listView' || request()->view == 'dashboardView' || request()->view == 'commodityView' ? 'invisible' : ''}}">YEAR DEVELOPED:</span>
+                            
+                        <div style="width:12vw" class="{{ request()->view == 'listView' || request()->view == 'dashboardView' || request()->view == 'commodityView' ? 'invisible' : ''}}">
+                            <div class="px-3" data-toggle="tooltip" title="Click search to apply filter">
+                                <div class="slider-styled slider-round mt-3" id="slider"></div>
+                            </div>
+                            {{ Form::hidden('start', '', array('id' => 'form-year-start')) }}
+                            {{ Form::hidden('end', '', array('id' => 'form-year-end')) }}
                         </div>
                     <!--    <button style="font-size:18px" type="button" class="btn btn-default {{ request()->view == 'listView' || request()->view == 'dashboardView' ? 'disabled' : ''}}" data-toggle="modal" data-target="{{ request()->view == 'listView' || request()->view == 'dashboardView' ? '' : '#commodityFilterModal'}}">{!! request()->commodities ? '<b>Filtered by Commodity</b>' : 'Any Commodity'!!}</button> 
                         <a href="/#posts-anchor" style="font-size:18px" class="btn btn-default {{ request()->view == 'listView' || request()->view == 'dashboardView' ? 'disabled' : ''}}" role="button">Clear Filters</a> -->
@@ -370,6 +381,8 @@
                         </a>
                     </div>
                 </div> 
+
+                </form>   
                 <div class="dropdown-divider mobile-margin"></div> 
                 @if(request()->view == 'listView') 
                 <div class="card shadow mb-5">
@@ -548,11 +561,11 @@
                             } else {
                                 $techGridSorted = $techGrid->sortBy('title');
                             }
-                        } elseif(request()->sort == 'Date'){
+                        } elseif(request()->sort == 'Year'){
                             if(request()->sortOrder == 'Desc'){
-                                $techGridSorted = $techGrid->sortByDesc('date');
+                                $techGridSorted = $techGrid->sortByDesc('year_developed');
                             } else {
-                                $techGridSorted = $techGrid->sortBy('date');
+                                $techGridSorted = $techGrid->sortBy('year_developed');
                             }
                         } else {
                             $techGridSorted = $techGrid;
@@ -1934,7 +1947,7 @@
                         $adoptersPerRegionOthersCount = $adoptersPerRegionOthersCount + $item->total;
                     }
                 }
-                sort($adoptersPerRegionArray[0]);
+                sort($adoptersPerRegionArray[0], SORT_NATURAL | SORT_FLAG_CASE);
                 if($adoptersPerRegionOthersCount!= 0){
                     array_push($adoptersPerRegionArray[0],'Others');
                     array_push($adoptersPerRegionArray[1],$adoptersPerRegionOthersCount);
@@ -2343,7 +2356,7 @@
                             $stringCheck = 0;
                         }
                     }
-                    sort($fundedPerRegionArray[0]);
+                    sort($fundedPerRegionArray[0], SORT_NATURAL | SORT_FLAG_CASE);
                     if($fundedPerRegionOthersCount!= 0){
                         array_push($fundedPerRegionArray[0],'Others');
                         array_push($fundedPerRegionArray[1], $fundedPerRegionOthersCount);
@@ -2416,7 +2429,7 @@
                             if($rd->cost != 0){
                                 foreach($fundedPerAgencyArray[0] as $key => $val){
                                 if($agenc->name == $val){
-                                    $fundedPerAgencyArray[1][$key] = $fundedPerAgencyArray[1][$key] + (int)$rd->cost/1000000;
+                                    $fundedPerAgencyArray[1][$key] = $fundedPerAgencyArray[1][$key] + 1;
                                     $stringCheck = 1;
                                 }
                             }
@@ -2733,7 +2746,7 @@
        
 <!-- Protection Modals -->
 
-    @foreach($techCommodities as $technology)
+    @foreach(App\Technology::where('approved','=', '2')->get() as $technology)
     <!-- Modal for Patents -->
         @foreach($technology->patents as $patent)
         <div class="modal fade" id="viewPatentModal-{{$patent->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -3295,6 +3308,39 @@
 <!-- End of Survey Modal -->
 
 <style> 
+    .slider-styled .noUi-handle .noUi-touch-area {
+        border: 1px solid transparent;
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -54px;
+        width: auto;
+        height: auto;
+    }
+
+    /* Show a border when hovering the area the handle responds to */
+    .slider-styled .noUi-handle:hover .noUi-touch-area {
+        border: 1px dashed #7f7f7f;
+    }
+    .slider-round {
+        height: 10px;
+    }
+
+    .slider-round .noUi-connect {
+        background: #3FB8AF;
+    }
+
+    .slider-round .noUi-handle {
+        height: 18px;
+        width: 18px;
+        top: -5px;
+        right: -9px; /* half the width */
+        border-radius: 9px;
+    }
+    .noUi-horizontal .noUi-origin>.noUi-tooltip {
+        bottom: -54px !important;
+    }
     .take-survey{
         cursor: pointer;
     }
@@ -3384,6 +3430,7 @@
     #techCards .tech-card-container:nth-child(4n+4) div .tech-card-color {
         background-color:#01a635;
     }
+    
 </style>
 
 @endsection
@@ -3394,6 +3441,104 @@
         // init datatable on #example table
         $('.data-table').DataTable();
     });
+    var slider = document.getElementById('slider');
+    function mergeTooltips(slider, threshold, separator) {
+        var textIsRtl = getComputedStyle(slider).direction === 'rtl';
+        var isRtl = slider.noUiSlider.options.direction === 'rtl';
+        var isVertical = slider.noUiSlider.options.orientation === 'vertical';
+        var tooltips = slider.noUiSlider.getTooltips();
+        var origins = slider.noUiSlider.getOrigins();
+
+        // Move tooltips into the origin element. The default stylesheet handles this.
+        tooltips.forEach(function (tooltip, index) {
+            if (tooltip) {
+                origins[index].appendChild(tooltip);
+            }
+        });
+
+        slider.noUiSlider.on('update', function (values, handle, unencoded, tap, positions) {
+            document.getElementById('form-year-start').setAttribute('value', values[0]);
+            document.getElementById('form-year-end').setAttribute('value', values[1]);
+
+            var pools = [[]];
+            var poolPositions = [[]];
+            var poolValues = [[]];
+            var atPool = 0;
+
+            // Assign the first tooltip to the first pool, if the tooltip is configured
+            if (tooltips[0]) {
+                pools[0][0] = 0;
+                poolPositions[0][0] = positions[0];
+                poolValues[0][0] = values[0];
+            }
+
+            for (var i = 1; i < positions.length; i++) {
+                if (!tooltips[i] || (positions[i] - positions[i - 1]) > threshold) {
+                    atPool++;
+                    pools[atPool] = [];
+                    poolValues[atPool] = [];
+                    poolPositions[atPool] = [];
+                }
+
+                if (tooltips[i]) {
+                    pools[atPool].push(i);
+                    poolValues[atPool].push(values[i]);
+                    poolPositions[atPool].push(positions[i]);
+                }
+            }
+
+            pools.forEach(function (pool, poolIndex) {
+                var handlesInPool = pool.length;
+
+                for (var j = 0; j < handlesInPool; j++) {
+                    var handleNumber = pool[j];
+
+                    if (j === handlesInPool - 1) {
+                        var offset = 0;
+
+                        poolPositions[poolIndex].forEach(function (value) {
+                            offset += 1000 - value;
+                        });
+
+                        var direction = isVertical ? 'bottom' : 'right';
+                        var last = isRtl ? 0 : handlesInPool - 1;
+                        var lastOffset = 1000 - poolPositions[poolIndex][last];
+                        offset = (textIsRtl && !isVertical ? 100 : 0) + (offset / handlesInPool) - lastOffset;
+
+                        // Center this tooltip over the affected handles
+                        tooltips[handleNumber].innerHTML = poolValues[poolIndex].join(separator);
+                        tooltips[handleNumber].style.display = 'block';
+                        tooltips[handleNumber].style[direction] = offset + '%';
+                    } else {
+                        // Hide this tooltip
+                        tooltips[handleNumber].style.display = 'none';
+                    }
+                }
+            });
+        });
+    }
+    noUiSlider.create(slider, {
+        range: {
+            'min': [1970],
+            'max': [new Date().getFullYear()]
+        },
+        start: ['1970', new Date().getFullYear()],
+        format: {
+            from: function(value) {
+                return parseInt(value);
+            },
+            to: function(value) {
+                return parseInt(value);
+            }
+        },
+        connect: true,
+        tooltips: [true, true],
+    });
+    var url = new URL(window.location.href);
+    var start = url.searchParams.get("start");
+    var end = url.searchParams.get("end");
+    slider.noUiSlider.set([start, end]);
+    mergeTooltips(slider, 15, ' - ');
     $(".list-group-item-action").on('click', function() {
         $(".list-group-item-action").each(function(index) {
             $(this).removeClass("active show");
