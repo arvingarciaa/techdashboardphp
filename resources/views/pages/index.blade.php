@@ -284,9 +284,9 @@
                 </div>
 
                 @include('inc.messages')
-                <form action="/search" method="GET" role="search" name="searchForm" class="mb-2 {{ request()->view == 'listView' || request()->view == 'dashboardView' || request()->view == 'commodityView' ? 'd-none' : ''}}">
+                <form action="/search" method="GET" role="search" name="searchForm" class="">
                     {{ csrf_field() }}
-                    <div class="input-group">
+                    <div class="input-group {{ request()->view == 'listView' || request()->view == 'dashboardView' || request()->view == 'commodityView' ? 'd-none' : ''}}">
                         <label for="searchForm" class="" style="margin-top:-5000px;margin-left:-40px">label</label>
                             <input type="text" id="searchForm" name="searchForm" class="form-control {{ request()->view == 'listView' || request()->view == 'dashboardView' || request()->view == 'commodityView' ? 'invisible' : ''}}" style="font-size:2em" placeholder="Search Technology Title" value={{ isset($results) ? $query : ''}}> 
                             <span class="input-group-btn">
@@ -296,7 +296,7 @@
                             </span>
                     </div>
                 <div class="row" style="display:contents">
-                    <div class="btn-group" style="flex-wrap:wrap">
+                    <div class="btn-group mt-2" style="flex-wrap:wrap">
                         <h4 style="margin-top:6px" class="{{ request()->view == 'listView' || request()->view == 'dashboardView' || request()->view == 'commodityView' ? 'invisible' : ''}}">Filter:</h4>
                         <div class="dropdown"> 
                             <button style="font-size:18px" class="btn btn-default dropdown-toggle {{ request()->view == 'listView' || request()->view == 'dashboardView' || request()->view == 'commodityView' ? 'disabled invisible' : ''}}" type="button" id="dropdownMenuButtonRegion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -358,7 +358,7 @@
                     <!--    <button style="font-size:18px" type="button" class="btn btn-default {{ request()->view == 'listView' || request()->view == 'dashboardView' ? 'disabled' : ''}}" data-toggle="modal" data-target="{{ request()->view == 'listView' || request()->view == 'dashboardView' ? '' : '#commodityFilterModal'}}">{!! request()->commodities ? '<b>Filtered by Commodity</b>' : 'Any Commodity'!!}</button> 
                         <a href="/#posts-anchor" style="font-size:18px" class="btn btn-default {{ request()->view == 'listView' || request()->view == 'dashboardView' ? 'disabled' : ''}}" role="button">Clear Filters</a> -->
                     </div>
-                    <div class="float-right">
+                    <div class="float-right mt-2">
                         <a aria-label="View as grid" href="{{ route('pages.index', ['consortium' => request()->consortium, 'location' => request()->location, 'sort' => request()->sort, 'year' => request()->year, 'sortOrder' => request()->sortOrder, 'commodities' => request()->commodities, 'view' => 'gridView'])}}#posts-anchor">
                             <button type="button" data-toggle="tooltip" title="View as Grid" class="btn btn-light {{ request()->view == 'gridView' || !request()->view  ? 'active' : ''}}" autocomplete="off">
                                 <i class="fas fa-grip-horizontal"></i>
@@ -1621,8 +1621,8 @@
                                     </div>   
                                 </div>
                             </div>
-                            <div class="col-sm-12">
-                                <div class="card shadow" style="height:350px">
+                            <div class="col-sm-6">
+                                <div class="card shadow" style="">
                                     <div title="Click to see available funded per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
                                         <h5 class="font-weight-bold my-1 text-primary">Amount Funded per Agency</h5>
                                         <div class="dropdown" >
@@ -1633,8 +1633,8 @@
                                     </div>   
                                 </div>
                             </div>
-                            <div class="col-sm-12">
-                                <div class="card shadow" style="height:350px">
+                            <div class="col-sm-6">
+                                <div class="card shadow" style="">
                                     <div title="Click to see available funded per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
                                         <h5 class="font-weight-bold my-1 text-primary">Amount Funded per Category</h5>
                                         <div class="dropdown" >
@@ -1646,7 +1646,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12">
-                                <div class="card shadow" style="height:350px">
+                                <div class="card shadow" style="">
                                     <div title="Click to see available funded per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
                                         <h5 class="font-weight-bold my-1 text-primary">Amount Funded per Region</h5>
                                         <div class="dropdown" >
@@ -2448,14 +2448,14 @@
                         if($tech->basic_research_cost != 0 || $tech->applied_research_cost != 0){
                             foreach($fundedPerAgencyArray[0] as $key => $val){
                                 if($agenc->name == $val){
-                                    $fundedPerAgencyArray[1][$key] = $fundedPerAgencyArray[1][$key] + (int)$tech->basic_research_cost + (int)$tech->applied_research_cost;
+                                    $fundedPerAgencyArray[1][$key] = $fundedPerAgencyArray[1][$key] + (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000;
                                     $stringCheck = 1;
                                 }
                             }
                             if($stringCheck == 0){
                                 if($fundedPerAgencyCounter < 10){
                                     array_push($fundedPerAgencyArray[0], $agenc->name);
-                                    array_push($fundedPerAgencyArray[1], (int)$tech->basic_research_cost + (int)$tech->applied_research_cost);
+                                    array_push($fundedPerAgencyArray[1], (int)$tech->basic_research_cost/1000000 + (int)$tech->applied_research_cost/1000000);
                                     $fundedPerAgencyCounter++;
                                 } else {
                                     $fundedPerAgencyOthersCount++;
@@ -3717,27 +3717,18 @@
             data:{
                 labels: @php echo json_encode($techPerYearArray[0]);@endphp,
                 datasets:[{
-                    label: 'Number of Technologies',
+                    label: 'Number of Technologies Generated per Year',
                     data: @php echo json_encode($techPerYearArray[1]);@endphp,
-                    backgroundColor:[
-                        'rgba(20,99,20,1)',
-                        'rgba(54,38,195,1)',
-                        'rgba(108,21,105,1)',
-                        'rgba(169,201,51,1)',
-                        'rgba(20,21,20,1)',
-                        'rgb(213,213,213)',
-                        'rgb(168,254,56)',
-                        'rgb(182,11,201)',
-                        'rgb(60,193,255)',
-                        'rgb(60,105,66)',
-                    ],
-                    hoverBorderWidth:3,
-                    hoverBorderColor:'rgb(0,0,0)'
+                    BorderWidth:3,
+                    borderColor:'rgb(0,0,0)',
+                    fill: false,
                 }]
             },
             options:{
-                legend: {
-                    display: false
+                elements: {
+                    line: {
+                        tension: 0.1
+                    }
                 },
                 responsive:true,
                 scales: {
@@ -3752,7 +3743,7 @@
             }
         }); 
         let techPerAgencyChart = new Chart(document.getElementById('techPerAgencyChart').getContext('2d'), {
-            type:'bar',
+            type:'horizontalBar',
             data:{
                 labels: @php echo json_encode($techPerAgencyArray[0]);@endphp,
                 datasets:[{
@@ -3778,16 +3769,10 @@
                 legend: {
                     display: false
                 },
+                indexAxis: 'y',
                 responsive:true,
                 scales: {
                     xAxes: [{
-                        ticks: {
-                            callback: function(value) {
-                                return value.substr(0, 10) + '...';//truncate
-                            },
-                        }
-                    }],
-                    yAxes: [{
                         display: true,
                         ticks: {
                             beginAtZero: true,
@@ -3798,7 +3783,7 @@
             }
         });
         let techPerCategoryChart = new Chart(document.getElementById('techPerCategoryChart').getContext('2d'), {
-            type:'bar',
+            type:'horizontalBar',
             data:{
                 labels: @php echo json_encode($techPerCategoryArray[0]);@endphp,
                 datasets:[{
@@ -3824,16 +3809,10 @@
                 legend: {
                     display: false
                 },
+                indexAxis: 'y',
                 responsive:true,
                 scales: {
                     xAxes: [{
-                        ticks: {
-                            callback: function(value) {
-                                return value.substr(0, 10) + '...';//truncate
-                            },
-                        }
-                    }],
-                    yAxes: [{
                         display: true,
                         ticks: {
                             beginAtZero: true,
@@ -3933,16 +3912,10 @@
                 datasets:[{
                     label: 'Number of Technologies',
                     data: @php echo json_encode($adoptersPerYearArray[1]);@endphp,
-                    backgroundColor:[
-                        'rgba(8,99,132,1)',
-                        'rgba(54,38,8,1)',
-                        'rgba(9,21,5,1)',
-                        'rgba(3,201,51,1)',
-                        'rgba(210,7,100,1)',
-                        'rgba(31,7,100,1)',
-                    ],
-                    hoverBorderWidth:3,
-                    hoverBorderColor:'rgb(0,0,0)'
+                    BorderWidth:3,
+                    borderColor:'rgb(0,0,0)',
+                    fill: false,
+                    tension: 0.1,
                 }]
             },
             options:{
@@ -3959,7 +3932,7 @@
             }
         });
         let adoptersPerAgencyChart = new Chart(document.getElementById('adoptersPerAgencyChart').getContext('2d'), {
-            type:'bar',
+            type:'horizontalBar',
             data:{
                 labels: @php echo json_encode($adoptersPerAgencyArray[0]);@endphp,
                 datasets:[{
@@ -3978,16 +3951,10 @@
                 }]
             },
             options:{
+                indexAxis: 'y',
                 responsive:true,
                 scales: {
                     xAxes: [{
-                        ticks: {
-                            callback: function(value) {
-                                return value.substr(0, 10) + '...';//truncate
-                            },
-                        }
-                    }],
-                    yAxes: [{
                         display: true,
                         ticks: {
                             beginAtZero: true,
@@ -4021,7 +3988,7 @@
             }
         });
         let adoptersPerRegionChart = new Chart(document.getElementById('adoptersPerRegionChart').getContext('2d'), {
-            type:'line',
+            type:'pie',
             data:{
                 labels: @php echo json_encode($adoptersPerRegionArray[0]);@endphp,
                 datasets:[{
@@ -4041,15 +4008,6 @@
             },
             options:{
                 responsive:true,
-                scales: {
-                    yAxes: [{
-                        display: true,
-                        ticks: {
-                            beginAtZero: true,
-                            stepSize: 1
-                        }
-                    }]
-                }
             }
         });
         /*
@@ -4116,11 +4074,10 @@
                 datasets:[{
                     label: 'Amount of Funds in Millions',
                     data: @php echo json_encode($fundedPerYearArray[1]);@endphp,
-                    backgroundColor:[
-                        'rgba(85,32,200,1)',
-                    ],
-                    hoverBorderWidth:3,
-                    hoverBorderColor:'rgb(0,0,0)'
+                    BorderWidth:3,
+                    borderColor:'rgb(0,0,0)',
+                    fill: false,
+                    tension: 0.1,
                 }]
             },
             options:{
@@ -4138,70 +4095,71 @@
             }
         });
         let fundedPerAgencyChart = new Chart(document.getElementById('fundedPerAgencyChart').getContext('2d'), {
-            type:'line',
+            type:'horizontalBar',
             data:{
                 labels: @php echo json_encode($fundedPerAgencyArray[0]);@endphp,
                 datasets:[{
                     label: 'Amount of Funds in Millions',
                     data: @php echo json_encode($fundedPerAgencyArray[1]);@endphp,
                     backgroundColor:[
-                        'rgba(85,32,200,1)',
+                        'rgba(8,99,132,1)',
+                        'rgba(54,38,8,1)',
+                        'rgba(9,21,5,1)',
+                        'rgba(3,201,51,1)',
+                        'rgba(210,7,100,1)',
+                        'rgba(31,7,100,1)',
                     ],
                     hoverBorderWidth:3,
                     hoverBorderColor:'rgb(0,0,0)'
                 }]
             },
             options:{
+                indexAxis: 'y',
                 responsive:true,
-                maintainAspectRatio: false,
                 scales: {
-                    xAxes: [{
-                        ticks: {
-                            callback: function(value) {
-                                return value.substr(0, 10) + '...';//truncate
-                            },
-                        }
-                    }]
                 }
             }
         });
         let fundedPerCategoryChart = new Chart(document.getElementById('fundedPerCategoryChart').getContext('2d'), {
-            type:'line',
+            type:'horizontalBar',
             data:{
                 labels: @php echo json_encode($fundedPerCategoryArray[0]);@endphp,
                 datasets:[{
                     label: 'Amount of Funds in Millions',
                     data: @php echo json_encode($fundedPerCategoryArray[1]);@endphp,
                     backgroundColor:[
-                        'rgba(85,32,200,1)',
+                        'rgba(210,7,100,1)',
+                        'rgba(31,7,100,1)',
+                        'rgba(8,99,132,1)',
+                        'rgba(54,38,8,1)',
+                        'rgba(9,21,5,1)',
+                        'rgba(3,201,51,1)',
                     ],
                     hoverBorderWidth:3,
                     hoverBorderColor:'rgb(0,0,0)'
                 }]
             },
             options:{
+                indexAxis: 'y',
                 responsive:true,
-                maintainAspectRatio: false,
                 scales: {
-                    xAxes: [{
-                        ticks: {
-                            callback: function(value) {
-                                return value.substr(0, 10) + '...';//truncate
-                            },
-                        }
-                    }],
                 }
             }
         });
         let fundedPerRegionChart = new Chart(document.getElementById('fundedPerRegionChart').getContext('2d'), {
-            type:'line',
+            type:'pie',
             data:{
                 labels: @php echo json_encode($fundedPerRegionArray[0]);@endphp,
                 datasets:[{
                     label: 'Amount of Funds in Millions',
                     data: @php echo json_encode($fundedPerRegionArray[1]);@endphp,
                     backgroundColor:[
-                        'rgba(85,32,200,1)',
+                        'rgba(8,99,132,1)',
+                        'rgba(54,38,8,1)',
+                        'rgba(9,21,5,1)',
+                        'rgba(3,201,51,1)',
+                        'rgba(210,7,100,1)',
+                        'rgba(31,7,100,1)',
                     ],
                     hoverBorderWidth:3,
                     hoverBorderColor:'rgb(0,0,0)'
@@ -4209,7 +4167,6 @@
             },
             options:{
                 responsive:true,
-                maintainAspectRatio: false,
             }
         });
     }
