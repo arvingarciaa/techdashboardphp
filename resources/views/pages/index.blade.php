@@ -3892,6 +3892,9 @@
                 }]
             },
             options:{
+                legend: {
+                    display: false
+                },
                 responsive:true,
                 scales: {
                     yAxes: [{
@@ -3951,6 +3954,9 @@
                 }]
             },
             options:{
+                legend: {
+                    display: false
+                },
                 indexAxis: 'y',
                 responsive:true,
                 scales: {
@@ -4114,6 +4120,9 @@
                 }]
             },
             options:{
+                legend: {
+                    display: false
+                },
                 indexAxis: 'y',
                 responsive:true,
                 scales: {
@@ -4140,6 +4149,9 @@
                 }]
             },
             options:{
+                legend: {
+                    display: false
+                },
                 indexAxis: 'y',
                 responsive:true,
                 scales: {
@@ -4166,13 +4178,6 @@
                 }]
             },
             options:{
-                tooltips: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return Number(tooltipItem.yLabel) + "Million Pesos";
-                        }
-                    }
-                },
                 responsive:true,
                 maintainAspectRatio: false,
             }
