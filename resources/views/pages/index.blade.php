@@ -1646,14 +1646,14 @@
                                 </div>
                             </div>
                             <div class="col-sm-12">
-                                <div class="card shadow" style="">
+                                <div class="card shadow" style="height: 450px">
                                     <div title="Click to see available funded per..." class="card-header chart-header py-3 d-flex flex-row align-items-center justify-content-initial">
                                         <h5 class="font-weight-bold my-1 text-primary">Amount Funded per Region</h5>
                                         <div class="dropdown" >
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <canvas id="fundedPerRegionChart"></canvas>
+                                        <canvas id="fundedPerRegionChart" height="450"></canvas>
                                     </div>   
                                 </div>
                             </div>
@@ -4166,7 +4166,15 @@
                 }]
             },
             options:{
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return Number(tooltipItem.yLabel) + "Million Pesos";
+                        }
+                    }
+                },
                 responsive:true,
+                maintainAspectRatio: false,
             }
         });
     }
