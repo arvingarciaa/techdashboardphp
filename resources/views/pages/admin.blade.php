@@ -2026,7 +2026,7 @@
                     <div class="card shadow">
                         <form action="{{ route('deleteMessages')}}" id="deleteForm" method="POST">
                         {{ csrf_field() }}
-                        <input type="hidden" name="_method" value="delete">
+                        <input type="hidden" name="_method" value="Delete">
                         <div class="card-header">
                             <i class="far fa-envelope" style="font-size:25px;"></i>
                             <span style="font-size:22px;">User Messages 
@@ -2185,7 +2185,7 @@
             <div class="modal fade" id="deleteUserModal-{{$user->id}}" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        {{ Form::open(['action' => ['UsersController@deleteUser', $user->id], 'method' => "DELETE"]) }} 
+                        {{ Form::open(['action' => ['UsersController@deleteUser', $user->id], 'method' => "Delete"]) }} 
                         <div class="modal-header">
                             <h6 class="modal-title" id="exampleModalLabel">Confirm Delete</h6>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -2204,7 +2204,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                            <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                            <input class="btn btn-danger" type="submit" value="Yes, Delete" onclick="this.disabled=true;this.form.submit();">
                         </div>
                         {{ Form::close() }}
                     </div>
@@ -2310,7 +2310,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
                             @if($sectors->commodities->where('approved','=','2')->where('approved', '=', '2')->count() == 0)
-                            <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                            <input class="btn btn-danger" type="submit" value="Yes, Delete" onclick="this.disabled=true;this.form.submit();">
                             @endif
                         </div>
                         </form>
@@ -2408,7 +2408,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
                             @if($industries->sectors->where('approved','=','2')->where('approved', '=', '2')->count() == 0)
-                            <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                            <input class="btn btn-danger" type="submit" value="Yes, Delete" onclick="this.disabled=true;this.form.submit();">
                             @endif
                         </div>
                         </form>
@@ -2508,7 +2508,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
                             @if($techApp->count() == 0)
-                            <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                            <input class="btn btn-danger" type="submit" value="Yes, Delete" onclick="this.disabled=true;this.form.submit();">
                             @endif
                         </div>
                         </form>
@@ -2637,7 +2637,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                            <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                            <input class="btn btn-danger" type="submit" value="Yes, Delete" onclick="this.disabled=true;this.form.submit();">
                         </div>
                         </form>
                     </div>
@@ -2733,7 +2733,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                            <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                            <input class="btn btn-danger" type="submit" value="Yes, Delete" onclick="this.disabled=true;this.form.submit();">
                         </div>
                         </form>
                     </div>
@@ -2869,7 +2869,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                                <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                                <input class="btn btn-danger" type="submit" value="Yes, Delete" onclick="this.disabled=true;this.form.submit();">
                             </div>
                             </form>
                         </div>
@@ -2967,7 +2967,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
                             @if($adopterTypes->adopters->where('approved', '=', '2')->count() == 0)
-                            <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                            <input class="btn btn-danger" type="submit" value="Yes, Delete" onclick="this.disabled=true;this.form.submit();">
                             @endif
                         </div>
                         </form>
@@ -3162,7 +3162,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                            <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                            <input class="btn btn-danger" type="submit" value="Yes, Delete" onclick="this.disabled=true;this.form.submit();">
                         </div>
                         </form>
                     </div>
@@ -3350,7 +3350,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                            <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                            <input class="btn btn-danger" type="submit" value="Yes, Delete" onclick="this.disabled=true;this.form.submit();">
                         </div>
                         </form>
                     </div>
@@ -3485,7 +3485,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
-                            <input class="btn btn-danger" type="submit" value="Yes, Delete">
+                            <input class="btn btn-danger" type="submit" value="Yes, Delete" onclick="this.disabled=true;this.form.submit();">
                         </div>
                         </form>
                     </div>
